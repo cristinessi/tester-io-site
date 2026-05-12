@@ -1,0 +1,993 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Tester.io — Ship with confidence.</title>
+  <meta name="description" content="Premium QA & test automation platform. Automated testing, manual QA, and performance audits for teams that ship with confidence." />
+  <link rel="icon" href="brand_assets/Tester%20Logo.png" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Montserrat', 'system-ui', 'sans-serif'],
+            mono: ['JetBrains Mono', 'ui-monospace', 'monospace'],
+          },
+          colors: {
+            page: '#F5F2EB',
+            pagealt: '#EFEBE0',
+            paper: '#FBF9F3',
+            ink: {
+              900: '#08070A',
+              800: '#100D11',
+              700: '#1B1722',
+              500: '#15110D',
+              400: '#3A332C',
+              300: '#6B6259',
+              200: '#A29A8E',
+              100: '#D8D1C4',
+            },
+            gold: {
+              50:  '#FBF4DE',
+              100: '#F5E5B8',
+              200: '#EFD491',
+              300: '#E8B979',
+              400: '#D6A765',
+              500: '#C6A559',
+              600: '#A8853F',
+              700: '#7A6029',
+              800: '#4E3E1B',
+            },
+          },
+        },
+      },
+    }
+  </script>
+  <style>
+    html { color-scheme: light; scroll-behavior: smooth; }
+    body { background: #F5F2EB; color: #15110D; font-family: 'Montserrat', system-ui, sans-serif; -webkit-font-smoothing: antialiased; font-weight: 500; }
+
+    ::selection { background: rgba(232,185,121,0.45); color: #15110D; }
+
+    /* ===== Gold treatments ===== */
+    .text-gold {
+      background: linear-gradient(135deg, #F5D38A 0%, #E8B979 35%, #C6A559 70%, #A8853F 100%);
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+    }
+    .text-gold-soft {
+      background: linear-gradient(135deg, #F5E5B8 0%, #E8B979 50%, #C6A559 100%);
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+    }
+    .bg-gold-grad {
+      background: linear-gradient(135deg, #F5D38A 0%, #E8B979 35%, #D6A765 60%, #C6A559 100%);
+    }
+
+    /* ===== Buttons ===== */
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 0.55rem;
+      padding: 0.95rem 1.7rem; border-radius: 999px;
+      font-weight: 600; letter-spacing: 0.005em; font-size: 0.88rem;
+      transition: transform .35s cubic-bezier(.2,.8,.2,1), box-shadow .35s cubic-bezier(.2,.8,.2,1), opacity .25s, background-color .25s, color .25s, border-color .25s;
+      will-change: transform;
+    }
+    .btn-gold {
+      background: linear-gradient(135deg, #F5D38A 0%, #E8B979 35%, #D6A765 60%, #C6A559 100%);
+      color: #2A220F;
+      box-shadow: 0 14px 36px -10px rgba(198, 165, 89, 0.55), 0 2px 0 rgba(255,232,184,0.6) inset, 0 -1px 0 rgba(122,96,41,0.35) inset;
+      position: relative; overflow: hidden;
+    }
+    .btn-gold::after {
+      content: ''; position: absolute; inset: 0; border-radius: inherit;
+      background: linear-gradient(120deg, transparent 30%, rgba(255,255,255,0.55) 50%, transparent 70%);
+      transform: translateX(-120%); transition: transform .9s cubic-bezier(.2,.8,.2,1);
+      pointer-events: none;
+    }
+    .btn-gold:hover { transform: translateY(-2px); box-shadow: 0 20px 44px -10px rgba(232, 185, 121, 0.7), 0 2px 0 rgba(255,232,184,0.7) inset, 0 -1px 0 rgba(122,96,41,0.35) inset; }
+    .btn-gold:hover::after { transform: translateX(120%); }
+    .btn-gold:active { transform: translateY(0); }
+
+    .btn-ghost-dark {
+      background: rgba(255, 255, 255, 0.04);
+      color: #F2EDE3;
+      border: 1px solid rgba(232, 185, 121, 0.35);
+      backdrop-filter: blur(6px);
+    }
+    .btn-ghost-dark:hover { background: rgba(232, 185, 121, 0.10); border-color: rgba(232,185,121,0.55); transform: translateY(-2px); }
+
+    .btn-ghost-light {
+      background: transparent; color: #15110D;
+      border: 1px solid rgba(21, 17, 13, 0.18);
+    }
+    .btn-ghost-light:hover { background: rgba(21,17,13,0.04); border-color: rgba(21,17,13,0.35); transform: translateY(-2px); }
+
+    /* ===== Editorial display type ===== */
+    .display {
+      font-family: 'Montserrat', system-ui, sans-serif;
+      font-weight: 800;
+      letter-spacing: -0.035em;
+      line-height: 1.02;
+    }
+    .display-italic {
+      font-style: italic; font-weight: 300;
+      letter-spacing: -0.025em;
+    }
+    .h2 {
+      font-family: 'Montserrat', system-ui, sans-serif;
+      font-weight: 700; letter-spacing: -0.028em; line-height: 1.06;
+    }
+
+    /* ===== Eyebrow label ===== */
+    .eyebrow {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem; letter-spacing: 0.22em; text-transform: uppercase;
+      color: #A8853F; font-weight: 500;
+    }
+    .eyebrow-on-dark { color: #E8B979; }
+
+    /* ===== Wordmark ===== */
+    .wordmark { font-weight: 700; letter-spacing: -0.025em; }
+    .wordmark .dot { color: #C6A559; }
+
+    /* ===== Grain overlay ===== */
+    .grain { position: fixed; inset: 0; pointer-events: none; z-index: 60;
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.5 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.45'/></svg>");
+      opacity: 0.06; mix-blend-mode: multiply;
+    }
+    .grain-light { position: absolute; inset: 0; pointer-events: none;
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.5 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/></svg>");
+      opacity: 0.10; mix-blend-mode: overlay;
+    }
+
+    /* ===== Hairline divider ===== */
+    .hairline { border-top: 1px solid rgba(21,17,13,0.10); }
+    .hairline-dark { border-top: 1px solid rgba(232,185,121,0.14); }
+
+    /* ===== Cinematic hero atmosphere ===== */
+    .hero-bg {
+      background:
+        radial-gradient(1100px 700px at 22% 18%, rgba(232,185,121,0.20), transparent 65%),
+        radial-gradient(900px 700px at 90% 80%, rgba(168,133,63,0.20), transparent 60%),
+        radial-gradient(700px 500px at 50% 100%, rgba(40,28,12,0.85), transparent 70%),
+        linear-gradient(180deg, #0A0807 0%, #14100B 55%, #0A0807 100%);
+    }
+    .hero-bg::after {
+      content: ''; position: absolute; inset: 0; pointer-events: none;
+      background:
+        repeating-linear-gradient(180deg, rgba(255,255,255,0.012) 0px, rgba(255,255,255,0.012) 1px, transparent 1px, transparent 3px),
+        radial-gradient(1400px 500px at 50% 0%, rgba(0,0,0,0.55) 0%, transparent 70%),
+        radial-gradient(1200px 400px at 50% 100%, rgba(0,0,0,0.65) 0%, transparent 70%);
+    }
+
+    /* CTA dark section ambient */
+    .cta-dark {
+      background:
+        radial-gradient(900px 600px at 12% 110%, rgba(214, 167, 101, 0.30), transparent 60%),
+        radial-gradient(700px 500px at 92% 0%, rgba(232, 185, 121, 0.16), transparent 60%),
+        radial-gradient(500px 400px at 60% 50%, rgba(74, 41, 14, 0.4), transparent 60%),
+        linear-gradient(180deg, #0E0A07 0%, #08070A 100%);
+    }
+
+    /* ===== Image card / surface ===== */
+    .img-card { border-radius: 24px; overflow: hidden; box-shadow: 0 40px 100px -50px rgba(21,17,13,0.30), 0 6px 18px -10px rgba(198,165,89,0.18); }
+    .img-card-tall { aspect-ratio: 4/5; }
+    .img-card-wide { aspect-ratio: 16/10; }
+    .img-card-square { aspect-ratio: 1/1; }
+
+    .img-overlay {
+      position: absolute; inset: 0; pointer-events: none;
+      background:
+        linear-gradient(180deg, rgba(8,7,7,0.0) 30%, rgba(8,7,7,0.55) 100%),
+        linear-gradient(135deg, rgba(232,185,121,0.10) 0%, transparent 50%);
+      mix-blend-mode: multiply;
+    }
+    .img-overlay-light { background: linear-gradient(180deg, rgba(8,7,7,0.0) 35%, rgba(8,7,7,0.30) 100%); }
+
+    /* Number plates */
+    .num-plate {
+      font-family: 'Montserrat', system-ui, sans-serif;
+      font-weight: 200; font-style: italic; letter-spacing: -0.02em; line-height: 1;
+    }
+
+    /* Megamark footer */
+    .megamark {
+      font-weight: 800; letter-spacing: -0.07em; line-height: 0.82;
+      background: linear-gradient(180deg, #2A220F 0%, #15110D 60%, #0A0807 100%);
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+    }
+    .megamark-gold {
+      background: linear-gradient(180deg, #E8B979 0%, #C6A559 50%, #7A6029 100%);
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+    }
+
+    /* ===== Service card hover ===== */
+    .svc-card { transition: transform .5s cubic-bezier(.2,.8,.2,1), box-shadow .5s cubic-bezier(.2,.8,.2,1); }
+    .svc-card:hover { transform: translateY(-6px); box-shadow: 0 50px 110px -50px rgba(21,17,13,0.35), 0 10px 24px -12px rgba(198,165,89,0.28); }
+    .svc-card .svc-img { transition: transform .9s cubic-bezier(.2,.8,.2,1), filter .6s; }
+    .svc-card:hover .svc-img { transform: scale(1.05); filter: saturate(1.05); }
+    .svc-card .svc-arrow { transition: transform .4s cubic-bezier(.2,.8,.2,1); }
+    .svc-card:hover .svc-arrow { transform: translateX(6px); }
+
+    /* ===== Nav scroll state ===== */
+    .nav-bar { transition: background-color .4s ease, backdrop-filter .4s ease, border-color .4s ease, box-shadow .4s ease, color .4s ease; }
+    .nav-bar.is-scrolled { background-color: rgba(245, 242, 235, 0.85); backdrop-filter: blur(14px); border-bottom-color: rgba(21,17,13,0.08); box-shadow: 0 8px 30px -20px rgba(21,17,13,0.25); }
+
+    /* ===== Form ===== */
+    .field {
+      width: 100%; padding: 0.95rem 1rem 0.95rem 1rem;
+      background: rgba(255,255,255,0.04); border: 1px solid rgba(232,185,121,0.20);
+      border-radius: 14px; color: #F2EDE3; font-size: 0.9rem; font-family: inherit;
+      transition: border-color .25s, background-color .25s, box-shadow .25s;
+    }
+    .field::placeholder { color: rgba(232,222,205,0.45); }
+    .field:hover { border-color: rgba(232,185,121,0.32); background: rgba(255,255,255,0.06); }
+    .field:focus { outline: none; border-color: rgba(232,185,121,0.65); background: rgba(255,255,255,0.08); box-shadow: 0 0 0 4px rgba(232,185,121,0.10); }
+    .field-label {
+      display: block; font-family: 'JetBrains Mono', monospace; font-size: 0.68rem;
+      letter-spacing: 0.22em; text-transform: uppercase; color: rgba(232,185,121,0.85);
+      margin-bottom: 0.5rem;
+    }
+
+    /* Icon container */
+    .ico {
+      width: 40px; height: 40px; border-radius: 12px;
+      display: inline-flex; align-items: center; justify-content: center;
+      background: rgba(232,185,121,0.10);
+      border: 1px solid rgba(232,185,121,0.28);
+      color: #E8B979;
+    }
+    .ico-light {
+      background: rgba(21,17,13,0.04);
+      border: 1px solid rgba(21,17,13,0.10);
+      color: #15110D;
+    }
+
+    /* Vertical brand seal */
+    .seal {
+      writing-mode: vertical-rl; transform: rotate(180deg);
+      font-family: 'JetBrains Mono', monospace; font-size: 0.7rem;
+      letter-spacing: 0.32em; text-transform: uppercase; color: rgba(232,185,121,0.7);
+    }
+
+    /* Focus rings */
+    a:focus-visible, button:focus-visible, .field:focus-visible {
+      outline: 2px solid #C6A559; outline-offset: 3px; border-radius: 6px;
+    }
+
+    /* Reveal on load */
+    .reveal { opacity: 0; transform: translateY(18px); transition: opacity 1s cubic-bezier(.2,.8,.2,1), transform 1s cubic-bezier(.2,.8,.2,1); }
+    .reveal.in { opacity: 1; transform: translateY(0); }
+    .reveal-d1 { transition-delay: .1s; }
+    .reveal-d2 { transition-delay: .2s; }
+    .reveal-d3 { transition-delay: .35s; }
+    .reveal-d4 { transition-delay: .5s; }
+    .reveal-d5 { transition-delay: .65s; }
+
+    /* Marquee tagline */
+    @keyframes scroll-x {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+    .marquee-track { animation: scroll-x 40s linear infinite; }
+
+    /* Small star */
+    .star {
+      width: 14px; height: 14px; display: inline-block;
+      background: linear-gradient(135deg, #F5D38A, #C6A559);
+      clip-path: polygon(50% 0, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+    }
+
+    /* Ambient page glow */
+    .page-glow {
+      position: absolute; inset: 0; pointer-events: none; z-index: 0;
+      background:
+        radial-gradient(900px 700px at 0% 10%, rgba(232,185,121,0.10), transparent 60%),
+        radial-gradient(900px 700px at 100% 90%, rgba(168,133,63,0.06), transparent 65%);
+    }
+  </style>
+</head>
+<body class="relative overflow-x-hidden">
+
+  <!-- Grain overlay -->
+  <div class="grain" aria-hidden="true"></div>
+
+  <!-- ============================================== -->
+  <!-- TOP UTILITY STRIP                              -->
+  <!-- ============================================== -->
+  <div class="relative z-40 bg-ink-900 text-ink-200">
+    <div class="max-w-[1400px] mx-auto px-6 lg:px-10 py-2.5 flex items-center justify-between text-[11px] font-mono tracking-[0.18em] uppercase">
+      <div class="flex items-center gap-6">
+        <span class="hidden md:inline-flex items-center gap-2 text-gold-300">
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 inline-block animate-pulse"></span>
+          All systems normal
+        </span>
+        <span class="hidden md:inline text-ink-100/70">SOC&nbsp;2 · ISO&nbsp;27001 · GDPR</span>
+      </div>
+      <div class="flex items-center gap-5 text-ink-100/70">
+        <a href="#" class="hover:text-gold-300">Docs</a>
+        <a href="#" class="hover:text-gold-300">Status</a>
+        <a href="#" class="hover:text-gold-300 hidden md:inline">EN&nbsp;/&nbsp;US</a>
+        <a href="mailto:hello@tester.io" class="hover:text-gold-300 hidden md:inline">hello@tester.io</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================== -->
+  <!-- NAV                                            -->
+  <!-- ============================================== -->
+  <header id="nav" class="nav-bar sticky top-0 z-50 bg-transparent border-b border-transparent">
+    <div class="max-w-[1400px] mx-auto px-6 lg:px-10 py-5 flex items-center justify-between">
+      <a href="#" class="flex items-center gap-2.5 group">
+        <img src="brand_assets/Tester%20Logo.png" alt="" class="h-9 w-9 object-contain drop-shadow-[0_4px_12px_rgba(198,165,89,0.35)]" />
+        <span class="wordmark text-[1.35rem] text-ink-500">Tester<span class="dot">.</span>io</span>
+      </a>
+
+      <nav class="hidden md:flex items-center gap-9 text-[0.82rem] tracking-[0.04em] text-ink-400 font-medium">
+        <a href="#about" class="hover:text-ink-500 relative group">
+          About
+          <span class="absolute left-0 -bottom-1 h-px w-0 bg-gold-500 group-hover:w-full transition-[width] duration-500"></span>
+        </a>
+        <a href="#services" class="hover:text-ink-500 relative group">
+          Services
+          <span class="absolute left-0 -bottom-1 h-px w-0 bg-gold-500 group-hover:w-full transition-[width] duration-500"></span>
+        </a>
+        <a href="#work" class="hover:text-ink-500 relative group">
+          Work
+          <span class="absolute left-0 -bottom-1 h-px w-0 bg-gold-500 group-hover:w-full transition-[width] duration-500"></span>
+        </a>
+        <a href="#contact" class="hover:text-ink-500 relative group">
+          Contact
+          <span class="absolute left-0 -bottom-1 h-px w-0 bg-gold-500 group-hover:w-full transition-[width] duration-500"></span>
+        </a>
+      </nav>
+
+      <div class="flex items-center gap-3">
+        <a href="#" class="hidden md:inline text-[0.82rem] text-ink-400 hover:text-ink-500 font-medium">Sign in</a>
+        <a href="#contact" class="btn btn-gold text-[0.82rem] py-3 px-5">
+          Get Started
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ============================================== -->
+  <!-- HERO                                           -->
+  <!-- ============================================== -->
+  <section class="relative isolate text-white -mt-[73px] pt-[73px]">
+    <!-- atmospheric background -->
+    <div class="hero-bg absolute inset-0 z-0" aria-hidden="true"></div>
+    <!-- placeholder cinematic image, multiply-blended -->
+    <img
+      src="https://placehold.co/2200x1400/0A0807/0A0807"
+      alt=""
+      aria-hidden="true"
+      class="absolute inset-0 w-full h-full object-cover opacity-30 mix-blend-screen pointer-events-none z-0"
+    />
+    <div class="grain-light z-10" aria-hidden="true"></div>
+
+    <div class="relative z-20 max-w-[1400px] mx-auto px-6 lg:px-10 pt-20 lg:pt-28 pb-24 lg:pb-32 min-h-[88vh] flex flex-col justify-between">
+      <!-- top eyebrow row -->
+      <div class="reveal flex items-center justify-between gap-6 mb-12 lg:mb-20">
+        <div class="flex items-center gap-3 text-gold-300">
+          <span class="h-px w-8 bg-gold-300/50"></span>
+          <span class="eyebrow eyebrow-on-dark">QA · Testing · Confidence</span>
+        </div>
+        <div class="hidden md:flex items-center gap-3 text-[11px] font-mono tracking-[0.22em] uppercase text-ink-100/60">
+          <span>Est.&nbsp;2018</span>
+          <span class="w-1 h-1 rounded-full bg-gold-300/60"></span>
+          <span>Berlin · NYC · Singapore</span>
+        </div>
+      </div>
+
+      <!-- main display heading -->
+      <div class="relative">
+        <h1 class="display reveal reveal-d1 text-white text-[clamp(3.4rem,9vw,9.5rem)] leading-[0.96] max-w-[1100px]">
+          Ship with
+          <span class="block">
+            <span class="display-italic text-gold">confidence.</span>
+          </span>
+        </h1>
+
+        <div class="mt-10 lg:mt-14 grid lg:grid-cols-[1fr_auto] gap-10 lg:gap-16 items-end">
+          <p class="reveal reveal-d2 max-w-[40ch] text-[1.05rem] lg:text-[1.15rem] leading-[1.7] text-ink-100/85 font-light">
+            A premium quality engineering platform for teams who treat every release like a finished product.
+            Automated testing, manual QA, and performance audits — by people who care about the detail.
+          </p>
+
+          <div class="reveal reveal-d3 flex flex-col sm:flex-row gap-3 lg:justify-end">
+            <a href="#contact" class="btn btn-gold">
+              Start a free trial
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </a>
+            <a href="#services" class="btn btn-ghost-dark">
+              See the platform
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- bottom row meta -->
+      <div class="reveal reveal-d4 mt-16 lg:mt-24 flex items-end justify-between gap-6 flex-wrap">
+        <div class="flex items-center gap-6">
+          <div class="flex -space-x-2">
+            <span class="w-9 h-9 rounded-full bg-gold-grad ring-2 ring-ink-900"></span>
+            <span class="w-9 h-9 rounded-full bg-gold-300 ring-2 ring-ink-900"></span>
+            <span class="w-9 h-9 rounded-full bg-gold-500 ring-2 ring-ink-900"></span>
+            <span class="w-9 h-9 rounded-full bg-ink-700 ring-2 ring-ink-900 text-[10px] font-semibold flex items-center justify-center text-gold-200">+9</span>
+          </div>
+          <div class="text-[11px] font-mono tracking-[0.20em] uppercase text-ink-100/65 leading-[1.6]">
+            Trusted by 400+ engineering teams<br/>
+            <span class="text-gold-300 inline-flex items-center gap-1.5 mt-1"><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span> 4.9 / 5 · 280 reviews</span>
+          </div>
+        </div>
+
+        <a href="#stats" class="hidden md:inline-flex items-center gap-3 text-[11px] font-mono tracking-[0.22em] uppercase text-ink-100/55 hover:text-gold-300 transition-colors">
+          Scroll
+          <svg class="animate-bounce" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><path d="m19 12-7 7-7-7"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <!-- side vertical seal -->
+    <div class="hidden lg:flex absolute top-1/2 -translate-y-1/2 right-6 z-30 flex-col items-center gap-4">
+      <span class="seal">Tester.io · MMXXVI</span>
+      <span class="h-16 w-px bg-gold-300/30"></span>
+    </div>
+  </section>
+
+  <!-- ============================================== -->
+  <!-- MARQUEE LOGO STRIP                             -->
+  <!-- ============================================== -->
+  <section class="relative bg-ink-900 text-ink-100/40 py-6 border-t border-b border-gold-700/20 overflow-hidden">
+    <div class="flex whitespace-nowrap">
+      <div class="marquee-track flex shrink-0 items-center gap-16 px-8 text-[1.05rem] font-mono tracking-[0.18em] uppercase">
+        <span class="text-gold-300/60">Helix</span><span>·</span>
+        <span>Northbridge</span><span>·</span>
+        <span class="text-gold-300/60">Aperture Labs</span><span>·</span>
+        <span>Quanta</span><span>·</span>
+        <span class="text-gold-300/60">Mercator</span><span>·</span>
+        <span>Crestwood</span><span>·</span>
+        <span class="text-gold-300/60">Ardent&nbsp;OS</span><span>·</span>
+        <span>Solene</span><span>·</span>
+        <span class="text-gold-300/60">Vela&nbsp;Systems</span><span>·</span>
+        <span>Halcyon</span><span>·</span>
+      </div>
+      <div class="marquee-track flex shrink-0 items-center gap-16 px-8 text-[1.05rem] font-mono tracking-[0.18em] uppercase" aria-hidden="true">
+        <span class="text-gold-300/60">Helix</span><span>·</span>
+        <span>Northbridge</span><span>·</span>
+        <span class="text-gold-300/60">Aperture Labs</span><span>·</span>
+        <span>Quanta</span><span>·</span>
+        <span class="text-gold-300/60">Mercator</span><span>·</span>
+        <span>Crestwood</span><span>·</span>
+        <span class="text-gold-300/60">Ardent&nbsp;OS</span><span>·</span>
+        <span>Solene</span><span>·</span>
+        <span class="text-gold-300/60">Vela&nbsp;Systems</span><span>·</span>
+        <span>Halcyon</span><span>·</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================== -->
+  <!-- STATS STRIP                                    -->
+  <!-- ============================================== -->
+  <section id="stats" class="relative bg-page">
+    <div class="page-glow"></div>
+    <div class="relative max-w-[1400px] mx-auto px-6 lg:px-10 py-24 lg:py-28">
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-y-12">
+        <div class="px-2 lg:px-8 lg:border-r border-ink-500/10">
+          <div class="display text-[clamp(2.6rem,5vw,4.2rem)] text-ink-500">10<span class="text-gold">M+</span></div>
+          <div class="mt-2 text-[0.78rem] font-mono tracking-[0.22em] uppercase text-ink-300">Tests run monthly</div>
+        </div>
+        <div class="px-2 lg:px-8 lg:border-r border-ink-500/10">
+          <div class="display text-[clamp(2.6rem,5vw,4.2rem)] text-ink-500">99.9<span class="text-gold">%</span></div>
+          <div class="mt-2 text-[0.78rem] font-mono tracking-[0.22em] uppercase text-ink-300">Platform uptime</div>
+        </div>
+        <div class="px-2 lg:px-8 lg:border-r border-ink-500/10">
+          <div class="display text-[clamp(2.6rem,5vw,4.2rem)] text-ink-500">400<span class="text-gold">+</span></div>
+          <div class="mt-2 text-[0.78rem] font-mono tracking-[0.22em] uppercase text-ink-300">Teams shipping with us</div>
+        </div>
+        <div class="px-2 lg:px-8">
+          <div class="display text-[clamp(2.6rem,5vw,4.2rem)] text-ink-500">4.9<span class="text-gold">★</span></div>
+          <div class="mt-2 text-[0.78rem] font-mono tracking-[0.22em] uppercase text-ink-300">G2 average rating</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================== -->
+  <!-- ABOUT — two column                             -->
+  <!-- ============================================== -->
+  <section id="about" class="relative bg-page">
+    <div class="page-glow"></div>
+    <div class="relative max-w-[1400px] mx-auto px-6 lg:px-10 pb-24 lg:pb-32">
+      <div class="grid lg:grid-cols-12 gap-10 lg:gap-16 items-center">
+
+        <!-- left: image card stack -->
+        <div class="lg:col-span-6 relative">
+          <div class="img-card img-card-tall relative bg-ink-800">
+            <img src="https://placehold.co/900x1125/14100B/0A0807" alt="A quiet engineering studio" class="w-full h-full object-cover" />
+            <div class="img-overlay"></div>
+            <!-- ambient gold corner -->
+            <div class="absolute inset-0 pointer-events-none" style="background: radial-gradient(400px 300px at 80% 20%, rgba(232,185,121,0.20), transparent 60%);"></div>
+            <!-- caption -->
+            <div class="absolute left-6 right-6 bottom-6 flex items-end justify-between gap-4 text-white">
+              <div>
+                <div class="eyebrow eyebrow-on-dark mb-1">Studio · MMXXVI</div>
+                <div class="display text-[1.4rem] leading-tight">A workshop, not a factory.</div>
+              </div>
+              <span class="text-[11px] font-mono tracking-[0.18em] uppercase text-gold-300">01 / 04</span>
+            </div>
+          </div>
+
+          <!-- floating smaller card -->
+          <div class="hidden lg:block absolute -bottom-12 -right-10 w-[240px] img-card bg-paper p-5">
+            <div class="eyebrow mb-3">Pass rate</div>
+            <div class="display text-[2.4rem] text-ink-500 leading-none">98.7<span class="text-gold">%</span></div>
+            <div class="mt-2 text-[12px] text-ink-300 leading-snug">Last 30 days, all customer suites.</div>
+            <div class="mt-4 flex items-end gap-1 h-10">
+              <div class="w-1.5 bg-gold-300/40 rounded-sm" style="height: 40%"></div>
+              <div class="w-1.5 bg-gold-300/55 rounded-sm" style="height: 58%"></div>
+              <div class="w-1.5 bg-gold-300/70 rounded-sm" style="height: 46%"></div>
+              <div class="w-1.5 bg-gold-300/80 rounded-sm" style="height: 70%"></div>
+              <div class="w-1.5 bg-gold-grad rounded-sm" style="height: 82%"></div>
+              <div class="w-1.5 bg-gold-300/80 rounded-sm" style="height: 64%"></div>
+              <div class="w-1.5 bg-gold-grad rounded-sm" style="height: 90%"></div>
+              <div class="w-1.5 bg-gold-300/70 rounded-sm" style="height: 55%"></div>
+              <div class="w-1.5 bg-gold-grad rounded-sm" style="height: 95%"></div>
+              <div class="w-1.5 bg-gold-300/80 rounded-sm" style="height: 72%"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- right: copy -->
+        <div class="lg:col-span-6 lg:pl-8">
+          <div class="eyebrow mb-5 flex items-center gap-3">
+            <span class="h-px w-8 bg-gold-500/60"></span>
+            About Tester.io
+          </div>
+          <h2 class="h2 text-[clamp(2.2rem,4.4vw,3.8rem)] text-ink-500">
+            Quality engineering,
+            <span class="display-italic text-gold">refined.</span>
+          </h2>
+          <div class="mt-7 space-y-5 text-ink-400 text-[1.02rem] leading-[1.8] max-w-[55ch]">
+            <p>
+              We founded Tester.io in 2018 because we were tired of QA being treated like an afterthought —
+              the rushed handoff between engineering and release. We rebuilt the discipline from first principles:
+              automated where it matters, manual where it counts, and observable everywhere.
+            </p>
+            <p>
+              Today we work with founder-led startups and Fortune 500 platform teams who share one belief —
+              that <em class="text-ink-500 font-medium">how a product feels in production</em> is a feature, not an accident.
+              Every test we author is a small promise to your user.
+            </p>
+          </div>
+
+          <div class="mt-10 grid grid-cols-2 gap-x-6 gap-y-4 max-w-[40rem]">
+            <div class="flex items-start gap-3">
+              <span class="ico-light ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></span>
+              <div>
+                <div class="text-[0.92rem] font-semibold text-ink-500">SOC 2 Type II</div>
+                <div class="text-[0.82rem] text-ink-300 leading-snug">Audited annually since 2021.</div>
+              </div>
+            </div>
+            <div class="flex items-start gap-3">
+              <span class="ico-light ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></span>
+              <div>
+                <div class="text-[0.92rem] font-semibold text-ink-500">24 / 7 coverage</div>
+                <div class="text-[0.82rem] text-ink-300 leading-snug">Follow-the-sun across 3 regions.</div>
+              </div>
+            </div>
+            <div class="flex items-start gap-3">
+              <span class="ico-light ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 7v6c0 5 3.5 9.4 8 10 4.5-.6 8-5 8-10V7l-8-5z"/></svg></span>
+              <div>
+                <div class="text-[0.92rem] font-semibold text-ink-500">Zero-data-retention</div>
+                <div class="text-[0.82rem] text-ink-300 leading-snug">Tests run, prod data goes home.</div>
+              </div>
+            </div>
+            <div class="flex items-start gap-3">
+              <span class="ico-light ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><path d="M20 8v6"/><path d="M23 11h-6"/></svg></span>
+              <div>
+                <div class="text-[0.92rem] font-semibold text-ink-500">Senior engineers</div>
+                <div class="text-[0.82rem] text-ink-300 leading-snug">8+ yrs avg. across the team.</div>
+              </div>
+            </div>
+          </div>
+
+          <a href="#contact" class="mt-10 inline-flex items-center gap-2.5 text-[0.92rem] font-semibold text-ink-500 group">
+            <span class="border-b border-gold-500 pb-1 group-hover:border-ink-500 transition-colors">Read our story</span>
+            <svg class="group-hover:translate-x-1 transition-transform" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================== -->
+  <!-- SERVICES — 3 highlight cards                   -->
+  <!-- ============================================== -->
+  <section id="services" class="relative bg-pagealt">
+    <div class="page-glow"></div>
+    <div class="relative max-w-[1400px] mx-auto px-6 lg:px-10 py-24 lg:py-32">
+
+      <div class="flex items-end justify-between gap-10 flex-wrap mb-14 lg:mb-20">
+        <div class="max-w-[44rem]">
+          <div class="eyebrow mb-5 flex items-center gap-3">
+            <span class="h-px w-8 bg-gold-500/60"></span>
+            What we do
+          </div>
+          <h2 class="h2 text-[clamp(2.2rem,4.6vw,4rem)] text-ink-500">
+            Three pillars of
+            <span class="display-italic text-gold">release confidence.</span>
+          </h2>
+        </div>
+        <p class="max-w-[28rem] text-ink-400 leading-[1.75] text-[1rem]">
+          A complete quality discipline, delivered as one team. Pick what you need today —
+          add the rest when you're ready to make QA a real competitive advantage.
+        </p>
+      </div>
+
+      <!-- 3-card grid -->
+      <div id="work" class="grid md:grid-cols-3 gap-6 lg:gap-8">
+
+        <!-- Card 1 -->
+        <article class="svc-card relative bg-paper rounded-[24px] overflow-hidden border border-ink-500/[0.06]">
+          <div class="relative img-card-tall overflow-hidden bg-ink-800">
+            <img src="https://placehold.co/900x1100/1A1410/0A0807" alt="" class="svc-img absolute inset-0 w-full h-full object-cover" />
+            <div class="img-overlay"></div>
+            <div class="absolute top-5 left-5 right-5 flex items-start justify-between text-white">
+              <span class="eyebrow eyebrow-on-dark">Pillar 01</span>
+              <span class="px-2.5 py-1 rounded-full text-[10px] font-mono uppercase tracking-[0.18em] bg-black/30 backdrop-blur border border-gold-300/30 text-gold-300">Code-first</span>
+            </div>
+            <div class="absolute left-5 bottom-5 text-white">
+              <span class="num-plate text-[5rem] text-gold leading-none">01</span>
+            </div>
+          </div>
+          <div class="p-7">
+            <h3 class="display text-[1.65rem] text-ink-500 leading-tight">Automated Testing</h3>
+            <p class="mt-3 text-[0.95rem] text-ink-400 leading-[1.7]">
+              End-to-end suites in Playwright, Cypress, or your framework of choice. Parallelized,
+              flake-resistant, and authored by humans who know the difference between coverage and confidence.
+            </p>
+            <ul class="mt-5 space-y-2 text-[0.85rem] text-ink-300">
+              <li class="flex items-center gap-2.5"><span class="w-1 h-1 rounded-full bg-gold-500"></span> CI-native, &lt; 8 min full runs</li>
+              <li class="flex items-center gap-2.5"><span class="w-1 h-1 rounded-full bg-gold-500"></span> Visual + accessibility coverage</li>
+              <li class="flex items-center gap-2.5"><span class="w-1 h-1 rounded-full bg-gold-500"></span> Flake budget &lt; 0.5%</li>
+            </ul>
+            <a href="#contact" class="mt-7 inline-flex items-center gap-2 text-[0.85rem] font-semibold text-ink-500">
+              <span class="border-b border-gold-500 pb-0.5">Explore Automated</span>
+              <svg class="svc-arrow" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </a>
+          </div>
+        </article>
+
+        <!-- Card 2 -->
+        <article class="svc-card relative bg-paper rounded-[24px] overflow-hidden border border-ink-500/[0.06]">
+          <div class="relative img-card-tall overflow-hidden bg-ink-800">
+            <img src="https://placehold.co/900x1100/1B1722/0A0807" alt="" class="svc-img absolute inset-0 w-full h-full object-cover" />
+            <div class="img-overlay"></div>
+            <div class="absolute top-5 left-5 right-5 flex items-start justify-between text-white">
+              <span class="eyebrow eyebrow-on-dark">Pillar 02</span>
+              <span class="px-2.5 py-1 rounded-full text-[10px] font-mono uppercase tracking-[0.18em] bg-black/30 backdrop-blur border border-gold-300/30 text-gold-300">Human-led</span>
+            </div>
+            <div class="absolute left-5 bottom-5 text-white">
+              <span class="num-plate text-[5rem] text-gold leading-none">02</span>
+            </div>
+          </div>
+          <div class="p-7">
+            <h3 class="display text-[1.65rem] text-ink-500 leading-tight">Manual QA</h3>
+            <p class="mt-3 text-[0.95rem] text-ink-400 leading-[1.7]">
+              Exploratory testers who think like your most demanding customer. Cross-device coverage,
+              regression cycles, and the kind of nuanced feedback automation will never give you.
+            </p>
+            <ul class="mt-5 space-y-2 text-[0.85rem] text-ink-300">
+              <li class="flex items-center gap-2.5"><span class="w-1 h-1 rounded-full bg-gold-500"></span> 80+ devices · 14 locales</li>
+              <li class="flex items-center gap-2.5"><span class="w-1 h-1 rounded-full bg-gold-500"></span> Scripted &amp; exploratory passes</li>
+              <li class="flex items-center gap-2.5"><span class="w-1 h-1 rounded-full bg-gold-500"></span> Loom-first bug reports</li>
+            </ul>
+            <a href="#contact" class="mt-7 inline-flex items-center gap-2 text-[0.85rem] font-semibold text-ink-500">
+              <span class="border-b border-gold-500 pb-0.5">Explore Manual</span>
+              <svg class="svc-arrow" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </a>
+          </div>
+        </article>
+
+        <!-- Card 3 -->
+        <article class="svc-card relative bg-paper rounded-[24px] overflow-hidden border border-ink-500/[0.06]">
+          <div class="relative img-card-tall overflow-hidden bg-ink-800">
+            <img src="https://placehold.co/900x1100/100D11/0A0807" alt="" class="svc-img absolute inset-0 w-full h-full object-cover" />
+            <div class="img-overlay"></div>
+            <div class="absolute top-5 left-5 right-5 flex items-start justify-between text-white">
+              <span class="eyebrow eyebrow-on-dark">Pillar 03</span>
+              <span class="px-2.5 py-1 rounded-full text-[10px] font-mono uppercase tracking-[0.18em] bg-black/30 backdrop-blur border border-gold-300/30 text-gold-300">Diagnostic</span>
+            </div>
+            <div class="absolute left-5 bottom-5 text-white">
+              <span class="num-plate text-[5rem] text-gold leading-none">03</span>
+            </div>
+          </div>
+          <div class="p-7">
+            <h3 class="display text-[1.65rem] text-ink-500 leading-tight">Performance Audits</h3>
+            <p class="mt-3 text-[0.95rem] text-ink-400 leading-[1.7]">
+              Deep-dive load, stress, and Core Web Vitals audits with prioritized remediation paths.
+              We don't just hand you a Lighthouse score — we hand you a release plan.
+            </p>
+            <ul class="mt-5 space-y-2 text-[0.85rem] text-ink-300">
+              <li class="flex items-center gap-2.5"><span class="w-1 h-1 rounded-full bg-gold-500"></span> p95 latency budgets</li>
+              <li class="flex items-center gap-2.5"><span class="w-1 h-1 rounded-full bg-gold-500"></span> k6 + custom load profiles</li>
+              <li class="flex items-center gap-2.5"><span class="w-1 h-1 rounded-full bg-gold-500"></span> CWV regression alerts</li>
+            </ul>
+            <a href="#contact" class="mt-7 inline-flex items-center gap-2 text-[0.85rem] font-semibold text-ink-500">
+              <span class="border-b border-gold-500 pb-0.5">Explore Performance</span>
+              <svg class="svc-arrow" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </a>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================== -->
+  <!-- PULL QUOTE                                     -->
+  <!-- ============================================== -->
+  <section class="relative bg-page">
+    <div class="max-w-[1100px] mx-auto px-6 lg:px-10 py-24 lg:py-32 text-center">
+      <span class="display text-gold text-[5rem] leading-none block mb-4 select-none">&ldquo;</span>
+      <blockquote class="display text-[clamp(1.5rem,3vw,2.6rem)] leading-[1.25] text-ink-500 max-w-[40ch] mx-auto">
+        Tester.io is the only QA partner that has ever made us
+        <span class="display-italic text-gold">faster.</span>
+        Our release cycle dropped from two weeks to two days.
+      </blockquote>
+      <div class="mt-10 inline-flex items-center gap-4">
+        <span class="w-11 h-11 rounded-full bg-gold-grad ring-2 ring-page"></span>
+        <div class="text-left">
+          <div class="text-[0.92rem] font-semibold text-ink-500">Iris Halloway</div>
+          <div class="text-[0.78rem] font-mono tracking-[0.18em] uppercase text-ink-300">VP Engineering · Helix</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================== -->
+  <!-- CONTACT — dark CTA section                     -->
+  <!-- ============================================== -->
+  <section id="contact" class="relative cta-dark text-white overflow-hidden">
+    <!-- placeholder cinematic backdrop -->
+    <img src="https://placehold.co/2200x1400/0A0807/0A0807" alt="" aria-hidden="true" class="absolute inset-0 w-full h-full object-cover opacity-25 mix-blend-screen pointer-events-none" />
+    <div class="grain-light" aria-hidden="true"></div>
+
+    <div class="relative max-w-[1400px] mx-auto px-6 lg:px-10 py-24 lg:py-32">
+      <div class="grid lg:grid-cols-12 gap-12 lg:gap-20">
+
+        <!-- left copy -->
+        <div class="lg:col-span-6">
+          <div class="eyebrow eyebrow-on-dark mb-5 flex items-center gap-3">
+            <span class="h-px w-8 bg-gold-300/60"></span>
+            Engage with us
+          </div>
+          <h2 class="display text-white text-[clamp(2.4rem,5vw,4.6rem)] leading-[1.02]">
+            Let's ship something
+            <span class="display-italic text-gold">solid.</span>
+          </h2>
+          <p class="mt-7 max-w-[42ch] text-ink-100/75 text-[1.02rem] leading-[1.75]">
+            Tell us what you're building and where it hurts. We'll write back within one business day
+            with a 30-minute plan — not a deck, not a discovery call.
+          </p>
+
+          <!-- contact rows -->
+          <div class="mt-10 space-y-5 max-w-[26rem]">
+            <a href="mailto:hello@tester.io" class="flex items-center justify-between gap-4 py-4 border-b border-gold-300/15 group">
+              <span class="flex items-center gap-3">
+                <span class="ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><path d="m22 6-10 7L2 6"/></svg></span>
+                <span>
+                  <span class="block text-[11px] font-mono tracking-[0.22em] uppercase text-gold-300/80">Email</span>
+                  <span class="block text-[0.98rem] text-white">hello@tester.io</span>
+                </span>
+              </span>
+              <svg class="opacity-50 group-hover:opacity-100 group-hover:translate-x-1 transition" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg>
+            </a>
+            <a href="#" class="flex items-center justify-between gap-4 py-4 border-b border-gold-300/15 group">
+              <span class="flex items-center gap-3">
+                <span class="ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span>
+                <span>
+                  <span class="block text-[11px] font-mono tracking-[0.22em] uppercase text-gold-300/80">Phone</span>
+                  <span class="block text-[0.98rem] text-white">+1 (415) 555 — 0142</span>
+                </span>
+              </span>
+              <svg class="opacity-50 group-hover:opacity-100 group-hover:translate-x-1 transition" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg>
+            </a>
+            <a href="#" class="flex items-center justify-between gap-4 py-4 border-b border-gold-300/15 group">
+              <span class="flex items-center gap-3">
+                <span class="ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></span>
+                <span>
+                  <span class="block text-[11px] font-mono tracking-[0.22em] uppercase text-gold-300/80">Studio</span>
+                  <span class="block text-[0.98rem] text-white">14 Prinzessinnenstraße, Berlin</span>
+                </span>
+              </span>
+              <svg class="opacity-50 group-hover:opacity-100 group-hover:translate-x-1 transition" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- right form -->
+        <div class="lg:col-span-6 relative">
+          <div class="relative rounded-[28px] p-8 lg:p-10" style="background: linear-gradient(180deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.015) 100%); border: 1px solid rgba(232,185,121,0.18); backdrop-filter: blur(8px);">
+            <div class="absolute -top-px left-10 right-10 h-px bg-gradient-to-r from-transparent via-gold-300/40 to-transparent"></div>
+
+            <form action="#" method="post" class="space-y-6" novalidate>
+              <div class="grid sm:grid-cols-2 gap-5">
+                <div>
+                  <label class="field-label" for="name">Your name</label>
+                  <input id="name" name="name" type="text" placeholder="Iris Halloway" class="field" autocomplete="name" />
+                </div>
+                <div>
+                  <label class="field-label" for="company">Company</label>
+                  <input id="company" name="company" type="text" placeholder="Helix" class="field" autocomplete="organization" />
+                </div>
+              </div>
+
+              <div>
+                <label class="field-label" for="email">Work email</label>
+                <input id="email" name="email" type="email" placeholder="iris@helix.io" class="field" autocomplete="email" required />
+              </div>
+
+              <div>
+                <label class="field-label" for="interest">I'm interested in</label>
+                <select id="interest" name="interest" class="field appearance-none cursor-pointer" style="background-image: url(&quot;data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23E8B979' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='m6 9 6 6 6-6'/></svg>&quot;); background-repeat: no-repeat; background-position: right 1rem center;">
+                  <option style="color:#15110D">Automated Testing</option>
+                  <option style="color:#15110D">Manual QA</option>
+                  <option style="color:#15110D">Performance Audits</option>
+                  <option style="color:#15110D">A full QA partnership</option>
+                </select>
+              </div>
+
+              <div>
+                <label class="field-label" for="message">What hurts?</label>
+                <textarea id="message" name="message" rows="4" placeholder="A short paragraph is plenty." class="field resize-none"></textarea>
+              </div>
+
+              <div class="flex items-center justify-between gap-4 pt-2">
+                <span class="text-[0.76rem] font-mono tracking-[0.16em] uppercase text-ink-100/55">
+                  Reply within 1 business day.
+                </span>
+                <button type="submit" class="btn btn-gold">
+                  Send brief
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                </button>
+              </div>
+            </form>
+          </div>
+
+          <!-- social row -->
+          <div class="mt-8 flex items-center justify-between gap-6 text-ink-100/65 text-[0.78rem] font-mono tracking-[0.18em] uppercase">
+            <span class="flex items-center gap-2">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+              Available for new engagements — Q3 2026
+            </span>
+            <div class="flex items-center gap-2">
+              <a href="#" aria-label="LinkedIn" class="ico hover:bg-gold-300/20 transition-colors"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14zM8.34 18V9.99H5.67V18h2.67zM7 8.85a1.55 1.55 0 1 0 0-3.1 1.55 1.55 0 0 0 0 3.1zM18 18v-4.4c0-2.36-1.27-3.46-2.97-3.46-1.37 0-1.98.75-2.32 1.28V9.99H10.04c.04.75 0 8.01 0 8.01h2.67v-4.47c0-.24.02-.48.09-.65.19-.48.63-.97 1.37-.97.97 0 1.36.73 1.36 1.81V18H18z"/></svg></a>
+              <a href="#" aria-label="GitHub" class="ico hover:bg-gold-300/20 transition-colors"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.89 1.53 2.34 1.09 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.56-1.11-4.56-4.94 0-1.09.39-1.99 1.03-2.69-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.02a9.56 9.56 0 0 1 5 0c1.91-1.29 2.75-1.02 2.75-1.02.55 1.38.2 2.4.1 2.65.64.7 1.03 1.6 1.03 2.69 0 3.84-2.34 4.69-4.57 4.94.36.31.68.92.68 1.86v2.76c0 .27.18.58.69.48A10 10 0 0 0 12 2z"/></svg></a>
+              <a href="#" aria-label="X / Twitter" class="ico hover:bg-gold-300/20 transition-colors"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231L18.244 2.25zm-1.161 17.52h1.833L7.084 4.126H5.117l11.966 15.644z"/></svg></a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================== -->
+  <!-- FOOTER                                         -->
+  <!-- ============================================== -->
+  <footer class="relative bg-page overflow-hidden">
+    <div class="max-w-[1400px] mx-auto px-6 lg:px-10 pt-20 pb-10">
+
+      <!-- top: 3-col link grid + newsletter -->
+      <div class="grid lg:grid-cols-12 gap-12 pb-16">
+        <div class="lg:col-span-4">
+          <a href="#" class="inline-flex items-center gap-2.5">
+            <img src="brand_assets/Tester%20Logo.png" alt="" class="h-10 w-10 object-contain" />
+            <span class="wordmark text-[1.6rem] text-ink-500">Tester<span class="dot">.</span>io</span>
+          </a>
+          <p class="mt-5 text-[0.92rem] text-ink-400 leading-[1.7] max-w-[34ch]">
+            A premium quality engineering studio for teams who ship like they mean it.
+          </p>
+          <form action="#" class="mt-7 flex items-center gap-2 max-w-[22rem]">
+            <input type="email" placeholder="Your work email" class="flex-1 px-4 py-3 rounded-full bg-paper border border-ink-500/10 text-[0.88rem] focus:outline-none focus:border-gold-500/60 focus:ring-4 focus:ring-gold-500/10 transition" />
+            <button class="btn btn-gold !py-3 !px-5 text-[0.82rem]" type="submit">Subscribe</button>
+          </form>
+          <div class="mt-3 text-[0.74rem] font-mono tracking-[0.16em] uppercase text-ink-300">Monthly · No spam · 4,200 readers</div>
+        </div>
+
+        <div class="lg:col-span-2 lg:col-start-6">
+          <div class="eyebrow mb-5">Product</div>
+          <ul class="space-y-3 text-[0.92rem] text-ink-400">
+            <li><a href="#services" class="hover:text-ink-500">Automated</a></li>
+            <li><a href="#services" class="hover:text-ink-500">Manual QA</a></li>
+            <li><a href="#services" class="hover:text-ink-500">Performance</a></li>
+            <li><a href="#" class="hover:text-ink-500">Integrations</a></li>
+            <li><a href="#" class="hover:text-ink-500">Changelog</a></li>
+          </ul>
+        </div>
+
+        <div class="lg:col-span-2">
+          <div class="eyebrow mb-5">Company</div>
+          <ul class="space-y-3 text-[0.92rem] text-ink-400">
+            <li><a href="#about" class="hover:text-ink-500">About</a></li>
+            <li><a href="#work" class="hover:text-ink-500">Case studies</a></li>
+            <li><a href="#" class="hover:text-ink-500">Manifesto</a></li>
+            <li><a href="#" class="hover:text-ink-500">Careers</a></li>
+            <li><a href="#" class="hover:text-ink-500">Press</a></li>
+          </ul>
+        </div>
+
+        <div class="lg:col-span-2">
+          <div class="eyebrow mb-5">Legal</div>
+          <ul class="space-y-3 text-[0.92rem] text-ink-400">
+            <li><a href="#" class="hover:text-ink-500">Privacy</a></li>
+            <li><a href="#" class="hover:text-ink-500">Terms</a></li>
+            <li><a href="#" class="hover:text-ink-500">Security</a></li>
+            <li><a href="#" class="hover:text-ink-500">Trust center</a></li>
+            <li><a href="#" class="hover:text-ink-500">DPA</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- divider -->
+      <div class="hairline"></div>
+
+      <!-- copyright + meta -->
+      <div class="py-7 flex flex-wrap items-center justify-between gap-4 text-[0.78rem] font-mono tracking-[0.16em] uppercase text-ink-300">
+        <span>© 2026 Tester.io GmbH · All rights reserved.</span>
+        <span>Crafted in Berlin · Hosted in Frankfurt</span>
+      </div>
+
+      <!-- megamark wordmark -->
+      <div class="relative pt-2 pb-2 select-none">
+        <h2 class="megamark text-[clamp(5rem,17vw,16rem)]">
+          Tester<span class="megamark-gold">.io</span>
+        </h2>
+      </div>
+
+    </div>
+
+    <!-- ambient bottom glow -->
+    <div class="absolute inset-x-0 bottom-0 h-32 pointer-events-none" style="background: radial-gradient(800px 200px at 50% 100%, rgba(198,165,89,0.10), transparent 70%);"></div>
+  </footer>
+
+  <script>
+    // Reveal-on-load animations
+    (function () {
+      const els = document.querySelectorAll('.reveal');
+      // initial paint
+      requestAnimationFrame(() => {
+        els.forEach(el => el.classList.add('in'));
+      });
+      // also reveal on scroll for any below-the-fold ones
+      const io = new IntersectionObserver(entries => {
+        entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
+      }, { threshold: 0.12 });
+      els.forEach(el => io.observe(el));
+    })();
+
+    // Nav scroll state
+    (function () {
+      const nav = document.getElementById('nav');
+      let last = false;
+      const onScroll = () => {
+        const scrolled = window.scrollY > 24;
+        if (scrolled !== last) {
+          nav.classList.toggle('is-scrolled', scrolled);
+          last = scrolled;
+        }
+      };
+      window.addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
+    })();
+  </script>
+</body>
+</html>
