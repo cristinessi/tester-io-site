@@ -289,9 +289,26 @@
         radial-gradient(900px 700px at 0% 10%, rgba(232,185,121,0.10), transparent 60%),
         radial-gradient(900px 700px at 100% 90%, rgba(168,133,63,0.06), transparent 65%);
     }
+
+    /* ===== Reduced motion ===== */
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        animation-delay: 0ms !important;
+        transition-duration: 0.01ms !important;
+        transition-delay: 0ms !important;
+      }
+      .marquee-track { animation: none !important; }
+      .reveal { opacity: 1 !important; transform: none !important; }
+    }
   </style>
 </head>
 <body class="relative overflow-x-hidden">
+
+  <!-- Skip to content -->
+  <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[100] focus:px-4 focus:py-2 focus:rounded-md focus:bg-ink-900 focus:text-gold-300 focus:text-sm focus:font-semibold focus:outline focus:outline-2 focus:outline-gold-500">Skip to content</a>
 
   <!-- Grain overlay -->
   <div class="grain" aria-hidden="true"></div>
@@ -309,10 +326,10 @@
         <span class="hidden md:inline text-ink-100/70">SOC&nbsp;2 · ISO&nbsp;27001 · GDPR</span>
       </div>
       <div class="flex items-center gap-5 text-ink-100/70">
-        <a href="#" class="hover:text-gold-300">Docs</a>
-        <a href="#" class="hover:text-gold-300">Status</a>
-        <a href="#" class="hover:text-gold-300 hidden md:inline">EN&nbsp;/&nbsp;US</a>
-        <a href="mailto:hello@tester.io" class="hover:text-gold-300 hidden md:inline">hello@tester.io</a>
+        <a href="#" class="inline-block py-1.5 hover:text-gold-300">Docs</a>
+        <a href="#" class="inline-block py-1.5 hover:text-gold-300">Status</a>
+        <a href="#" class="inline-block py-1.5 hover:text-gold-300 hidden md:inline">EN&nbsp;/&nbsp;US</a>
+        <a href="mailto:hello@tester.io" class="inline-block py-1.5 hover:text-gold-300 hidden md:inline">hello@tester.io</a>
       </div>
     </div>
   </div>
@@ -323,7 +340,7 @@
   <header id="nav" class="nav-bar sticky top-0 z-50 bg-transparent border-b border-transparent">
     <div class="max-w-[1400px] mx-auto px-6 lg:px-10 py-5 flex items-center justify-between">
       <a href="#" class="flex items-center gap-2.5 group">
-        <img src="brand_assets/tester-logo.png" alt="" class="h-9 w-9 object-contain drop-shadow-[0_4px_12px_rgba(198,165,89,0.35)]" />
+        <img src="brand_assets/tester-logo.png" alt="Tester.io home" class="h-9 w-9 object-contain drop-shadow-[0_4px_12px_rgba(198,165,89,0.35)]" />
         <span class="wordmark text-[1.35rem] text-ink-500">Tester<span class="dot">.</span>io</span>
       </a>
 
@@ -359,7 +376,7 @@
   <!-- ============================================== -->
   <!-- HERO                                           -->
   <!-- ============================================== -->
-  <section class="relative isolate text-white -mt-[73px] pt-[73px]">
+  <section id="main" class="relative isolate text-white -mt-[73px] pt-[73px]">
     <!-- atmospheric background -->
     <div class="hero-bg absolute inset-0 z-0" aria-hidden="true"></div>
     <img
@@ -370,7 +387,7 @@
     />
     <div class="grain-light z-10" aria-hidden="true"></div>
 
-    <div class="relative z-20 max-w-[1400px] mx-auto px-6 lg:px-10 pt-20 lg:pt-28 pb-24 lg:pb-32 min-h-[88vh] flex flex-col justify-between">
+    <div class="relative z-20 max-w-[1400px] mx-auto px-6 lg:px-10 pt-20 lg:pt-28 pb-24 lg:pb-32 min-h-[88dvh] flex flex-col justify-between">
       <!-- top eyebrow row -->
       <div class="reveal flex items-center justify-between gap-6 mb-12 lg:mb-20">
         <div class="flex items-center gap-3 text-gold-300">
@@ -822,7 +839,7 @@
               </span>
               <svg class="opacity-50 group-hover:opacity-100 group-hover:translate-x-1 transition" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg>
             </a>
-            <a href="#" class="flex items-center justify-between gap-4 py-4 border-b border-gold-300/15 group">
+            <a href="tel:+14155550142" class="flex items-center justify-between gap-4 py-4 border-b border-gold-300/15 group">
               <span class="flex items-center gap-3">
                 <span class="ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span>
                 <span>
@@ -832,7 +849,7 @@
               </span>
               <svg class="opacity-50 group-hover:opacity-100 group-hover:translate-x-1 transition" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg>
             </a>
-            <a href="#" class="flex items-center justify-between gap-4 py-4 border-b border-gold-300/15 group">
+            <a href="https://www.google.com/maps/search/?api=1&amp;query=14+Prinzessinnenstra%C3%9Fe%2C+Berlin" target="_blank" rel="noopener noreferrer" class="flex items-center justify-between gap-4 py-4 border-b border-gold-300/15 group">
               <span class="flex items-center gap-3">
                 <span class="ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></span>
                 <span>
@@ -850,7 +867,7 @@
           <div class="relative rounded-[28px] p-8 lg:p-10" style="background: linear-gradient(180deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.015) 100%); border: 1px solid rgba(232,185,121,0.18); backdrop-filter: blur(8px);">
             <div class="absolute -top-px left-10 right-10 h-px bg-gradient-to-r from-transparent via-gold-300/40 to-transparent"></div>
 
-            <form action="#" method="post" class="space-y-6" novalidate>
+            <form action="#" method="post" class="space-y-6">
               <div class="grid sm:grid-cols-2 gap-5">
                 <div>
                   <label class="field-label" for="name">Your name</label>
@@ -922,7 +939,7 @@
       <div class="grid lg:grid-cols-12 gap-12 pb-16">
         <div class="lg:col-span-4">
           <a href="#" class="inline-flex items-center gap-2.5">
-            <img src="brand_assets/tester-logo.png" alt="" class="h-10 w-10 object-contain" />
+            <img src="brand_assets/tester-logo.png" alt="Tester.io home" class="h-10 w-10 object-contain" />
             <span class="wordmark text-[1.6rem] text-ink-500">Tester<span class="dot">.</span>io</span>
           </a>
           <p class="mt-5 text-[0.92rem] text-ink-400 leading-[1.7] max-w-[34ch]">
@@ -938,33 +955,33 @@
         <div class="lg:col-span-2 lg:col-start-6">
           <div class="eyebrow mb-5">Product</div>
           <ul class="space-y-3 text-[0.92rem] text-ink-400">
-            <li><a href="#services" class="hover:text-ink-500">Automated</a></li>
-            <li><a href="#services" class="hover:text-ink-500">Manual QA</a></li>
-            <li><a href="#services" class="hover:text-ink-500">Performance</a></li>
-            <li><a href="#" class="hover:text-ink-500">Integrations</a></li>
-            <li><a href="#" class="hover:text-ink-500">Changelog</a></li>
+            <li><a href="#services" class="inline-block py-1.5 hover:text-ink-500">Automated</a></li>
+            <li><a href="#services" class="inline-block py-1.5 hover:text-ink-500">Manual QA</a></li>
+            <li><a href="#services" class="inline-block py-1.5 hover:text-ink-500">Performance</a></li>
+            <li><a href="#" class="inline-block py-1.5 hover:text-ink-500">Integrations</a></li>
+            <li><a href="#" class="inline-block py-1.5 hover:text-ink-500">Changelog</a></li>
           </ul>
         </div>
 
         <div class="lg:col-span-2">
           <div class="eyebrow mb-5">Company</div>
           <ul class="space-y-3 text-[0.92rem] text-ink-400">
-            <li><a href="#about" class="hover:text-ink-500">About</a></li>
-            <li><a href="#work" class="hover:text-ink-500">Case studies</a></li>
-            <li><a href="#" class="hover:text-ink-500">Manifesto</a></li>
-            <li><a href="#" class="hover:text-ink-500">Careers</a></li>
-            <li><a href="#" class="hover:text-ink-500">Press</a></li>
+            <li><a href="#about" class="inline-block py-1.5 hover:text-ink-500">About</a></li>
+            <li><a href="#work" class="inline-block py-1.5 hover:text-ink-500">Case studies</a></li>
+            <li><a href="#" class="inline-block py-1.5 hover:text-ink-500">Manifesto</a></li>
+            <li><a href="#" class="inline-block py-1.5 hover:text-ink-500">Careers</a></li>
+            <li><a href="#" class="inline-block py-1.5 hover:text-ink-500">Press</a></li>
           </ul>
         </div>
 
         <div class="lg:col-span-2">
           <div class="eyebrow mb-5">Legal</div>
           <ul class="space-y-3 text-[0.92rem] text-ink-400">
-            <li><a href="#" class="hover:text-ink-500">Privacy</a></li>
-            <li><a href="#" class="hover:text-ink-500">Terms</a></li>
-            <li><a href="#" class="hover:text-ink-500">Security</a></li>
-            <li><a href="#" class="hover:text-ink-500">Trust center</a></li>
-            <li><a href="#" class="hover:text-ink-500">DPA</a></li>
+            <li><a href="#" class="inline-block py-1.5 hover:text-ink-500">Privacy</a></li>
+            <li><a href="#" class="inline-block py-1.5 hover:text-ink-500">Terms</a></li>
+            <li><a href="#" class="inline-block py-1.5 hover:text-ink-500">Security</a></li>
+            <li><a href="#" class="inline-block py-1.5 hover:text-ink-500">Trust center</a></li>
+            <li><a href="#" class="inline-block py-1.5 hover:text-ink-500">DPA</a></li>
           </ul>
         </div>
       </div>
