@@ -9,7 +9,7 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Fraunces:ital,wght@1,500;1,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <script>
     tailwind.config = {
       theme: {
@@ -113,8 +113,9 @@
       line-height: 1.02;
     }
     .display-italic {
-      font-style: italic; font-weight: 300;
-      letter-spacing: -0.025em;
+      font-family: 'Fraunces', 'Montserrat', system-ui, serif;
+      font-style: italic; font-weight: 600;
+      letter-spacing: -0.015em;
     }
     .h2 {
       font-family: 'Montserrat', system-ui, sans-serif;
@@ -731,21 +732,54 @@
   </section>
 
   <!-- ============================================== -->
-  <!-- PULL QUOTE                                     -->
+  <!-- PULL QUOTE — Editorial field note              -->
   <!-- ============================================== -->
-  <section class="relative bg-page">
-    <div class="max-w-[1100px] mx-auto px-6 lg:px-10 py-24 lg:py-32 text-center">
-      <span class="display text-gold text-[5rem] leading-none block mb-4 select-none">&ldquo;</span>
-      <blockquote class="display text-[clamp(1.5rem,3vw,2.6rem)] leading-[1.25] text-ink-500 max-w-[40ch] mx-auto">
-        Tester.io is the only QA partner that has ever made us
-        <span class="display-italic text-gold">faster.</span>
-        Our release cycle dropped from two weeks to two days.
-      </blockquote>
-      <div class="mt-10 inline-flex items-center gap-4">
-        <span class="w-11 h-11 rounded-full bg-gold-grad ring-2 ring-page"></span>
-        <div class="text-left">
-          <div class="text-[0.92rem] font-semibold text-ink-500">Iris Halloway</div>
-          <div class="text-[0.78rem] font-mono tracking-[0.18em] uppercase text-ink-300">VP Engineering · Helix</div>
+  <section class="relative bg-page overflow-hidden">
+    <div class="relative max-w-[1200px] mx-auto px-6 lg:px-10 py-24 lg:py-32">
+      <div class="grid lg:grid-cols-12 gap-10 lg:gap-16 items-start">
+
+        <!-- Left strip: field note label + attribution -->
+        <aside class="lg:col-span-3">
+          <div class="eyebrow flex items-center gap-3">
+            <span class="h-px w-8 bg-gold-500/60"></span>
+            Field Note Nº 07
+          </div>
+          <div class="mt-2 ml-11 text-[0.74rem] font-mono tracking-[0.22em] uppercase text-ink-300">— Helix</div>
+
+          <div class="hidden lg:block h-20 w-px bg-ink-500/15 ml-3 my-10"></div>
+
+          <div class="mt-10 lg:mt-0 flex items-center gap-4">
+            <span class="w-11 h-11 rounded-full bg-gold-grad ring-2 ring-page shrink-0"></span>
+            <div class="leading-tight">
+              <div class="text-[0.92rem] font-semibold text-ink-500">Iris Halloway</div>
+              <div class="mt-1 text-[0.7rem] font-mono tracking-[0.22em] uppercase text-ink-300">VP Engineering · Helix</div>
+            </div>
+          </div>
+        </aside>
+
+        <!-- Right: the quote with watermark -->
+        <div class="lg:col-span-9 relative">
+          <!-- subtle watermark quote mark behind text -->
+          <span
+            aria-hidden="true"
+            class="absolute pointer-events-none select-none text-gold leading-none"
+            style="font-family: 'Fraunces', serif; font-weight: 600; font-style: italic;
+                   font-size: clamp(14rem, 24vw, 22rem);
+                   opacity: 0.10;
+                   top: -3rem;
+                   left: -1.5rem;">&ldquo;</span>
+
+          <!-- top rule (fixed length) -->
+          <div class="relative h-px w-24 bg-ink-500/30 mb-10"></div>
+
+          <blockquote class="relative display text-[clamp(1.6rem,3.1vw,2.8rem)] leading-[1.28] text-ink-500 max-w-[42ch]">
+            Tester.io is the <span class="display-italic">only</span> QA partner that has ever made us
+            <span class="display-italic text-gold">faster.</span>
+            Our release cycle dropped from two weeks to two days.
+          </blockquote>
+
+          <!-- bottom rule (fixed length) -->
+          <div class="relative h-px w-24 bg-ink-500/30 mt-10"></div>
         </div>
       </div>
     </div>
