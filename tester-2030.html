@@ -1,0 +1,770 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Tester Tech · 2030 — A Vision · Tester.io</title>
+  <meta name="description" content="A speculative vision of consumer technology five years on. Quietly extraordinary." />
+  <link rel="icon" href="brand_assets/tester-logo.png" />
+  <link rel="preload" as="video" href="tester-2030.mp4" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Fraunces:ital,wght@1,400;1,500;1,600;1,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Montserrat', 'system-ui', 'sans-serif'],
+            mono: ['JetBrains Mono', 'ui-monospace', 'monospace'],
+            serif: ['Fraunces', 'serif'],
+          },
+          colors: {
+            ink: {
+              900: '#08070A', 800: '#100D11', 700: '#1B1722',
+              500: '#15110D', 400: '#3A332C', 300: '#6B6259',
+              200: '#A29A8E', 100: '#D8D1C4', 50: '#F2EDE3',
+            },
+            gold: {
+              50:  '#FBF4DE', 100: '#F5E5B8', 200: '#EFD491',
+              300: '#E8B979', 400: '#D6A765', 500: '#C6A559',
+              600: '#A8853F', 700: '#7A6029', 800: '#4E3E1B',
+            },
+          },
+        },
+      },
+    }
+  </script>
+
+  <style>
+    :root {
+      --bg:         #000000;
+      --text-warm:  #F2EDE3;
+      --text-soft:  rgba(242, 237, 227, 0.72);
+      --text-muted: rgba(242, 237, 227, 0.42);
+    }
+
+    html { color-scheme: dark; scroll-behavior: smooth; background: #000; }
+    body {
+      background: #000; color: var(--text-warm);
+      font-family: 'Montserrat', system-ui, sans-serif;
+      font-weight: 400;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    ::selection { background: rgba(232,185,121,0.40); color: var(--text-warm); }
+
+    /* ===== Typography ===== */
+    .display       { font-family: 'Montserrat', system-ui, sans-serif; font-weight: 800; letter-spacing: -0.045em; line-height: 0.94; }
+    .display-it    { font-family: 'Fraunces', serif; font-style: italic; font-weight: 500; letter-spacing: -0.025em; line-height: 0.9; }
+    .h2            { font-family: 'Montserrat', system-ui, sans-serif; font-weight: 700; letter-spacing: -0.030em; line-height: 1.04; }
+    .serif-it      { font-family: 'Fraunces', serif; font-style: italic; }
+
+    .text-gold {
+      background: linear-gradient(135deg, #F5D38A 0%, #E8B979 35%, #C6A559 70%, #A8853F 100%);
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+    }
+    .text-gold-soft {
+      background: linear-gradient(135deg, #F5E5B8 0%, #E8B979 50%, #C6A559 100%);
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+    }
+
+    .eyebrow {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem; letter-spacing: 0.28em; text-transform: uppercase;
+      color: #E8B979; font-weight: 500;
+    }
+    .eyebrow-muted { color: var(--text-muted); }
+
+    .wordmark { font-weight: 700; letter-spacing: -0.025em; }
+    .wordmark .dot { color: #C6A559; }
+
+    /* ===== Hairline ===== */
+    .hairline { border-top: 1px solid rgba(232,185,121,0.10); }
+
+    /* ===== Grain ===== */
+    .grain {
+      position: fixed; inset: 0; pointer-events: none; z-index: 80;
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.5 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/></svg>");
+      opacity: 0.045; mix-blend-mode: overlay;
+    }
+
+    /* ===== Nav ===== */
+    .nav-bar { transition: background-color .5s ease, backdrop-filter .5s ease, border-color .5s, box-shadow .5s; }
+    .nav-bar.is-scrolled {
+      background-color: rgba(8, 7, 10, 0.78);
+      backdrop-filter: blur(18px) saturate(140%);
+      border-bottom-color: rgba(232,185,121,0.10);
+      box-shadow: 0 12px 30px -20px rgba(0,0,0,0.7);
+    }
+
+    /* ===== Hero ===== */
+    .hero {
+      position: relative; isolation: isolate;
+      min-height: 100vh; min-height: 100dvh;
+      overflow: hidden;
+    }
+    .hero-video {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      z-index: 0;
+    }
+    .hero-veil {
+      position: absolute; inset: 0; z-index: 1; pointer-events: none;
+      background:
+        radial-gradient(70% 55% at 50% 50%, rgba(0,0,0,0.10) 0%, rgba(0,0,0,0.55) 60%, rgba(0,0,0,0.95) 100%),
+        linear-gradient(180deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.18) 38%, rgba(0,0,0,0.30) 62%, #000 100%);
+    }
+
+    /* ===== Reveal anims — slow, meditative ===== */
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity 1.4s cubic-bezier(.2,.8,.2,1), transform 1.4s cubic-bezier(.2,.8,.2,1); }
+    .reveal.in { opacity: 1; transform: translateY(0); }
+    .rd-1 { transition-delay: .18s; }
+    .rd-2 { transition-delay: .36s; }
+    .rd-3 { transition-delay: .54s; }
+    .rd-4 { transition-delay: .72s; }
+    .rd-5 { transition-delay: .90s; }
+
+    /* ===== Manifesto rows ===== */
+    .manifesto-row { padding: 18vh 0; }
+    @media (max-width: 767px) {
+      .manifesto-row { padding: 10vh 0; }
+    }
+
+    /* ===== Vision quote frame ===== */
+    .vision-stage {
+      position: relative;
+      aspect-ratio: 16/9;
+      border-radius: 22px;
+      overflow: hidden;
+      border: 1px solid rgba(232,185,121,0.14);
+      box-shadow: 0 60px 120px -50px rgba(0,0,0,0.85);
+      background: #000;
+    }
+    .vision-stage video {
+      width: 100%; height: 100%; object-fit: cover; display: block;
+    }
+
+    /* ===== Scroll cue ===== */
+    .scroll-cue {
+      width: 22px; height: 36px;
+      border: 1px solid rgba(232,185,121,0.45);
+      border-radius: 12px; position: relative;
+    }
+    .scroll-cue::after {
+      content: ''; position: absolute; top: 6px; left: 50%; transform: translateX(-50%);
+      width: 3px; height: 8px; border-radius: 2px; background: #E8B979;
+      animation: cue 2.2s ease-in-out infinite;
+    }
+    @keyframes cue {
+      0%   { transform: translate(-50%, 0);   opacity: 0; }
+      30%  { opacity: 1; }
+      70%  { opacity: 1; }
+      100% { transform: translate(-50%, 14px); opacity: 0; }
+    }
+
+    /* ===== Megamark footer ===== */
+    .megamark {
+      font-weight: 800; letter-spacing: -0.07em; line-height: 0.82;
+      background: linear-gradient(180deg, #2A220F 0%, #15110D 60%, #0A0807 100%);
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+    }
+    .megamark-gold {
+      background: linear-gradient(180deg, #E8B979 0%, #C6A559 50%, #7A6029 100%);
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+    }
+
+    /* ===== Focus ===== */
+    a:focus-visible, button:focus-visible {
+      outline: 2px solid #C6A559; outline-offset: 3px; border-radius: 6px;
+    }
+
+    /* ===== Mobile nav menu ===== */
+    .mobile-menu {
+      position: absolute; left: 0; right: 0; top: 100%;
+      background: rgba(8,7,10,0.94);
+      -webkit-backdrop-filter: blur(18px) saturate(140%);
+      backdrop-filter: blur(18px) saturate(140%);
+      border-bottom: 1px solid rgba(232,185,121,0.10);
+      box-shadow: 0 18px 48px -20px rgba(0,0,0,0.7);
+      transform-origin: top; transform: scaleY(0.96);
+      opacity: 0; pointer-events: none;
+      transition: opacity .25s ease, transform .25s ease;
+    }
+    .mobile-menu.is-open { opacity: 1; transform: scaleY(1); pointer-events: auto; }
+    .mobile-menu a {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1rem 1.25rem;
+      border-bottom: 1px solid rgba(232,185,121,0.06);
+      color: var(--text-warm);
+      font-size: 0.95rem; font-weight: 500;
+      transition: color .2s, background-color .2s;
+    }
+    .mobile-menu a:hover, .mobile-menu a:focus-visible { color: #E8B979; background: rgba(232,185,121,0.04); }
+    .mobile-menu a[aria-current="page"] { color: #E8B979; }
+    .mobile-menu a svg { opacity: 0.5; transition: opacity .2s, transform .2s; }
+    .mobile-menu a:hover svg { opacity: 1; transform: translateX(3px); }
+
+    .nav-toggle {
+      width: 40px; height: 40px;
+      display: inline-flex; align-items: center; justify-content: center;
+      border: 1px solid rgba(232,185,121,0.30);
+      border-radius: 10px;
+      color: var(--text-warm);
+      background: rgba(255,255,255,0.02);
+      transition: border-color .2s, background-color .2s;
+    }
+    .nav-toggle:hover, .nav-toggle:focus-visible { border-color: rgba(232,185,121,0.6); background: rgba(232,185,121,0.06); }
+    .nav-toggle .bar { transition: transform .25s ease, opacity .2s ease; transform-origin: center; }
+    .nav-toggle[aria-expanded="true"] .bar-top    { transform: translateY(5px) rotate(45deg); }
+    .nav-toggle[aria-expanded="true"] .bar-mid    { opacity: 0; }
+    .nav-toggle[aria-expanded="true"] .bar-bottom { transform: translateY(-5px) rotate(-45deg); }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        animation-delay: 0ms !important;
+        transition-duration: 0.01ms !important;
+      }
+      .reveal { opacity: 1 !important; transform: none !important; }
+      .scroll-cue::after { animation: none !important; }
+    }
+  </style>
+
+  <noscript>
+    <style>
+      .reveal { opacity: 1 !important; transform: none !important; }
+    </style>
+  </noscript>
+</head>
+<body class="relative">
+
+  <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[100] focus:px-4 focus:py-2 focus:rounded-md focus:bg-ink-900 focus:text-gold-300 focus:text-sm focus:font-semibold focus:outline focus:outline-2 focus:outline-gold-500">Skip to content</a>
+
+  <div class="grain" aria-hidden="true"></div>
+
+  <!-- ============================================== -->
+  <!-- TOP UTILITY STRIP                              -->
+  <!-- ============================================== -->
+  <div class="relative z-40 bg-black text-ink-100 border-b border-white/[0.04]">
+    <div class="max-w-[1500px] mx-auto px-5 sm:px-6 lg:px-10 py-2.5 flex items-center justify-between gap-3 text-[10px] sm:text-[11px] font-mono tracking-[0.18em] uppercase">
+      <div class="flex items-center gap-4 sm:gap-6 min-w-0">
+        <span class="inline-flex items-center gap-2 text-gold-300 shrink-0">
+          <span class="w-1.5 h-1.5 rounded-full bg-gold-300 inline-block"></span>
+          A Tester Tech Vision
+        </span>
+        <span class="hidden md:inline text-ink-100/65">Filed · 2030</span>
+      </div>
+      <div class="flex items-center gap-3 sm:gap-5 text-ink-100/65 shrink-0">
+        <a href="./product.html" class="inline-block py-1.5 hover:text-gold-300">Return to the present</a>
+        <a href="mailto:hello@tester.io" class="hidden sm:inline-block py-1.5 hover:text-gold-300">hello@tester.io</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================== -->
+  <!-- NAV — Vision marked as current                 -->
+  <!-- ============================================== -->
+  <header id="nav" class="nav-bar sticky top-0 z-50 bg-transparent border-b border-transparent">
+    <div class="relative max-w-[1500px] mx-auto px-5 sm:px-6 lg:px-10 py-4 lg:py-5 flex items-center justify-between gap-3">
+      <a href="./index.html" class="flex items-center gap-2.5 group min-w-0">
+        <img src="brand_assets/tester-logo.png" alt="Tester.io home" class="h-8 w-8 lg:h-9 lg:w-9 object-contain drop-shadow-[0_4px_12px_rgba(198,165,89,0.45)]" />
+        <span class="wordmark text-[1.2rem] lg:text-[1.35rem] text-ink-50">Tester<span class="dot">.</span>io</span>
+        <span class="hidden lg:inline ml-2 px-2 py-0.5 rounded-full border border-gold-500/40 text-[10px] font-mono tracking-[0.22em] uppercase text-gold-300">Vision</span>
+      </a>
+
+      <nav class="hidden md:flex items-center gap-7 lg:gap-9 text-[0.82rem] tracking-[0.04em] text-ink-100/65 font-medium">
+        <a href="./index.html#about" class="hover:text-ink-50 relative group">
+          About
+          <span class="absolute left-0 -bottom-1 h-px w-0 bg-gold-500 group-hover:w-full transition-[width] duration-500"></span>
+        </a>
+        <a href="./index.html#services" class="hover:text-ink-50 relative group">
+          Services
+          <span class="absolute left-0 -bottom-1 h-px w-0 bg-gold-500 group-hover:w-full transition-[width] duration-500"></span>
+        </a>
+        <a href="./TesterTech.html" class="hover:text-ink-50 relative group">
+          Tech
+          <span class="absolute left-0 -bottom-1 h-px w-0 bg-gold-500 group-hover:w-full transition-[width] duration-500"></span>
+        </a>
+        <a href="./product.html" class="hover:text-ink-50 relative group">
+          Products
+          <span class="absolute left-0 -bottom-1 h-px w-0 bg-gold-500 group-hover:w-full transition-[width] duration-500"></span>
+        </a>
+        <a href="./tester-2030.html" class="text-ink-50 relative group" aria-current="page">
+          Vision
+          <span class="absolute left-0 -bottom-1 h-px w-full bg-gold-500"></span>
+        </a>
+        <a href="./index.html#work" class="hover:text-ink-50 relative group">
+          Work
+          <span class="absolute left-0 -bottom-1 h-px w-0 bg-gold-500 group-hover:w-full transition-[width] duration-500"></span>
+        </a>
+        <a href="./index.html#contact" class="hover:text-ink-50 relative group">
+          Contact
+          <span class="absolute left-0 -bottom-1 h-px w-0 bg-gold-500 group-hover:w-full transition-[width] duration-500"></span>
+        </a>
+      </nav>
+
+      <div class="flex items-center gap-2 sm:gap-3 shrink-0">
+        <a href="./product.html" class="hidden sm:inline-flex items-center gap-2 text-[0.78rem] text-ink-100/55 hover:text-gold-300 transition-colors font-mono tracking-[0.18em] uppercase">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+          2026
+        </a>
+        <button type="button" class="nav-toggle md:hidden" id="mobile-menu-toggle"
+                aria-label="Open menu" aria-controls="mobile-menu" aria-expanded="false">
+          <svg width="20" height="14" viewBox="0 0 20 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+            <line class="bar bar-top"    x1="2" y1="2"  x2="18" y2="2"  />
+            <line class="bar bar-mid"    x1="2" y1="7"  x2="18" y2="7"  />
+            <line class="bar bar-bottom" x1="2" y1="12" x2="18" y2="12" />
+          </svg>
+        </button>
+      </div>
+
+      <div class="mobile-menu md:hidden" id="mobile-menu" aria-label="Mobile navigation">
+        <a href="./index.html#about">About <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
+        <a href="./index.html#services">Services <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
+        <a href="./TesterTech.html">Tech <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
+        <a href="./product.html">Products <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
+        <a href="./tester-2030.html" aria-current="page">Vision <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
+        <a href="./index.html#work">Work <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
+        <a href="./index.html#contact">Contact <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ============================================== -->
+  <!-- HERO — full-bleed mood video                   -->
+  <!-- ============================================== -->
+  <section id="main" class="hero -mt-[64px] pt-[64px] lg:-mt-[76px] lg:pt-[76px]">
+    <video class="hero-video" id="hero-video"
+           muted loop playsinline preload="auto" autoplay
+           aria-label="Tester Tech 2030 — atmospheric mood film">
+      <source src="tester-2030.mp4" type="video/mp4" />
+    </video>
+    <div class="hero-veil" aria-hidden="true"></div>
+
+    <div class="relative z-10 max-w-[1500px] mx-auto px-5 sm:px-6 lg:px-10 min-h-[calc(100vh-64px)] min-h-[calc(100dvh-64px)] lg:min-h-[calc(100vh-76px)] lg:min-h-[calc(100dvh-76px)] flex flex-col justify-between gap-10 sm:gap-12 pt-10 sm:pt-14 lg:pt-20 pb-12 sm:pb-16 lg:pb-20">
+
+      <div class="reveal flex items-center justify-center text-center">
+        <div class="flex items-center gap-3 text-gold-300">
+          <span class="h-px w-10 bg-gold-300/55"></span>
+          <span class="eyebrow">A Tester Tech Vision · 2030</span>
+          <span class="h-px w-10 bg-gold-300/55"></span>
+        </div>
+      </div>
+
+      <div class="text-center max-w-[60ch] mx-auto">
+        <h1 class="reveal rd-1 display-it text-gold text-[clamp(6rem,22vw,16rem)]">
+          2030.
+        </h1>
+        <p class="reveal rd-3 mt-6 sm:mt-8 text-[clamp(1.4rem,3vw,2.2rem)] text-ink-50 font-light tracking-[-0.01em]">
+          <span class="serif-it text-gold-soft">Quietly</span> extraordinary.
+        </p>
+      </div>
+
+      <div class="reveal rd-5 flex items-end justify-between gap-6 flex-wrap">
+        <div class="flex items-center gap-3 text-[11px] font-mono tracking-[0.22em] uppercase text-ink-100/55">
+          <span class="w-1 h-1 rounded-full bg-gold-300/60"></span>
+          A speculative manifesto
+        </div>
+        <div class="flex items-center gap-3 text-[11px] font-mono tracking-[0.22em] uppercase text-ink-100/55">
+          <span>Scroll</span>
+          <span class="scroll-cue" aria-hidden="true"></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================== -->
+  <!-- MANIFESTO — three statements                   -->
+  <!-- ============================================== -->
+  <section id="manifesto" class="relative bg-black overflow-hidden border-t border-gold-500/[0.06]">
+    <div class="max-w-[1500px] mx-auto px-5 sm:px-6 lg:px-10 pt-20 sm:pt-32 lg:pt-40 pb-8">
+      <div class="reveal max-w-[44rem]">
+        <div class="eyebrow eyebrow-muted mb-5 flex items-center gap-3">
+          <span class="h-px w-8 bg-gold-500/45"></span>
+          002 · Manifesto
+        </div>
+        <h2 class="h2 display text-[clamp(2rem,4vw,3.4rem)] text-ink-50">
+          What we believe <span class="serif-it text-gold">about the future.</span>
+        </h2>
+      </div>
+    </div>
+
+    <!-- 01 — left aligned -->
+    <article class="manifesto-row">
+      <div class="max-w-[1500px] mx-auto px-5 sm:px-6 lg:px-10 grid lg:grid-cols-12 gap-6 lg:gap-12">
+        <div class="lg:col-span-8 lg:col-start-1">
+          <div class="reveal eyebrow eyebrow-muted mb-6 flex items-center gap-3">
+            <span class="h-px w-7 bg-gold-500/40"></span>
+            <span class="serif-it text-gold-soft normal-case tracking-normal text-[1rem] font-medium">i.</span>
+            <span>On calm</span>
+          </div>
+          <h3 class="reveal rd-1 display text-[clamp(2.4rem,7vw,5.6rem)] text-ink-50 max-w-[18ch]">
+            Technology should feel <span class="serif-it text-gold">like nothing.</span>
+          </h3>
+          <p class="reveal rd-2 mt-7 max-w-[44ch] text-[1.05rem] sm:text-[1.15rem] text-ink-100/65 leading-[1.7]">
+            The future of design is invisibility. The best interface is the one
+            you forget you are using — a hum beneath the day, present only
+            when called.
+          </p>
+        </div>
+      </div>
+    </article>
+
+    <!-- 02 — right aligned -->
+    <article class="manifesto-row">
+      <div class="max-w-[1500px] mx-auto px-5 sm:px-6 lg:px-10 grid lg:grid-cols-12 gap-6 lg:gap-12">
+        <div class="lg:col-span-8 lg:col-start-5 lg:text-right">
+          <div class="reveal eyebrow eyebrow-muted mb-6 flex lg:justify-end items-center gap-3">
+            <span class="h-px w-7 bg-gold-500/40 lg:hidden"></span>
+            <span class="serif-it text-gold-soft normal-case tracking-normal text-[1rem] font-medium">ii.</span>
+            <span>On craftsmanship</span>
+            <span class="h-px w-7 bg-gold-500/40 hidden lg:inline-block"></span>
+          </div>
+          <h3 class="reveal rd-1 display text-[clamp(2.4rem,7vw,5.6rem)] text-ink-50 max-w-[18ch] lg:ml-auto">
+            <span class="serif-it text-gold">Material</span> over marketing.
+          </h3>
+          <p class="reveal rd-2 mt-7 max-w-[44ch] lg:ml-auto text-[1.05rem] sm:text-[1.15rem] text-ink-100/65 leading-[1.7]">
+            We believe in the patience of a chamfered edge, the weight of a
+            milled case, the honest sheen of brushed titanium. Marketing fades.
+            Material doesn't.
+          </p>
+        </div>
+      </div>
+    </article>
+
+    <!-- 03 — left aligned -->
+    <article class="manifesto-row">
+      <div class="max-w-[1500px] mx-auto px-5 sm:px-6 lg:px-10 grid lg:grid-cols-12 gap-6 lg:gap-12">
+        <div class="lg:col-span-8 lg:col-start-1">
+          <div class="reveal eyebrow eyebrow-muted mb-6 flex items-center gap-3">
+            <span class="h-px w-7 bg-gold-500/40"></span>
+            <span class="serif-it text-gold-soft normal-case tracking-normal text-[1rem] font-medium">iii.</span>
+            <span>On restraint</span>
+          </div>
+          <h3 class="reveal rd-1 display text-[clamp(2.4rem,7vw,5.6rem)] text-ink-50 max-w-[18ch]">
+            Built to <span class="serif-it text-gold">disappear</span> into life.
+          </h3>
+          <p class="reveal rd-2 mt-7 max-w-[44ch] text-[1.05rem] sm:text-[1.15rem] text-ink-100/65 leading-[1.7]">
+            Devices should sit at the edge of attention, never the center.
+            Quiet by default. Loud only when summoned. Designed to retreat.
+          </p>
+        </div>
+      </div>
+    </article>
+  </section>
+
+  <!-- ============================================== -->
+  <!-- PILLARS — three directions                     -->
+  <!-- ============================================== -->
+  <section id="pillars" class="relative bg-black border-t border-gold-500/[0.06]">
+    <div class="max-w-[1500px] mx-auto px-5 sm:px-6 lg:px-10 pt-20 sm:pt-32 lg:pt-40 pb-16 sm:pb-24 lg:pb-32">
+
+      <div class="reveal max-w-[44rem] mb-14 sm:mb-20 lg:mb-28">
+        <div class="eyebrow eyebrow-muted mb-5 flex items-center gap-3">
+          <span class="h-px w-8 bg-gold-500/45"></span>
+          003 · Directions
+        </div>
+        <h2 class="h2 display text-[clamp(2rem,4vw,3.4rem)] text-ink-50">
+          Three concept pillars. <span class="serif-it text-gold">Not products.</span>
+        </h2>
+        <p class="mt-5 text-[1rem] sm:text-[1.05rem] text-ink-100/55 leading-[1.7] max-w-[52ch]">
+          Where we'd point the team if we were building today, for 2030.
+        </p>
+      </div>
+
+      <div class="grid lg:grid-cols-3 gap-14 sm:gap-16 lg:gap-12">
+        <div class="reveal">
+          <div class="display-it text-gold text-[clamp(4rem,7vw,6.5rem)] leading-none mb-6">I</div>
+          <h3 class="h2 text-[clamp(1.6rem,2.4vw,2.2rem)] text-ink-50">
+            Ambient <span class="serif-it text-gold-soft">intelligence.</span>
+          </h3>
+          <p class="mt-5 text-[0.98rem] text-ink-100/65 leading-[1.7] max-w-[36ch]">
+            Devices that listen for context, not commands. They learn the
+            rhythms of your day and arrive only when invited.
+          </p>
+        </div>
+
+        <div class="reveal rd-1">
+          <div class="display-it text-gold text-[clamp(4rem,7vw,6.5rem)] leading-none mb-6">II</div>
+          <h3 class="h2 text-[clamp(1.6rem,2.4vw,2.2rem)] text-ink-50">
+            Material <span class="serif-it text-gold-soft">honesty.</span>
+          </h3>
+          <p class="mt-5 text-[0.98rem] text-ink-100/65 leading-[1.7] max-w-[36ch]">
+            Premium materials shown as they are. No surface that imitates
+            another. Titanium is titanium; leather is leather; sapphire is
+            sapphire.
+          </p>
+        </div>
+
+        <div class="reveal rd-2">
+          <div class="display-it text-gold text-[clamp(4rem,7vw,6.5rem)] leading-none mb-6">III</div>
+          <h3 class="h2 text-[clamp(1.6rem,2.4vw,2.2rem)] text-ink-50">
+            Calm <span class="serif-it text-gold-soft">computing.</span>
+          </h3>
+          <p class="mt-5 text-[0.98rem] text-ink-100/65 leading-[1.7] max-w-[36ch]">
+            Interfaces that quiet the mind. One thing at a time. Notifications
+            opt-in. Color used sparingly, never to startle.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================== -->
+  <!-- VISION MOMENT — smaller video + meditative quote -->
+  <!-- ============================================== -->
+  <section id="vision" class="relative bg-black border-t border-gold-500/[0.06] overflow-hidden">
+    <div class="max-w-[1500px] mx-auto px-5 sm:px-6 lg:px-10 pt-20 sm:pt-32 lg:pt-40 pb-20 sm:pb-32 lg:pb-40">
+
+      <div class="reveal max-w-[44rem] mb-14 sm:mb-20">
+        <div class="eyebrow eyebrow-muted mb-5 flex items-center gap-3">
+          <span class="h-px w-8 bg-gold-500/45"></span>
+          004 · A moment
+        </div>
+      </div>
+
+      <div class="reveal vision-stage max-w-[920px] mx-auto">
+        <video id="vision-video"
+               muted loop playsinline preload="metadata" autoplay
+               aria-label="Tester Tech 2030 — atmospheric mood film, reprise">
+          <source src="tester-2030.mp4" type="video/mp4" />
+        </video>
+      </div>
+
+      <div class="reveal rd-2 max-w-[58ch] mx-auto mt-14 sm:mt-20 text-center">
+        <blockquote class="serif-it text-[clamp(1.8rem,3.5vw,3.2rem)] text-ink-50 leading-[1.18] tracking-[-0.015em]">
+          “The best technology is the kind you forget you're <span class="text-gold">using</span>.”
+        </blockquote>
+        <cite class="not-italic block mt-7 eyebrow eyebrow-muted">
+          — Tester Tech, 2030
+        </cite>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================== -->
+  <!-- SIGNATURE FOOTER                               -->
+  <!-- ============================================== -->
+  <footer class="relative bg-black overflow-hidden border-t border-gold-500/[0.06]">
+    <div class="max-w-[1500px] mx-auto px-5 sm:px-6 lg:px-10 pt-16 sm:pt-24 lg:pt-32 pb-8 sm:pb-10">
+
+      <div class="reveal max-w-[58ch] mx-auto text-center mb-12 sm:mb-16 lg:mb-20">
+        <p class="serif-it text-[clamp(1.6rem,3vw,2.4rem)] text-ink-50 leading-[1.3]">
+          From the workshop.
+        </p>
+        <p class="serif-it text-[clamp(1.6rem,3vw,2.4rem)] text-gold leading-[1.3]">
+          Tester Tech, 2030.
+        </p>
+
+        <a href="./product.html" class="inline-flex items-center gap-2 mt-9 text-[0.82rem] text-ink-100/70 hover:text-gold-300 transition-colors font-mono tracking-[0.18em] uppercase group">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="transition-transform group-hover:-translate-x-0.5"><path d="m15 18-6-6 6-6"/></svg>
+          Return to the present
+        </a>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-8 sm:gap-10 items-start">
+
+        <div>
+          <a href="./index.html" class="inline-flex items-center gap-2.5">
+            <img src="brand_assets/tester-logo.png" alt="Tester.io home" class="h-10 w-10 object-contain" />
+            <span class="wordmark text-[1.4rem] text-ink-50">Tester<span class="dot">.</span>io</span>
+            <span class="ml-2 px-2 py-0.5 rounded-full border border-gold-500/35 text-[10px] font-mono tracking-[0.22em] uppercase text-gold-300">Vision</span>
+          </a>
+          <p class="mt-5 text-[0.92rem] text-ink-100/55 leading-[1.7] max-w-[34ch]">
+            A speculative manifesto. Not a roadmap. A direction.
+          </p>
+        </div>
+
+        <div class="md:text-center">
+          <div class="eyebrow eyebrow-muted mb-4">Follow</div>
+          <div class="flex md:justify-center items-center gap-3">
+            <a href="#" aria-label="X / Twitter" class="w-10 h-10 grid place-items-center rounded-full border border-gold-500/25 text-ink-100/70 hover:text-gold-300 hover:border-gold-500/55 transition-colors">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231L18.244 2.25zm-1.161 17.52h1.833L7.084 4.126H5.117l11.966 15.644z"/></svg>
+            </a>
+            <a href="#" aria-label="Instagram" class="w-10 h-10 grid place-items-center rounded-full border border-gold-500/25 text-ink-100/70 hover:text-gold-300 hover:border-gold-500/55 transition-colors">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.6" fill="currentColor"/></svg>
+            </a>
+            <a href="#" aria-label="YouTube" class="w-10 h-10 grid place-items-center rounded-full border border-gold-500/25 text-ink-100/70 hover:text-gold-300 hover:border-gold-500/55 transition-colors">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M21.6 7.2a2.5 2.5 0 0 0-1.8-1.8C18.2 5 12 5 12 5s-6.2 0-7.8.4A2.5 2.5 0 0 0 2.4 7.2C2 8.8 2 12 2 12s0 3.2.4 4.8a2.5 2.5 0 0 0 1.8 1.8C5.8 19 12 19 12 19s6.2 0 7.8-.4a2.5 2.5 0 0 0 1.8-1.8C22 15.2 22 12 22 12s0-3.2-.4-4.8zM10 15V9l5 3-5 3z"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="md:text-right">
+          <div class="eyebrow eyebrow-muted mb-4">Back to</div>
+          <a href="./index.html" class="inline-flex items-center gap-2 text-[0.95rem] text-ink-50 hover:text-gold-300 transition-colors">
+            tester.io
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="hairline mt-12"></div>
+
+      <div class="py-7 flex flex-wrap items-center justify-between gap-4 text-[0.78rem] font-mono tracking-[0.16em] uppercase text-ink-100/45">
+        <span>© 2026 Tester.io GmbH — Filed under 2030</span>
+        <span>Designed in Berlin · A speculation, not a roadmap</span>
+      </div>
+
+      <div class="relative pt-2 pb-2 select-none" aria-hidden="true">
+        <div class="megamark text-[clamp(3rem,17vw,16rem)]">
+          2<span class="megamark-gold">0</span><span class="megamark-gold">3</span>0
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ============================================== -->
+  <!-- MINIMAL JS — ping-pong loop + reveals          -->
+  <!-- ============================================== -->
+  <script>
+    (function () {
+      // ===== Nav background on scroll =====
+      const nav = document.getElementById('nav');
+      if (nav) {
+        let scrolled = false;
+        const onScroll = () => {
+          const s = window.scrollY > 24;
+          if (s !== scrolled) { nav.classList.toggle('is-scrolled', s); scrolled = s; }
+        };
+        window.addEventListener('scroll', onScroll, { passive: true });
+        onScroll();
+      }
+
+      // ===== Mobile menu toggle =====
+      const menuToggle = document.getElementById('mobile-menu-toggle');
+      const mobileMenu = document.getElementById('mobile-menu');
+      const setMenu = (open) => {
+        if (!menuToggle || !mobileMenu) return;
+        mobileMenu.classList.toggle('is-open', open);
+        menuToggle.setAttribute('aria-expanded', String(open));
+        menuToggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+        document.body.style.overflow = open ? 'hidden' : '';
+      };
+      if (menuToggle && mobileMenu) {
+        menuToggle.addEventListener('click', () => setMenu(!mobileMenu.classList.contains('is-open')));
+        mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setMenu(false)));
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape' && mobileMenu.classList.contains('is-open')) setMenu(false);
+        });
+        const mq = window.matchMedia('(min-width: 768px)');
+        const onMq = (e) => { if (e.matches) setMenu(false); };
+        if (mq.addEventListener) mq.addEventListener('change', onMq);
+        else if (mq.addListener) mq.addListener(onMq);
+      }
+
+      // ===== Smooth scroll for anchor links (with sticky nav offset) =====
+      document.querySelectorAll('a[href^="#"]').forEach(a => {
+        a.addEventListener('click', (e) => {
+          const id = a.getAttribute('href');
+          if (!id || id === '#') return;
+          const target = document.querySelector(id);
+          if (!target) return;
+          e.preventDefault();
+          const offset = (nav ? nav.offsetHeight : 0) - 1;
+          const top = target.getBoundingClientRect().top + window.scrollY - offset;
+          window.scrollTo({ top, behavior: 'smooth' });
+        });
+      });
+
+      // ===== Reveal-on-scroll (slow, meditative) =====
+      const revealEls = document.querySelectorAll('.reveal');
+      if ('IntersectionObserver' in window) {
+        const io = new IntersectionObserver((entries) => {
+          entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+        }, { threshold: 0.14, rootMargin: '0px 0px -6% 0px' });
+        revealEls.forEach(el => io.observe(el));
+        requestAnimationFrame(() => {
+          revealEls.forEach(el => {
+            const r = el.getBoundingClientRect();
+            if (r.top < window.innerHeight * 0.92) el.classList.add('in');
+          });
+        });
+      } else {
+        revealEls.forEach(el => el.classList.add('in'));
+      }
+
+      // =================================================================
+      // PING-PONG VIDEO LOOP
+      // Forward via native playback; reverse via manual currentTime decrement.
+      // This is the only technique that works in Safari/iOS — negative
+      // playbackRate is not supported there. requestAnimationFrame keeps
+      // reverse playback in sync with the display refresh.
+      // =================================================================
+      function pingPong(video) {
+        if (!video) return;
+        // Strip the loop attribute — we manage looping manually
+        video.removeAttribute('loop');
+        video.muted = true;
+        video.playsInline = true;
+
+        let forward = true;
+        let lastTs = 0;
+        let raf = null;
+
+        const tryPlay = () => video.play().catch(() => {});
+        video.addEventListener('loadedmetadata', tryPlay, { once: true });
+        // Unlock autoplay on first user interaction (some browsers block it)
+        const unlock = () => tryPlay();
+        document.addEventListener('click', unlock, { once: true });
+        document.addEventListener('touchstart', unlock, { once: true, passive: true });
+
+        function step(ts) {
+          const dur = video.duration;
+          if (!dur || isNaN(dur)) {
+            raf = requestAnimationFrame(step);
+            return;
+          }
+          if (forward) {
+            // Native playback handles forward. Watch for end-of-clip.
+            if (video.currentTime >= dur - 0.08) {
+              forward = false;
+              video.pause();
+              lastTs = ts;
+            }
+          } else {
+            // Reverse: decrement currentTime each frame.
+            if (lastTs === 0) lastTs = ts;
+            const dt = (ts - lastTs) / 1000;
+            lastTs = ts;
+            const next = video.currentTime - dt;
+            if (next <= 0.04) {
+              video.currentTime = 0;
+              forward = true;
+              tryPlay();
+            } else {
+              video.currentTime = next;
+            }
+          }
+          raf = requestAnimationFrame(step);
+        }
+        raf = requestAnimationFrame(step);
+
+        // Pause/resume the rAF loop when tab loses visibility, to be polite
+        // (autoplay still pauses natively, but we don't want reverse to keep
+        // ticking in background).
+        document.addEventListener('visibilitychange', () => {
+          if (document.hidden) {
+            if (raf) { cancelAnimationFrame(raf); raf = null; }
+            video.pause();
+          } else if (!raf) {
+            lastTs = 0;
+            if (forward) tryPlay();
+            raf = requestAnimationFrame(step);
+          }
+        });
+      }
+
+      pingPong(document.getElementById('hero-video'));
+      pingPong(document.getElementById('vision-video'));
+    })();
+  </script>
+</body>
+</html>

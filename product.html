@@ -1,0 +1,1427 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Tester Smart Watch Pro — Precision on your wrist · Tester.io</title>
+  <meta name="description" content="Tester Smart Watch Pro — a flagship smartwatch from Tester.io. Titanium case, sapphire crystal, 7-day battery. Engineered with the same rigor as our QA software." />
+  <link rel="icon" href="brand_assets/tester-logo.png" />
+  <link rel="preload" as="video" href="Smart Watch Dissection.mp4" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Fraunces:ital,wght@1,500;1,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Montserrat', 'system-ui', 'sans-serif'],
+            mono: ['JetBrains Mono', 'ui-monospace', 'monospace'],
+          },
+          colors: {
+            page: '#F5F2EB',
+            pagealt: '#EFEBE0',
+            paper: '#FBF9F3',
+            ink: {
+              900: '#08070A', 800: '#100D11', 700: '#1B1722',
+              500: '#15110D', 400: '#3A332C', 300: '#6B6259',
+              200: '#A29A8E', 100: '#D8D1C4', 50: '#F2EDE3',
+            },
+            gold: {
+              50:  '#FBF4DE', 100: '#F5E5B8', 200: '#EFD491',
+              300: '#E8B979', 400: '#D6A765', 500: '#C6A559',
+              600: '#A8853F', 700: '#7A6029', 800: '#4E3E1B',
+            },
+          },
+        },
+      },
+    }
+  </script>
+
+  <style>
+    :root {
+      --bg-pure-black: #000000;
+      --bg-near-black: #000000;
+      --bg-deep-ink:   #000000;
+      --bg-warm-ink:   #000000;
+      --text-warm:     #F2EDE3;
+      --text-soft:     rgba(242, 237, 227, 0.72);
+      --text-muted:    rgba(242, 237, 227, 0.48);
+    }
+
+    html { color-scheme: dark; scroll-behavior: smooth; background: #000; }
+    body { background: #000; color: var(--text-warm); font-family: 'Montserrat', system-ui, sans-serif; -webkit-font-smoothing: antialiased; font-weight: 500; overflow-x: hidden; }
+    ::selection { background: rgba(232,185,121,0.45); color: var(--text-warm); }
+
+    /* ===== Typography ===== */
+    .display { font-family: 'Montserrat', system-ui, sans-serif; font-weight: 800; letter-spacing: -0.04em; line-height: 0.94; }
+    .display-italic { font-family: 'Fraunces', 'Montserrat', system-ui, serif; font-style: italic; font-weight: 600; letter-spacing: -0.015em; }
+    .h2 { font-family: 'Montserrat', system-ui, sans-serif; font-weight: 700; letter-spacing: -0.030em; line-height: 1.04; }
+
+    .text-gold { background: linear-gradient(135deg, #F5D38A 0%, #E8B979 35%, #C6A559 70%, #A8853F 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .text-gold-soft { background: linear-gradient(135deg, #F5E5B8 0%, #E8B979 50%, #C6A559 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .bg-gold-grad { background: linear-gradient(135deg, #F5D38A 0%, #E8B979 35%, #D6A765 60%, #C6A559 100%); }
+
+    .eyebrow {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem; letter-spacing: 0.24em; text-transform: uppercase;
+      color: #E8B979; font-weight: 500;
+    }
+    .eyebrow-muted { color: var(--text-muted); }
+
+    .wordmark { font-weight: 700; letter-spacing: -0.025em; }
+    .wordmark .dot { color: #C6A559; }
+
+    /* ===== Buttons ===== */
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 0.55rem;
+      padding: 0.95rem 1.7rem; border-radius: 999px;
+      font-weight: 600; font-size: 0.88rem; letter-spacing: 0.005em;
+      transition: transform .35s cubic-bezier(.2,.8,.2,1), box-shadow .35s cubic-bezier(.2,.8,.2,1),
+                  background-color .25s, color .25s, border-color .25s;
+      will-change: transform; position: relative; overflow: hidden;
+    }
+    .btn-gold {
+      background: linear-gradient(135deg, #F5D38A 0%, #E8B979 35%, #D6A765 60%, #C6A559 100%);
+      color: #2A220F;
+      box-shadow: 0 14px 36px -10px rgba(198, 165, 89, 0.55),
+                  0 2px 0 rgba(255,232,184,0.6) inset,
+                  0 -1px 0 rgba(122,96,41,0.35) inset;
+    }
+    .btn-gold::after {
+      content: ''; position: absolute; inset: 0; border-radius: inherit;
+      background: linear-gradient(120deg, transparent 30%, rgba(255,255,255,0.55) 50%, transparent 70%);
+      transform: translateX(-120%); transition: transform .9s cubic-bezier(.2,.8,.2,1);
+      pointer-events: none;
+    }
+    .btn-gold:hover { transform: translateY(-2px); box-shadow: 0 20px 44px -10px rgba(232, 185, 121, 0.75), 0 2px 0 rgba(255,232,184,0.7) inset, 0 -1px 0 rgba(122,96,41,0.35) inset; }
+    .btn-gold:hover::after { transform: translateX(120%); }
+    .btn-gold:active { transform: translateY(0); }
+
+    .btn-ghost-dark {
+      background: rgba(255, 255, 255, 0.03); color: var(--text-warm);
+      border: 1px solid rgba(232, 185, 121, 0.30);
+      -webkit-backdrop-filter: blur(6px);
+      backdrop-filter: blur(6px);
+    }
+    .btn-ghost-dark:hover { background: rgba(232, 185, 121, 0.10); border-color: rgba(232,185,121,0.55); transform: translateY(-2px); }
+
+    /* ===== Hairlines ===== */
+    .hairline { border-top: 1px solid rgba(232,185,121,0.10); }
+
+    /* ===== Grain ===== */
+    .grain {
+      position: fixed; inset: 0; pointer-events: none; z-index: 80;
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.5 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/></svg>");
+      opacity: 0.05; mix-blend-mode: overlay;
+    }
+
+    /* ===== Nav scroll state ===== */
+    .nav-bar { transition: background-color .4s ease, backdrop-filter .4s ease, border-color .4s, box-shadow .4s, color .4s; }
+    .nav-bar.is-scrolled {
+      background-color: rgba(8, 7, 10, 0.78);
+      -webkit-backdrop-filter: blur(18px) saturate(140%);
+      backdrop-filter: blur(18px) saturate(140%);
+      border-bottom-color: rgba(232,185,121,0.10);
+      box-shadow: 0 12px 30px -20px rgba(0,0,0,0.7);
+    }
+
+    /* ===== Hero ===== */
+    .hero-video {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      z-index: 0;
+    }
+    .hero-veil {
+      position: absolute; inset: 0; z-index: 1; pointer-events: none;
+      background:
+        radial-gradient(80% 60% at 50% 50%, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.55) 70%, rgba(0,0,0,0.95) 100%),
+        linear-gradient(180deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.15) 38%, rgba(0,0,0,0.35) 62%, #000 100%);
+    }
+    .hero-glow {
+      position: absolute; inset: 0; z-index: 1; pointer-events: none;
+      background:
+        radial-gradient(700px 500px at 15% 90%, rgba(232,185,121,0.10), transparent 60%),
+        radial-gradient(600px 400px at 85% 10%, rgba(168,133,63,0.10), transparent 60%);
+      mix-blend-mode: screen;
+    }
+
+    /* ===== Section atmospheres — pure black with subtle gold glow overlays ===== */
+    .bg-features {
+      position: relative;
+      background:
+        radial-gradient(900px 600px at 20% 0%, rgba(232,185,121,0.05), transparent 60%),
+        radial-gradient(700px 500px at 90% 90%, rgba(168,133,63,0.04), transparent 60%),
+        #000;
+    }
+    .bg-stats {
+      position: relative;
+      background:
+        radial-gradient(700px 400px at 80% 50%, rgba(232,185,121,0.04), transparent 65%),
+        #000;
+    }
+    .bg-dissection {
+      position: relative;
+      background:
+        radial-gradient(900px 700px at 50% 50%, rgba(232,185,121,0.05), transparent 60%),
+        #000;
+    }
+    .bg-cta {
+      position: relative;
+      background:
+        radial-gradient(900px 600px at 12% 110%, rgba(214, 167, 101, 0.22), transparent 60%),
+        radial-gradient(700px 500px at 92% 0%, rgba(232, 185, 121, 0.12), transparent 60%),
+        radial-gradient(500px 400px at 60% 50%, rgba(74, 41, 14, 0.30), transparent 60%),
+        #000;
+    }
+
+    /* ===== Reveal anims — CSS-driven, triggered via IntersectionObserver ===== */
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity 1s cubic-bezier(.2,.8,.2,1), transform 1s cubic-bezier(.2,.8,.2,1); }
+    .reveal.in { opacity: 1; transform: translateY(0); }
+    .reveal-d1 { transition-delay: .12s; }
+    .reveal-d2 { transition-delay: .24s; }
+    .reveal-d3 { transition-delay: .38s; }
+    .reveal-d4 { transition-delay: .52s; }
+    .reveal-d5 { transition-delay: .66s; }
+    .reveal-d6 { transition-delay: .80s; }
+
+    /* ===== Marquee ===== */
+    .marquee-wrap { overflow: hidden; position: relative; padding: 6vh 0; }
+    .marquee-track { display: flex; gap: 6vw; white-space: nowrap; will-change: transform; }
+    .marquee-text {
+      font-family: 'Montserrat', system-ui, sans-serif;
+      font-weight: 800; letter-spacing: -0.04em;
+      font-size: 12vw; line-height: 1; text-transform: uppercase;
+      color: transparent;
+      -webkit-text-stroke: 1px rgba(232,185,121,0.50);
+    }
+    .marquee-text .filled {
+      background: linear-gradient(135deg, #F5D38A 0%, #E8B979 35%, #C6A559 70%, #A8853F 100%);
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+      -webkit-text-stroke: 0;
+    }
+    @keyframes marquee-fallback {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+    .marquee-track-css { animation: marquee-fallback 40s linear infinite; }
+
+    /* ===== Feature row ===== */
+    .feature-row { position: relative; padding: 7vh 0; }
+    .feature-row .num-plate {
+      font-family: 'Montserrat', system-ui, sans-serif;
+      font-weight: 200; font-style: italic; letter-spacing: -0.02em; line-height: 1;
+      font-size: 7rem; color: transparent;
+      -webkit-text-stroke: 1px rgba(232,185,121,0.45);
+    }
+    .feature-row .icon-frame {
+      width: 64px; height: 64px; border-radius: 16px;
+      display: inline-flex; align-items: center; justify-content: center;
+      background: rgba(232,185,121,0.08);
+      border: 1px solid rgba(232,185,121,0.22);
+      color: #E8B979;
+    }
+
+    /* CSS-driven feature animations — added via IntersectionObserver */
+    .feature-row .feature-elem {
+      transition:
+        opacity .95s cubic-bezier(.2,.8,.2,1),
+        transform .95s cubic-bezier(.2,.8,.2,1),
+        clip-path 1s cubic-bezier(.2,.8,.2,1);
+      will-change: opacity, transform;
+    }
+    .feature-row[data-animation="fade-up"]     .feature-elem { opacity: 0; transform: translateY(60px); }
+    .feature-row[data-animation="slide-right"] .feature-elem { opacity: 0; transform: translateX(-80px); }
+    .feature-row[data-animation="slide-left"]  .feature-elem { opacity: 0; transform: translateX(80px); }
+    .feature-row[data-animation="scale-up"]    .feature-elem { opacity: 0; transform: scale(0.92); }
+    .feature-row[data-animation="rotate-in"]   .feature-elem { opacity: 0; transform: translateY(40px) rotate(2.5deg); }
+    .feature-row[data-animation="clip-reveal"] .feature-elem { opacity: 0; clip-path: inset(100% 0 0 0); }
+    .feature-row.in .feature-elem {
+      opacity: 1; transform: none; clip-path: inset(0 0 0 0);
+    }
+    .feature-row.in .feature-elem:nth-of-type(2) { transition-delay: .14s; }
+
+    /* ===== Dissection — scroll-bound canvas ===== */
+    .video-stage {
+      position: relative;
+      aspect-ratio: 16/9;
+      border-radius: 28px;
+      overflow: hidden;
+      border: 1px solid rgba(232,185,121,0.15);
+      box-shadow: 0 60px 120px -50px rgba(0,0,0,0.8), 0 0 0 1px rgba(232,185,121,0.08) inset;
+      background: #000;
+    }
+    .video-stage video,
+    .video-stage canvas { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    /* ============================================================
+       Dissection — DESKTOP layout (≥ 768px): sticky-pinned canvas
+       with absolutely-positioned callouts and stems. Untouched.
+       ============================================================ */
+    .dissection-scrub-wrap { position: relative; height: 160vh; }
+    .dissection-sticky {
+      position: sticky; top: 0;
+      height: 100vh; height: 100dvh;
+      display: flex; align-items: center; justify-content: center;
+      padding: 4vh 1.25rem;
+    }
+    .dissection-stage {
+      aspect-ratio: 16/9;
+      width: 100%; max-width: 1320px; margin: 0 auto;
+    }
+    #dissection-canvas { background: #000; }
+    .dissection-fallback { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+    .dissection-mobile-video { display: none; }   /* visible only on mobile */
+
+    .callout-layer { position: absolute; inset: 0; pointer-events: none; }
+    .callout {
+      position: absolute; z-index: 5;
+      display: flex; align-items: center; gap: 0.65rem;
+      opacity: 0; transform: translateY(8px);
+      transition: opacity .8s cubic-bezier(.2,.8,.2,1), transform .8s cubic-bezier(.2,.8,.2,1);
+      pointer-events: none;
+    }
+    .callout.in { opacity: 1; transform: translateY(0); }
+    .callout .dot {
+      width: 12px; height: 12px; border-radius: 999px;
+      background: #E8B979;
+      box-shadow: 0 0 0 3px rgba(232,185,121,0.25), 0 0 16px rgba(232,185,121,0.5);
+      flex-shrink: 0;
+      animation: pulse 2.2s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 0 0 3px rgba(232,185,121,0.25), 0 0 16px rgba(232,185,121,0.5); }
+      50%      { box-shadow: 0 0 0 7px rgba(232,185,121,0.10), 0 0 24px rgba(232,185,121,0.7); }
+    }
+    .callout .stem {
+      height: 1px; background: linear-gradient(90deg, rgba(232,185,121,0.6), rgba(232,185,121,0.05));
+      flex-shrink: 0;
+    }
+    .callout .label {
+      -webkit-backdrop-filter: blur(10px);
+      backdrop-filter: blur(10px);
+      background: rgba(8,7,10,0.65);
+      border: 1px solid rgba(232,185,121,0.22);
+      border-radius: 999px;
+      padding: 0.45rem 0.85rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: #F5E5B8;
+      white-space: nowrap;
+    }
+    .callout--right { flex-direction: row; }
+    .callout--left  { flex-direction: row-reverse; }
+    .callout--left .stem { transform: scaleX(-1); }
+
+    /* Mobile callout list — hidden by default, only visible ≤767px */
+    .callout-mobile-list { display: none; }
+
+    /* ============================================================
+       Dissection — MOBILE layout (≤ 767px): no sticky pin, video
+       plays inline, desktop callout-layer hidden, dedicated vertical
+       list rendered below the stage as a sibling element.
+       ============================================================ */
+    @media (max-width: 767px) {
+      .dissection-scrub-wrap { height: auto; position: static; padding: 0 1.25rem; }
+      .dissection-sticky {
+        position: static; height: auto;
+        display: block; padding: 0;
+      }
+      .dissection-stage {
+        aspect-ratio: 16/9;
+        max-width: 100%;
+        margin: 0 auto;
+        border-radius: 14px;
+      }
+      #dissection-canvas { display: none; }
+      .dissection-mobile-video {
+        display: block;
+        width: 100%; height: 100%;
+        object-fit: cover;
+      }
+
+      /* Hide the desktop in-stage absolute callout layer — it gets clipped
+         by .video-stage overflow:hidden and would never be visible anyway. */
+      .video-stage .callout-layer { display: none !important; }
+
+      /* Mobile vertical list — sibling of .video-stage, free from the clip mask */
+      .callout-mobile-list {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+        padding: 2rem 0 0.5rem;
+        margin: 0;
+        list-style: none;
+      }
+      .callout-mobile-item {
+        display: flex;
+        gap: 0.9rem;
+        align-items: flex-start;
+        opacity: 0;
+        transform: translateX(-18px);
+        transition: opacity .55s cubic-bezier(.2,.8,.2,1), transform .55s cubic-bezier(.2,.8,.2,1);
+      }
+      .callout-mobile-list.in .callout-mobile-item {
+        opacity: 1;
+        transform: translateX(0);
+      }
+      .callout-mobile-list.in .callout-mobile-item:nth-child(1) { transition-delay: 0.05s; }
+      .callout-mobile-list.in .callout-mobile-item:nth-child(2) { transition-delay: 0.15s; }
+      .callout-mobile-list.in .callout-mobile-item:nth-child(3) { transition-delay: 0.25s; }
+      .callout-mobile-list.in .callout-mobile-item:nth-child(4) { transition-delay: 0.35s; }
+      .callout-mobile-list.in .callout-mobile-item:nth-child(5) { transition-delay: 0.45s; }
+
+      .callout-mobile-dot {
+        width: 10px; height: 10px; border-radius: 999px;
+        background: #E8B979;
+        box-shadow: 0 0 0 3px rgba(232,185,121,0.22), 0 0 12px rgba(232,185,121,0.55);
+        flex-shrink: 0;
+        margin-top: 0.45rem;
+        animation: pulse 2.2s ease-in-out infinite;
+      }
+      .callout-mobile-body {
+        display: flex; flex-direction: column;
+        gap: 0.3rem;
+        flex: 1; min-width: 0;
+      }
+      .callout-mobile-label {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 0.7rem; letter-spacing: 0.22em;
+        text-transform: uppercase; color: #E8B979;
+        font-weight: 500;
+      }
+      .callout-mobile-desc {
+        font-family: 'Montserrat', system-ui, sans-serif;
+        font-size: 0.92rem; line-height: 1.55;
+        color: rgba(242, 237, 227, 0.7); font-weight: 400;
+      }
+    }
+
+    /* ===== Spec chips (hero) ===== */
+    .spec-chip {
+      display: inline-flex; align-items: center; gap: 0.45rem;
+      padding: 0.45rem 0.85rem;
+      border: 1px solid rgba(232,185,121,0.28);
+      background: rgba(8,7,10,0.55);
+      -webkit-backdrop-filter: blur(8px);
+      backdrop-filter: blur(8px);
+      border-radius: 999px;
+      color: var(--text-warm);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem; letter-spacing: 0.10em;
+      white-space: nowrap;
+    }
+    .spec-chip .dot { width: 6px; height: 6px; border-radius: 999px; background: #E8B979; box-shadow: 0 0 8px rgba(232,185,121,0.6); }
+
+    /* ===== Scroll indicator ===== */
+    .scroll-cue {
+      width: 22px; height: 36px; border: 1px solid rgba(232,185,121,0.45);
+      border-radius: 12px; position: relative;
+    }
+    .scroll-cue::after {
+      content: ''; position: absolute; top: 6px; left: 50%; transform: translateX(-50%);
+      width: 3px; height: 8px; border-radius: 2px; background: #E8B979;
+      animation: cue 1.8s ease-in-out infinite;
+    }
+    @keyframes cue {
+      0%   { transform: translate(-50%, 0);   opacity: 0; }
+      30%  { opacity: 1; }
+      70%  { opacity: 1; }
+      100% { transform: translate(-50%, 14px); opacity: 0; }
+    }
+
+    /* ===== Megamark footer ===== */
+    .megamark {
+      font-weight: 800; letter-spacing: -0.07em; line-height: 0.82;
+      background: linear-gradient(180deg, #2A220F 0%, #15110D 60%, #0A0807 100%);
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+    }
+    .megamark-gold {
+      background: linear-gradient(180deg, #E8B979 0%, #C6A559 50%, #7A6029 100%);
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+    }
+
+    /* ===== Focus ===== */
+    a:focus-visible, button:focus-visible {
+      outline: 2px solid #C6A559; outline-offset: 3px; border-radius: 6px;
+    }
+
+    /* ===== Stat counter ===== */
+    .stat-num {
+      font-family: 'Montserrat', system-ui, sans-serif;
+      font-weight: 800; letter-spacing: -0.04em; line-height: 1;
+      font-variant-numeric: tabular-nums;
+    }
+
+    @media (max-width: 900px) {
+      .feature-row { padding: 5vh 0; }
+      .feature-row .num-plate { font-size: 5rem; }
+      .marquee-wrap { padding: 4vh 0; }
+    }
+    /* Tablet-only: shrink desktop pill callouts on narrow desktops/tablets */
+    @media (min-width: 768px) and (max-width: 900px) {
+      .callout .label { font-size: 0.62rem; padding: 0.35rem 0.7rem; }
+      .callout .stem { width: 24px !important; }
+      .callout .dot  { width: 10px; height: 10px; }
+    }
+
+    /* Mobile nav menu */
+    .mobile-menu {
+      position: absolute; left: 0; right: 0; top: 100%;
+      background: rgba(8,7,10,0.94);
+      -webkit-backdrop-filter: blur(18px) saturate(140%);
+      backdrop-filter: blur(18px) saturate(140%);
+      border-bottom: 1px solid rgba(232,185,121,0.10);
+      box-shadow: 0 18px 48px -20px rgba(0,0,0,0.7);
+      transform-origin: top;
+      transform: scaleY(0.96);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .25s ease, transform .25s ease;
+    }
+    .mobile-menu.is-open {
+      opacity: 1;
+      transform: scaleY(1);
+      pointer-events: auto;
+    }
+    .mobile-menu a {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1rem 1.25rem;
+      border-bottom: 1px solid rgba(232,185,121,0.06);
+      color: var(--text-warm);
+      font-size: 0.95rem; font-weight: 500;
+      transition: color .2s, background-color .2s;
+    }
+    .mobile-menu a:hover, .mobile-menu a:focus-visible { color: #E8B979; background: rgba(232,185,121,0.04); }
+    .mobile-menu a[aria-current="page"] { color: #E8B979; }
+    .mobile-menu a svg { opacity: 0.5; transition: opacity .2s, transform .2s; }
+    .mobile-menu a:hover svg { opacity: 1; transform: translateX(3px); }
+
+    .nav-toggle {
+      width: 40px; height: 40px;
+      display: inline-flex; align-items: center; justify-content: center;
+      border: 1px solid rgba(232,185,121,0.30);
+      border-radius: 10px;
+      color: var(--text-warm);
+      background: rgba(255,255,255,0.02);
+      transition: border-color .2s, background-color .2s;
+    }
+    .nav-toggle:hover, .nav-toggle:focus-visible { border-color: rgba(232,185,121,0.6); background: rgba(232,185,121,0.06); }
+    .nav-toggle .bar { transition: transform .25s ease, opacity .2s ease; transform-origin: center; }
+    .nav-toggle[aria-expanded="true"] .bar-top    { transform: translateY(5px) rotate(45deg); }
+    .nav-toggle[aria-expanded="true"] .bar-mid    { opacity: 0; }
+    .nav-toggle[aria-expanded="true"] .bar-bottom { transform: translateY(-5px) rotate(-45deg); }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        animation-delay: 0ms !important;
+        transition-duration: 0.01ms !important;
+      }
+      .marquee-track-css { animation: none !important; }
+      .reveal { opacity: 1 !important; transform: none !important; }
+      .feature-row .feature-elem { opacity: 1 !important; transform: none !important; clip-path: none !important; }
+      .callout { opacity: 1 !important; transform: none !important; }
+      .scroll-cue::after { animation: none !important; }
+    }
+  </style>
+
+  <noscript>
+    <style>
+      .reveal, .feature-row .feature-elem, .callout {
+        opacity: 1 !important; transform: none !important; clip-path: none !important;
+      }
+      .marquee-track-css { animation: none !important; }
+    </style>
+  </noscript>
+</head>
+<body class="relative">
+
+  <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[100] focus:px-4 focus:py-2 focus:rounded-md focus:bg-ink-900 focus:text-gold-300 focus:text-sm focus:font-semibold focus:outline focus:outline-2 focus:outline-gold-500">Skip to content</a>
+
+  <div class="grain" aria-hidden="true"></div>
+
+  <!-- ============================================== -->
+  <!-- TOP UTILITY STRIP                              -->
+  <!-- ============================================== -->
+  <div class="relative z-40 bg-black text-ink-100 border-b border-white/[0.04]">
+    <div class="max-w-[1500px] mx-auto px-5 sm:px-6 lg:px-10 py-2.5 flex items-center justify-between gap-3 text-[10px] sm:text-[11px] font-mono tracking-[0.18em] uppercase">
+      <div class="flex items-center gap-4 sm:gap-6 min-w-0">
+        <span class="inline-flex items-center gap-2 text-gold-300 shrink-0">
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 inline-block animate-pulse"></span>
+          <span class="hidden sm:inline">Pre-orders open</span>
+          <span class="sm:hidden">Live</span>
+        </span>
+        <span class="hidden md:inline text-ink-100/65">Ships Q3 · 2026</span>
+      </div>
+      <div class="flex items-center gap-3 sm:gap-5 text-ink-100/65 shrink-0">
+        <a href="./TesterTech.html" class="inline-block py-1.5 hover:text-gold-300">Tester Tech</a>
+        <a href="./tester-2030.html" class="inline-block py-1.5 hover:text-gold-300 hidden sm:inline">Glimpse 2030 &rarr;</a>
+        <a href="mailto:hello@tester.io" class="inline-block py-1.5 hover:text-gold-300 hidden md:inline">hello@tester.io</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================== -->
+  <!-- NAV — Products marked as current page          -->
+  <!-- ============================================== -->
+  <header id="nav" class="nav-bar sticky top-0 z-50 bg-transparent border-b border-transparent">
+    <div class="relative max-w-[1500px] mx-auto px-5 sm:px-6 lg:px-10 py-5 flex items-center justify-between gap-3">
+      <a href="./index.html" class="flex items-center gap-2.5 group min-w-0">
+        <img src="brand_assets/tester-logo.png" alt="Tester.io home" class="h-9 w-9 object-contain drop-shadow-[0_4px_12px_rgba(198,165,89,0.45)]" />
+        <span class="wordmark text-[1.2rem] lg:text-[1.35rem] text-ink-50">Tester<span class="dot">.</span>io</span>
+        <span class="hidden lg:inline ml-2 px-2 py-0.5 rounded-full border border-gold-500/40 text-[10px] font-mono tracking-[0.22em] uppercase text-gold-300">Products</span>
+      </a>
+
+      <nav class="hidden md:flex items-center gap-7 lg:gap-9 text-[0.82rem] tracking-[0.04em] text-ink-100/65 font-medium">
+        <a href="./index.html#about" class="hover:text-ink-50 relative group">
+          About
+          <span class="absolute left-0 -bottom-1 h-px w-0 bg-gold-500 group-hover:w-full transition-[width] duration-500"></span>
+        </a>
+        <a href="./index.html#services" class="hover:text-ink-50 relative group">
+          Services
+          <span class="absolute left-0 -bottom-1 h-px w-0 bg-gold-500 group-hover:w-full transition-[width] duration-500"></span>
+        </a>
+        <a href="./TesterTech.html" class="hover:text-ink-50 relative group">
+          Tech
+          <span class="absolute left-0 -bottom-1 h-px w-0 bg-gold-500 group-hover:w-full transition-[width] duration-500"></span>
+        </a>
+        <a href="./product.html" class="text-ink-50 relative group" aria-current="page">
+          Products
+          <span class="absolute left-0 -bottom-1 h-px w-full bg-gold-500"></span>
+        </a>
+        <a href="./index.html#work" class="hover:text-ink-50 relative group">
+          Work
+          <span class="absolute left-0 -bottom-1 h-px w-0 bg-gold-500 group-hover:w-full transition-[width] duration-500"></span>
+        </a>
+        <a href="./index.html#contact" class="hover:text-ink-50 relative group">
+          Contact
+          <span class="absolute left-0 -bottom-1 h-px w-0 bg-gold-500 group-hover:w-full transition-[width] duration-500"></span>
+        </a>
+      </nav>
+
+      <div class="flex items-center gap-2 sm:gap-3 shrink-0">
+        <a href="#cta" class="btn btn-gold text-[0.78rem] sm:text-[0.82rem] py-2.5 sm:py-3 px-4 sm:px-5">
+          Pre-order
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </a>
+        <button type="button" class="nav-toggle md:hidden" id="mobile-menu-toggle"
+                aria-label="Open menu" aria-controls="mobile-menu" aria-expanded="false">
+          <svg width="20" height="14" viewBox="0 0 20 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+            <line class="bar bar-top"    x1="2" y1="2"  x2="18" y2="2"  />
+            <line class="bar bar-mid"    x1="2" y1="7"  x2="18" y2="7"  />
+            <line class="bar bar-bottom" x1="2" y1="12" x2="18" y2="12" />
+          </svg>
+        </button>
+      </div>
+
+      <!-- Mobile menu panel (slides from below the nav bar) -->
+      <div class="mobile-menu md:hidden" id="mobile-menu" aria-label="Mobile navigation">
+        <a href="./index.html#about">
+          About
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </a>
+        <a href="./index.html#services">
+          Services
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </a>
+        <a href="./TesterTech.html">
+          Tech
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </a>
+        <a href="./product.html" aria-current="page">
+          Products
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </a>
+        <a href="./index.html#work">
+          Work
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </a>
+        <a href="./index.html#contact">
+          Contact
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ============================================== -->
+  <!-- HERO — full-bleed video centerpiece           -->
+  <!-- ============================================== -->
+  <section id="main" class="relative isolate -mt-[64px] pt-[64px] lg:-mt-[76px] lg:pt-[76px] min-h-[100dvh] overflow-hidden">
+    <video class="hero-video" autoplay muted loop playsinline preload="auto" poster=""
+           aria-label="Tester Smart Watch Pro dissection animation"
+           id="hero-video">
+      <source src="Smart Watch Dissection.mp4" type="video/mp4" />
+    </video>
+
+    <div class="hero-veil" aria-hidden="true"></div>
+    <div class="hero-glow" aria-hidden="true"></div>
+
+    <div class="relative z-10 max-w-[1500px] mx-auto px-5 sm:px-6 lg:px-10 min-h-[calc(100dvh-64px)] lg:min-h-[calc(100dvh-76px)] flex flex-col justify-between gap-10 sm:gap-12 pt-8 sm:pt-12 lg:pt-20 pb-10 sm:pb-14 lg:pb-20">
+
+      <div class="reveal flex items-center justify-between gap-6">
+        <div class="flex items-center gap-3 text-gold-300">
+          <span class="h-px w-10 bg-gold-300/55"></span>
+          <span class="eyebrow">001 · Now in pre-order</span>
+        </div>
+        <div class="hidden md:flex items-center gap-3 text-[11px] font-mono tracking-[0.22em] uppercase text-ink-100/55">
+          <span>Tester · Products</span>
+          <span class="w-1 h-1 rounded-full bg-gold-300/60"></span>
+          <span>Watch · 03</span>
+        </div>
+      </div>
+
+      <div class="max-w-[58ch]">
+        <h1 class="reveal reveal-d1 display text-[clamp(2.8rem,12vw,9rem)] text-ink-50">
+          Tester
+          <span class="block">Smart&nbsp;Watch</span>
+          <span class="display-italic text-gold block lg:inline">Pro.</span>
+        </h1>
+
+        <p class="reveal reveal-d3 mt-8 max-w-[42ch] text-[1.05rem] lg:text-[1.18rem] text-ink-50/80 leading-[1.55]">
+          <span class="display-italic text-gold-soft">Precision</span> on your wrist.
+          Titanium, sapphire, 7&nbsp;days of battery — the watch we'd carry into the lab.
+        </p>
+
+        <div class="reveal reveal-d4 mt-9 flex flex-wrap items-center gap-3">
+          <a href="#cta" class="btn btn-gold">
+            Pre-order $349
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </a>
+          <a href="#dissection" class="btn btn-ghost-dark">See the dissection</a>
+        </div>
+      </div>
+
+      <div class="reveal reveal-d5 flex items-end justify-between gap-6 flex-wrap">
+        <div class="flex flex-wrap gap-2.5">
+          <span class="spec-chip"><span class="dot"></span>Grade-5 titanium</span>
+          <span class="spec-chip"><span class="dot"></span>Sapphire crystal</span>
+          <span class="spec-chip"><span class="dot"></span>7-day battery</span>
+          <span class="spec-chip"><span class="dot"></span>10&nbsp;ATM</span>
+          <span class="spec-chip"><span class="dot"></span>ECG · HRV · SpO₂</span>
+        </div>
+        <div class="flex items-center gap-3 text-[11px] font-mono tracking-[0.22em] uppercase text-ink-100/55">
+          <span>Scroll</span>
+          <span class="scroll-cue" aria-hidden="true"></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================== -->
+  <!-- MARQUEE — oversized horizontal text            -->
+  <!-- ============================================== -->
+  <section class="relative bg-black overflow-hidden border-y border-gold-500/[0.10]">
+    <div class="marquee-wrap" aria-hidden="true">
+      <div class="marquee-track marquee-track-css" id="marquee">
+        <div class="marquee-text">Precision&nbsp;<span class="filled">on&nbsp;your&nbsp;wrist</span>&nbsp;· Tester&nbsp;<span class="filled">Smart&nbsp;Watch&nbsp;Pro</span>&nbsp;·</div>
+        <div class="marquee-text">Precision&nbsp;<span class="filled">on&nbsp;your&nbsp;wrist</span>&nbsp;· Tester&nbsp;<span class="filled">Smart&nbsp;Watch&nbsp;Pro</span>&nbsp;·</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================== -->
+  <!-- FEATURES — 6 rows, alternating layout          -->
+  <!-- ============================================== -->
+  <section id="features" class="bg-features relative">
+    <div class="relative max-w-[1500px] mx-auto px-5 sm:px-6 lg:px-10 pt-16 sm:pt-24 lg:pt-32 pb-4 sm:pb-8">
+      <div class="reveal max-w-[44rem] mb-8">
+        <div class="eyebrow eyebrow-muted mb-5 flex items-center gap-3">
+          <span class="h-px w-8 bg-gold-500/45"></span>
+          002 · Features
+        </div>
+        <h2 class="h2 display text-[clamp(2.4rem,5vw,4rem)] text-ink-50">
+          Six instruments. <span class="display-italic text-gold">One wrist.</span>
+        </h2>
+        <p class="mt-5 text-[1rem] text-ink-100/65 leading-[1.7] max-w-[52ch]">
+          Every sensor on the Pro was specified, soak-tested, and benchmarked against three
+          generations before it shipped. Below: the ones that matter.
+        </p>
+      </div>
+    </div>
+
+    <article class="feature-row" data-animation="slide-right">
+      <div class="max-w-[1280px] mx-auto px-5 sm:px-6 lg:px-10 flex flex-col lg:flex-row lg:justify-center items-start lg:items-center gap-6 sm:gap-8 lg:gap-16">
+        <div class="feature-elem shrink-0">
+          <div class="num-plate">01</div>
+        </div>
+        <div class="feature-elem max-w-[520px]">
+          <span class="icon-frame mb-6">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h3l2-6 4 12 2-6h7"/></svg>
+          </span>
+          <div class="eyebrow mb-3">Vitals</div>
+          <h3 class="h2 text-[clamp(2rem,3.6vw,3.2rem)] text-ink-50">
+            Heart rate &amp; <span class="display-italic text-gold">HRV.</span>
+          </h3>
+          <p class="mt-4 text-[1rem] text-ink-100/65 leading-[1.7]">
+            Medical-grade optical sensor with ECG-backed HRV. Continuous in the background,
+            elevated when you ask, and quiet when you sleep.
+          </p>
+        </div>
+      </div>
+    </article>
+
+    <article class="feature-row" data-animation="slide-left">
+      <div class="max-w-[1280px] mx-auto px-5 sm:px-6 lg:px-10 flex flex-col lg:flex-row lg:justify-center items-start lg:items-center gap-6 sm:gap-8 lg:gap-16">
+        <div class="feature-elem max-w-[520px] order-2 lg:order-1">
+          <span class="icon-frame mb-6">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="10" r="3"/><path d="M12 22s-7-7.5-7-12a7 7 0 1 1 14 0c0 4.5-7 12-7 12z"/></svg>
+          </span>
+          <div class="eyebrow mb-3">Location</div>
+          <h3 class="h2 text-[clamp(2rem,3.6vw,3.2rem)] text-ink-50">
+            Dual-band <span class="display-italic text-gold">GPS.</span>
+          </h3>
+          <p class="mt-4 text-[1rem] text-ink-100/65 leading-[1.7]">
+            L1 + L5 multi-constellation positioning. Pavement-accurate in cities, signal-stable
+            in canyons and dense canopy. Offline maps included.
+          </p>
+        </div>
+        <div class="feature-elem shrink-0 order-1 lg:order-2">
+          <div class="num-plate">02</div>
+        </div>
+      </div>
+    </article>
+
+    <article class="feature-row" data-animation="scale-up">
+      <div class="max-w-[1280px] mx-auto px-5 sm:px-6 lg:px-10 flex flex-col lg:flex-row lg:justify-center items-start lg:items-center gap-6 sm:gap-8 lg:gap-16">
+        <div class="feature-elem shrink-0">
+          <div class="num-plate">03</div>
+        </div>
+        <div class="feature-elem max-w-[520px]">
+          <span class="icon-frame mb-6">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2s5 6.5 5 12a5 5 0 1 1-10 0c0-5.5 5-12 5-12z"/></svg>
+          </span>
+          <div class="eyebrow mb-3">Resistance</div>
+          <h3 class="h2 text-[clamp(2rem,3.6vw,3.2rem)] text-ink-50">
+            10&nbsp;ATM <span class="display-italic text-gold">water-rated.</span>
+          </h3>
+          <p class="mt-4 text-[1rem] text-ink-100/65 leading-[1.7]">
+            Swim, surf, dive shallow. Rated to MIL-STD-810H — dust, vibration, salt-spray,
+            and a 1.5 m drop onto hardwood. We tested all three.
+          </p>
+        </div>
+      </div>
+    </article>
+
+    <article class="feature-row" data-animation="fade-up">
+      <div class="max-w-[1280px] mx-auto px-5 sm:px-6 lg:px-10 flex flex-col lg:flex-row lg:justify-center items-start lg:items-center gap-6 sm:gap-8 lg:gap-16">
+        <div class="feature-elem max-w-[520px] order-2 lg:order-1">
+          <span class="icon-frame mb-6">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="18" height="10" rx="2"/><path d="M22 11v2"/><path d="M5 10v4"/></svg>
+          </span>
+          <div class="eyebrow mb-3">Endurance</div>
+          <h3 class="h2 text-[clamp(2rem,3.6vw,3.2rem)] text-ink-50">
+            7-day <span class="display-italic text-gold">battery.</span>
+          </h3>
+          <p class="mt-4 text-[1rem] text-ink-100/65 leading-[1.7]">
+            A week on the wrist under regular use. Three on heavy training. We publish the
+            curve — see the dashboard before you commit.
+          </p>
+        </div>
+        <div class="feature-elem shrink-0 order-1 lg:order-2">
+          <div class="num-plate">04</div>
+        </div>
+      </div>
+    </article>
+
+    <article class="feature-row" data-animation="clip-reveal">
+      <div class="max-w-[1280px] mx-auto px-5 sm:px-6 lg:px-10 flex flex-col lg:flex-row lg:justify-center items-start lg:items-center gap-6 sm:gap-8 lg:gap-16">
+        <div class="feature-elem shrink-0">
+          <div class="num-plate">05</div>
+        </div>
+        <div class="feature-elem max-w-[520px]">
+          <span class="icon-frame mb-6">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4c-.3 1-.4 2-.2 3a6 6 0 0 0 8 8c.9.1 1.8.1 2.7-.5z"/></svg>
+          </span>
+          <div class="eyebrow mb-3">Recovery</div>
+          <h3 class="h2 text-[clamp(2rem,3.6vw,3.2rem)] text-ink-50">
+            Sleep &amp; <span class="display-italic text-gold">recovery.</span>
+          </h3>
+          <p class="mt-4 text-[1rem] text-ink-100/65 leading-[1.7]">
+            Stage detection without a chest strap. Skin-temp drift, HRV trends, and a quiet
+            wake that doesn't pull you out of REM.
+          </p>
+        </div>
+      </div>
+    </article>
+
+    <article class="feature-row pb-32" data-animation="rotate-in">
+      <div class="max-w-[1280px] mx-auto px-5 sm:px-6 lg:px-10 flex flex-col lg:flex-row lg:justify-center items-start lg:items-center gap-6 sm:gap-8 lg:gap-16">
+        <div class="feature-elem max-w-[520px] order-2 lg:order-1">
+          <span class="icon-frame mb-6">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="12" cy="12" r="3.2"/></svg>
+          </span>
+          <div class="eyebrow mb-3">Display</div>
+          <h3 class="h2 text-[clamp(2rem,3.6vw,3.2rem)] text-ink-50">
+            Always-on <span class="display-italic text-gold">AMOLED.</span>
+          </h3>
+          <p class="mt-4 text-[1rem] text-ink-100/65 leading-[1.7]">
+            1.8&quot; sapphire-protected AMOLED at 2000 nits peak. Refreshes faster than your
+            wrist can flick — and still reads cleanly under direct sun.
+          </p>
+        </div>
+        <div class="feature-elem shrink-0 order-1 lg:order-2">
+          <div class="num-plate">06</div>
+        </div>
+      </div>
+    </article>
+  </section>
+
+  <!-- ============================================== -->
+  <!-- STATS — count-up animations                    -->
+  <!-- ============================================== -->
+  <section class="bg-stats relative py-16 sm:py-24 lg:py-32 border-y border-gold-500/[0.08]">
+    <div class="max-w-[1500px] mx-auto px-5 sm:px-6 lg:px-10">
+      <div class="reveal max-w-[44rem] mb-8 sm:mb-12 lg:mb-14">
+        <div class="eyebrow eyebrow-muted mb-4 sm:mb-5 flex items-center gap-3">
+          <span class="h-px w-8 bg-gold-500/45"></span>
+          003 · By the numbers
+        </div>
+        <h2 class="h2 display text-[clamp(2.2rem,4.4vw,3.6rem)] text-ink-50">
+          Measured. <span class="display-italic text-gold">Twice.</span>
+        </h2>
+      </div>
+
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-8 sm:gap-10 lg:gap-14">
+        <div class="reveal">
+          <div class="flex items-baseline gap-1.5">
+            <span class="stat-num text-[clamp(2.4rem,9vw,5.5rem)] text-gold" data-stat="168" data-decimals="0">0</span>
+            <span class="display text-gold/70 text-[clamp(1rem,1.6vw,1.8rem)]">hr</span>
+          </div>
+          <div class="eyebrow mt-3">Battery life</div>
+        </div>
+        <div class="reveal reveal-d1">
+          <div class="flex items-baseline gap-1.5">
+            <span class="stat-num text-[clamp(2.4rem,9vw,5.5rem)] text-gold" data-stat="2000" data-decimals="0">0</span>
+            <span class="display text-gold/70 text-[clamp(1rem,1.6vw,1.8rem)]">nit</span>
+          </div>
+          <div class="eyebrow mt-3">Peak brightness</div>
+        </div>
+        <div class="reveal reveal-d2">
+          <div class="flex items-baseline gap-1.5">
+            <span class="stat-num text-[clamp(2.4rem,9vw,5.5rem)] text-gold" data-stat="42" data-decimals="0">0</span>
+            <span class="display text-gold/70 text-[clamp(1rem,1.6vw,1.8rem)]">g</span>
+          </div>
+          <div class="eyebrow mt-3">Case weight</div>
+        </div>
+        <div class="reveal reveal-d3">
+          <div class="flex items-baseline gap-1.5">
+            <span class="stat-num text-[clamp(2.4rem,9vw,5.5rem)] text-gold" data-stat="4.9" data-decimals="1">0</span>
+            <span class="display text-gold/70 text-[clamp(1rem,1.6vw,1.8rem)]">★</span>
+          </div>
+          <div class="eyebrow mt-3">Avg. review</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================== -->
+  <!-- DISSECTION — scroll-bound canvas frame sequence -->
+  <!-- ============================================== -->
+  <section id="dissection" class="bg-dissection relative">
+    <div class="max-w-[1500px] mx-auto px-5 sm:px-6 lg:px-10 pt-16 sm:pt-24 lg:pt-32">
+      <div class="reveal max-w-[44rem] mb-8 sm:mb-12 lg:mb-16">
+        <div class="eyebrow eyebrow-muted mb-5 flex items-center gap-3">
+          <span class="h-px w-8 bg-gold-500/45"></span>
+          004 · Dissection
+        </div>
+        <h2 class="h2 display text-[clamp(2.4rem,5vw,4rem)] text-ink-50">
+          Every part. <span class="display-italic text-gold">Accounted for.</span>
+        </h2>
+        <p class="mt-5 text-[1rem] text-ink-100/65 leading-[1.7] max-w-[52ch]">
+          We open it because we built it. Every layer, every material, every
+          choice — designed to be seen.
+        </p>
+      </div>
+    </div>
+
+    <div class="dissection-scrub-wrap"
+         id="dissection-scrub"
+         data-frame-count="121" data-frame-prefix="frames/frame_" data-frame-ext=".webp">
+      <div class="dissection-sticky">
+        <div class="video-stage dissection-stage">
+          <canvas id="dissection-canvas"
+                  aria-label="Tester Smart Watch Pro dissection — scroll to advance"></canvas>
+
+          <video class="dissection-mobile-video"
+                 autoplay muted loop playsinline preload="metadata"
+                 aria-label="Tester Smart Watch Pro dissection">
+            <source src="Smart Watch Dissection.mp4" type="video/mp4" />
+          </video>
+
+          <noscript>
+            <video class="dissection-fallback" autoplay muted loop playsinline preload="metadata">
+              <source src="Smart Watch Dissection.mp4" type="video/mp4" />
+            </video>
+          </noscript>
+
+          <div class="callout-layer">
+            <div class="callout callout--right" data-callout="1" data-progress="0.10" style="top: 14%; left: 50%; transform: translate(-50%, -50%);">
+              <span class="dot"></span>
+              <span class="stem" style="width: 60px;"></span>
+              <span class="label">01 · Sapphire crystal</span>
+            </div>
+            <div class="callout callout--left" data-callout="2" data-progress="0.30" style="top: 42%; left: 12%;">
+              <span class="dot"></span>
+              <span class="stem" style="width: 70px;"></span>
+              <span class="label">02 · Grade-5 titanium</span>
+            </div>
+            <div class="callout callout--right" data-callout="3" data-progress="0.48" style="top: 38%; right: 10%;">
+              <span class="dot"></span>
+              <span class="stem" style="width: 70px;"></span>
+              <span class="label">03 · AMOLED display</span>
+            </div>
+            <div class="callout callout--left" data-callout="4" data-progress="0.68" style="bottom: 22%; left: 14%;">
+              <span class="dot"></span>
+              <span class="stem" style="width: 60px;"></span>
+              <span class="label">04 · Optical sensor</span>
+            </div>
+            <div class="callout callout--right" data-callout="5" data-progress="0.84" style="bottom: 18%; right: 14%;">
+              <span class="dot"></span>
+              <span class="stem" style="width: 60px;"></span>
+              <span class="label">05 · Haptic crown</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Mobile-only callout list (≤767px). Lives OUTSIDE .video-stage so it
+             isn't clipped by the stage's `overflow: hidden` + 16/9 aspect-ratio. -->
+        <aside class="callout-mobile-list" id="callout-mobile-list" aria-label="Watch components">
+          <div class="callout-mobile-item">
+            <span class="callout-mobile-dot" aria-hidden="true"></span>
+            <div class="callout-mobile-body">
+              <span class="callout-mobile-label">01 · Sapphire crystal</span>
+              <span class="callout-mobile-desc">Scratch-proof, anti-reflective. 9 on Mohs.</span>
+            </div>
+          </div>
+          <div class="callout-mobile-item">
+            <span class="callout-mobile-dot" aria-hidden="true"></span>
+            <div class="callout-mobile-body">
+              <span class="callout-mobile-label">02 · Grade-5 titanium</span>
+              <span class="callout-mobile-desc">Brushed case, 38% lighter than steel.</span>
+            </div>
+          </div>
+          <div class="callout-mobile-item">
+            <span class="callout-mobile-dot" aria-hidden="true"></span>
+            <div class="callout-mobile-body">
+              <span class="callout-mobile-label">03 · AMOLED display</span>
+              <span class="callout-mobile-desc">2000 nits, always-on, sapphire-protected.</span>
+            </div>
+          </div>
+          <div class="callout-mobile-item">
+            <span class="callout-mobile-dot" aria-hidden="true"></span>
+            <div class="callout-mobile-body">
+              <span class="callout-mobile-label">04 · Optical sensor</span>
+              <span class="callout-mobile-desc">Multi-wavelength + ECG-backed HRV.</span>
+            </div>
+          </div>
+          <div class="callout-mobile-item">
+            <span class="callout-mobile-dot" aria-hidden="true"></span>
+            <div class="callout-mobile-body">
+              <span class="callout-mobile-label">05 · Haptic crown</span>
+              <span class="callout-mobile-desc">Linear actuator. Precise click feedback.</span>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
+
+    <div class="max-w-[1500px] mx-auto px-5 sm:px-6 lg:px-10 pt-12 sm:pt-16 pb-16 sm:pb-24 lg:pb-32">
+      <div class="reveal grid sm:grid-cols-3 gap-5 sm:gap-6 max-w-[1200px] mx-auto text-[0.92rem] text-ink-100/65 leading-[1.7]">
+        <div>
+          <div class="eyebrow mb-2">Crystal</div>
+          Lab-grown sapphire, 9 on Mohs. Resists hairlines from keys and zippers.
+        </div>
+        <div>
+          <div class="eyebrow mb-2">Case</div>
+          Grade-5 titanium, brushed finish. 38% lighter than the steel equivalent.
+        </div>
+        <div>
+          <div class="eyebrow mb-2">Sensor stack</div>
+          Multi-wavelength optical + ECG electrodes hidden under the case-back.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================== -->
+  <!-- CTA — pre-order                                -->
+  <!-- ============================================== -->
+  <section id="cta" class="bg-cta relative py-20 sm:py-32 lg:py-40 overflow-hidden">
+    <div class="max-w-[1500px] mx-auto px-5 sm:px-6 lg:px-10">
+      <div class="grid lg:grid-cols-12 gap-10 items-end">
+        <div class="lg:col-span-8 reveal">
+          <div class="eyebrow mb-6 flex items-center gap-3">
+            <span class="h-px w-8 bg-gold-300/55"></span>
+            005 · Reserve yours
+          </div>
+          <h2 class="display text-[clamp(2.8rem,7vw,6rem)] text-ink-50 max-w-[14ch]">
+            Pre-order <span class="display-italic text-gold">today.</span><br>
+            Wear it Q3.
+          </h2>
+          <p class="mt-7 max-w-[48ch] text-[1.05rem] text-ink-100/65 leading-[1.65]">
+            $349, ships in summer 2026. Fully refundable until your unit leaves Frankfurt.
+            Carbon-neutral shipping, 2-year warranty, lifetime crystal replacement.
+          </p>
+        </div>
+        <div class="lg:col-span-4 reveal reveal-d2 flex flex-wrap items-center gap-3 lg:justify-end">
+          <a href="#" class="btn btn-gold text-[0.95rem] !py-4 !px-7">
+            Pre-order $349
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </a>
+          <a href="#dissection" class="btn btn-ghost-dark">Watch the dissection</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================== -->
+  <!-- FOOTER — minimal                               -->
+  <!-- ============================================== -->
+  <footer class="relative bg-black overflow-hidden">
+    <div class="max-w-[1500px] mx-auto px-5 sm:px-6 lg:px-10 pt-12 sm:pt-16 pb-8 sm:pb-10">
+      <div class="grid md:grid-cols-3 gap-8 sm:gap-10 items-start">
+
+        <div>
+          <a href="./index.html" class="inline-flex items-center gap-2.5">
+            <img src="brand_assets/tester-logo.png" alt="Tester.io home" class="h-10 w-10 object-contain" />
+            <span class="wordmark text-[1.4rem] text-ink-50">Tester<span class="dot">.</span>io</span>
+            <span class="ml-2 px-2 py-0.5 rounded-full border border-gold-500/35 text-[10px] font-mono tracking-[0.22em] uppercase text-gold-300">Products</span>
+          </a>
+          <p class="mt-5 text-[0.92rem] text-ink-100/55 leading-[1.7] max-w-[34ch]">
+            Tester Smart Watch Pro is a product of Tester.io — the quality engineering studio.
+          </p>
+        </div>
+
+        <div class="md:text-center">
+          <div class="eyebrow eyebrow-muted mb-4">Follow</div>
+          <div class="flex md:justify-center items-center gap-3">
+            <a href="#" aria-label="X / Twitter" class="w-10 h-10 grid place-items-center rounded-full border border-gold-500/25 text-ink-100/70 hover:text-gold-300 hover:border-gold-500/55 transition-colors">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231L18.244 2.25zm-1.161 17.52h1.833L7.084 4.126H5.117l11.966 15.644z"/></svg>
+            </a>
+            <a href="#" aria-label="Instagram" class="w-10 h-10 grid place-items-center rounded-full border border-gold-500/25 text-ink-100/70 hover:text-gold-300 hover:border-gold-500/55 transition-colors">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.6" fill="currentColor"/></svg>
+            </a>
+            <a href="#" aria-label="YouTube" class="w-10 h-10 grid place-items-center rounded-full border border-gold-500/25 text-ink-100/70 hover:text-gold-300 hover:border-gold-500/55 transition-colors">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M21.6 7.2a2.5 2.5 0 0 0-1.8-1.8C18.2 5 12 5 12 5s-6.2 0-7.8.4A2.5 2.5 0 0 0 2.4 7.2C2 8.8 2 12 2 12s0 3.2.4 4.8a2.5 2.5 0 0 0 1.8 1.8C5.8 19 12 19 12 19s6.2 0 7.8-.4a2.5 2.5 0 0 0 1.8-1.8C22 15.2 22 12 22 12s0-3.2-.4-4.8zM10 15V9l5 3-5 3z"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="md:text-right">
+          <div class="eyebrow eyebrow-muted mb-4">Back to</div>
+          <a href="./index.html" class="inline-flex items-center gap-2 text-[0.95rem] text-ink-50 hover:text-gold-300 transition-colors">
+            tester.io
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="hairline mt-8 sm:mt-12"></div>
+
+      <div class="py-6 sm:py-7 flex flex-col sm:flex-row sm:flex-wrap sm:items-center sm:justify-between gap-3 sm:gap-4 text-[0.72rem] sm:text-[0.78rem] font-mono tracking-[0.16em] uppercase text-ink-100/45">
+        <span>© 2026 Tester.io GmbH</span>
+        <span>Designed in Berlin · Shipped from Frankfurt</span>
+      </div>
+
+      <div class="relative pt-2 pb-2 select-none" aria-hidden="true">
+        <div class="megamark text-[clamp(3rem,17vw,16rem)]">
+          Tester<span class="megamark-gold">.io</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ============================================== -->
+  <!-- MINIMAL JS — no external libraries             -->
+  <!-- ============================================== -->
+  <script>
+    (function () {
+      // ===== Nav background on scroll =====
+      const nav = document.getElementById('nav');
+      if (nav) {
+        let scrolled = false;
+        const onScroll = () => {
+          const s = window.scrollY > 24;
+          if (s !== scrolled) { nav.classList.toggle('is-scrolled', s); scrolled = s; }
+        };
+        window.addEventListener('scroll', onScroll, { passive: true });
+        onScroll();
+      }
+
+      // ===== Mobile menu toggle =====
+      const menuToggle = document.getElementById('mobile-menu-toggle');
+      const mobileMenu = document.getElementById('mobile-menu');
+      const setMenu = (open) => {
+        if (!menuToggle || !mobileMenu) return;
+        mobileMenu.classList.toggle('is-open', open);
+        menuToggle.setAttribute('aria-expanded', String(open));
+        menuToggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+        document.body.style.overflow = open ? 'hidden' : '';
+      };
+      if (menuToggle && mobileMenu) {
+        menuToggle.addEventListener('click', () => {
+          setMenu(!mobileMenu.classList.contains('is-open'));
+        });
+        mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setMenu(false)));
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape' && mobileMenu.classList.contains('is-open')) setMenu(false);
+        });
+        // Close menu if viewport grows past mobile breakpoint
+        const mq = window.matchMedia('(min-width: 768px)');
+        const onMq = (e) => { if (e.matches) setMenu(false); };
+        if (mq.addEventListener) mq.addEventListener('change', onMq);
+        else if (mq.addListener) mq.addListener(onMq);
+      }
+
+      // ===== Smooth scroll for in-page anchors =====
+      // Honors the CSS `scroll-behavior: smooth` and adjusts for sticky nav height.
+      // Bare "#" anchors get their default scroll-to-top behaviour suppressed
+      // so dead placeholder links don't yank the page.
+      document.querySelectorAll('a[href^="#"]').forEach(a => {
+        a.addEventListener('click', (e) => {
+          const id = a.getAttribute('href');
+          if (!id || id === '#') { e.preventDefault(); return; }
+          const target = document.querySelector(id);
+          if (!target) return;
+          e.preventDefault();
+          const offset = (nav ? nav.offsetHeight : 0) - 1;
+          const top = target.getBoundingClientRect().top + window.scrollY - offset;
+          window.scrollTo({ top, behavior: 'smooth' });
+        });
+      });
+
+      // ===== Reveal on scroll (.reveal + .feature-row) =====
+      const revealEls = document.querySelectorAll('.reveal, .feature-row');
+      if ('IntersectionObserver' in window) {
+        const io = new IntersectionObserver((entries) => {
+          entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+        }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+        revealEls.forEach(el => io.observe(el));
+        // Anything already on-screen at first paint
+        requestAnimationFrame(() => {
+          revealEls.forEach(el => {
+            const r = el.getBoundingClientRect();
+            if (r.top < window.innerHeight * 0.92) el.classList.add('in');
+          });
+        });
+      } else {
+        revealEls.forEach(el => el.classList.add('in'));
+      }
+
+      // ===== Count-up stats (vanilla rAF, thousands-separated) =====
+      const easeOut = (t) => 1 - Math.pow(1 - t, 3);
+      const formatStat = (v, decimals) => {
+        const fixed = Number(v).toFixed(decimals);
+        const [intPart, fracPart] = fixed.split('.');
+        const grouped = intPart.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+        return fracPart ? grouped + '.' + fracPart : grouped;
+      };
+      const animateStat = (el) => {
+        const target = parseFloat(el.dataset.stat);
+        const decimals = parseInt(el.dataset.decimals || '0', 10);
+        const duration = 1800;
+        const t0 = performance.now();
+        const tick = (now) => {
+          const p = Math.min(1, (now - t0) / duration);
+          el.textContent = formatStat(target * easeOut(p), decimals);
+          if (p < 1) requestAnimationFrame(tick);
+        };
+        requestAnimationFrame(tick);
+      };
+      const stats = document.querySelectorAll('[data-stat]');
+      if (stats.length && 'IntersectionObserver' in window) {
+        const sIo = new IntersectionObserver((entries) => {
+          entries.forEach(e => { if (e.isIntersecting) { animateStat(e.target); sIo.unobserve(e.target); } });
+        }, { threshold: 0.4 });
+        stats.forEach(el => sIo.observe(el));
+      } else {
+        stats.forEach(animateStat);
+      }
+
+      // ===== Dissection scroll-bound canvas frame sequence (desktop only) =====
+      const scrub = document.getElementById('dissection-scrub');
+      const canvas = document.getElementById('dissection-canvas');
+      const callouts = document.querySelectorAll('#dissection .callout');
+      const mobileCalloutList = document.getElementById('callout-mobile-list');
+      const isDesktopLayout = window.matchMedia('(min-width: 768px)').matches;
+
+      // Mobile: the vertical callout list fades + slides in when it enters view.
+      // CSS handles the per-item stagger via :nth-child transition-delays.
+      if (mobileCalloutList && 'IntersectionObserver' in window) {
+        const listIo = new IntersectionObserver((entries) => {
+          entries.forEach(e => {
+            if (e.isIntersecting) {
+              mobileCalloutList.classList.add('in');
+              listIo.unobserve(e.target);
+            }
+          });
+        }, { threshold: 0.18, rootMargin: '0px 0px -10% 0px' });
+        listIo.observe(mobileCalloutList);
+      } else if (mobileCalloutList) {
+        mobileCalloutList.classList.add('in');
+      }
+
+      if (isDesktopLayout && scrub && canvas && canvas.getContext) {
+        const ctx = canvas.getContext('2d');
+        const FRAME_COUNT = parseInt(scrub.dataset.frameCount, 10) || 121;
+        const FRAME_PREFIX = scrub.dataset.framePrefix || 'frames/frame_';
+        const FRAME_EXT = scrub.dataset.frameExt || '.webp';
+        const PAD = 3;
+        const pad = (n) => String(n).padStart(PAD, '0');
+
+        const frames = new Array(FRAME_COUNT);
+        let currentFrame = -1;
+        let pendingFrame = 0;
+        let rafScheduled = false;
+        let bgColor = '#000';
+
+        const sampleBg = (img) => {
+          try {
+            const off = document.createElement('canvas');
+            off.width = 8; off.height = 8;
+            const octx = off.getContext('2d');
+            octx.drawImage(img, 0, 0, 8, 8);
+            const d = octx.getImageData(0, 0, 1, 1).data;
+            bgColor = `rgb(${d[0]},${d[1]},${d[2]})`;
+          } catch (e) { /* cross-origin guard, keep default */ }
+        };
+
+        const sizeCanvas = () => {
+          const r = canvas.getBoundingClientRect();
+          const dpr = Math.min(window.devicePixelRatio || 1, 2);
+          const w = Math.max(1, Math.round(r.width * dpr));
+          const h = Math.max(1, Math.round(r.height * dpr));
+          if (canvas.width !== w || canvas.height !== h) {
+            canvas.width = w; canvas.height = h;
+            if (currentFrame >= 0) drawFrame(currentFrame);
+          }
+        };
+
+        const drawFrame = (i) => {
+          const img = frames[i] || frames[0];
+          if (!img || !img.complete || !img.naturalWidth) return;
+          const cw = canvas.width, ch = canvas.height;
+          const iw = img.naturalWidth, ih = img.naturalHeight;
+          // Cover when canvas matches/exceeds source aspect (desktop 16:9 stage).
+          // Contain when canvas is narrower than source (mobile portrait full-bleed) —
+          // otherwise cover crops ~70% horizontally and the callouts drift off the watch.
+          const canvasAspect = cw / ch;
+          const imageAspect = iw / ih;
+          const scale = (canvasAspect < imageAspect)
+            ? Math.min(cw / iw, ch / ih)   // contain — fit width, letterbox top/bottom
+            : Math.max(cw / iw, ch / ih);  // cover
+          const dw = iw * scale, dh = ih * scale;
+          const dx = (cw - dw) / 2, dy = (ch - dh) / 2;
+          ctx.fillStyle = bgColor;
+          ctx.fillRect(0, 0, cw, ch);
+          ctx.drawImage(img, dx, dy, dw, dh);
+          currentFrame = i;
+        };
+
+        // Bind frame index to where the stage sits in the viewport.
+        // p = 0 when the stage's top edge has just left the viewport top.
+        // p = 1 when the stage's bottom edge has just reached the viewport top.
+        // This means the animation completes shortly after the stage exits the top of the screen.
+        const compute = () => {
+          const r = scrub.getBoundingClientRect();
+          const vh = window.innerHeight;
+          // Sticky-pin mode: bind frames to the sticky-engaged phase so the full
+          // animation plays while the canvas is pinned at the top of the viewport
+          // (felt "dead" before because frames mostly advanced during the approach/exit).
+          // p = 0 when wrap.top reaches viewport top, p = 1 when wrap.bottom reaches viewport bottom.
+          const stickyRange = r.height - vh;
+          let p;
+          if (stickyRange > 0) {
+            p = Math.max(0, Math.min(1, -r.top / stickyRange));
+          } else {
+            // Wrap shorter than viewport — fall back to natural pass-through.
+            const range = r.height + vh;
+            p = Math.max(0, Math.min(1, (vh - r.top) / range));
+          }
+          const idx = Math.min(FRAME_COUNT - 1, Math.max(0, Math.floor(p * FRAME_COUNT)));
+          if (idx !== pendingFrame) pendingFrame = idx;
+          if (!rafScheduled) {
+            rafScheduled = true;
+            requestAnimationFrame(() => {
+              rafScheduled = false;
+              if (pendingFrame !== currentFrame) drawFrame(pendingFrame);
+            });
+          }
+        };
+
+        // Preload first frame eagerly, rest with low priority
+        const loadFrame = (i, opts = {}) => new Promise((resolve) => {
+          const img = new Image();
+          if (opts.eager) img.fetchPriority = 'high';
+          img.decoding = 'async';
+          img.src = `${FRAME_PREFIX}${pad(i + 1)}${FRAME_EXT}`;
+          img.onload = () => resolve(img);
+          img.onerror = () => resolve(img);
+          frames[i] = img;
+        });
+
+        // Size the canvas immediately so it isn't stuck at 300×150 default
+        // while frame 0 is still in flight.
+        sizeCanvas();
+
+        loadFrame(0, { eager: true }).then(img => {
+          sampleBg(img);
+          sizeCanvas();
+          drawFrame(0);
+        });
+
+        // Background-load the rest sequentially so the network isn't slammed
+        (async () => {
+          for (let i = 1; i < FRAME_COUNT; i++) {
+            await loadFrame(i);
+            if (i === pendingFrame) drawFrame(i);
+          }
+        })();
+
+        // Reveal callouts once when the canvas enters view — staggered, like the original.
+        if (callouts.length && 'IntersectionObserver' in window) {
+          const cIo = new IntersectionObserver((entries) => {
+            entries.forEach(e => {
+              if (e.isIntersecting) {
+                callouts.forEach((cb, i) => setTimeout(() => cb.classList.add('in'), 360 + i * 200));
+                cIo.unobserve(e.target);
+              }
+            });
+          }, { threshold: 0.3 });
+          cIo.observe(scrub);
+        } else {
+          callouts.forEach(cb => cb.classList.add('in'));
+        }
+
+        window.addEventListener('scroll', compute, { passive: true });
+        window.addEventListener('resize', () => { sizeCanvas(); compute(); }, { passive: true });
+        compute();
+      } else if (callouts.length && isDesktopLayout) {
+        // Desktop fallback (canvas unsupported) — reveal callouts statically.
+        // On mobile, the layerIo above handles reveal — do NOT also flip individual
+        // .callout.in here, or the stagger transition-delays won't fire.
+        callouts.forEach(cb => cb.classList.add('in'));
+      }
+
+      // ===== Hero video autoplay safety (muted + playsinline) =====
+      document.querySelectorAll('video').forEach(v => {
+        v.muted = true;
+        v.setAttribute('playsinline', '');
+        const tryPlay = () => v.play().catch(() => {});
+        v.addEventListener('loadeddata', tryPlay, { once: true });
+        document.addEventListener('click', tryPlay, { once: true });
+      });
+    })();
+  </script>
+</body>
+</html>

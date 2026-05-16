@@ -1,0 +1,114 @@
+{
+  "_comment": "Image manifest for TesterTech.html. Each entry maps a placeholder slug to a KIE.ai generation request. Run `pwsh scripts/gen-images.ps1` to (re)generate. Files land in gadget_assets/<slug>.png. The script skips slugs whose output file already exists; pass -Force to regenerate, or -Only slug1,slug2 to target specific images.",
+
+  "defaults": {
+    "model": "nano-banana-pro",
+    "resolution": "2K",
+    "output_format": "png"
+  },
+  "output_dir": "gadget_assets",
+  "style_anchor": "Warm cream backdrop, ink-and-gold mood, premium editorial product photography, soft studio lighting with subtle golden highlights, ultra-detailed, magazine-cover quality, restrained Scandinavian aesthetic — no on-screen text or logos.",
+
+  "images": [
+    {
+      "slug": "hero-watch",
+      "aspect_ratio": "4:5",
+      "prompt": "Premium smartwatch in three-quarter perspective, brushed grade-5 titanium case in warm graphite, dark sapphire AMOLED display showing a minimalist soft-gold heart-rate animation, woven heathered charcoal sport band, floating against a deep warm ink-black backdrop with a subtle radial glow of warm amber from the upper-right, dramatic rim lighting, ultra-premium product photography, hyper-detailed, magazine cover quality, no readable text or logos."
+    },
+    {
+      "slug": "brand-rigor",
+      "aspect_ratio": "4:3",
+      "prompt": "Behind-the-scenes engineering studio shot: a premium smartwatch held by a precision robotic test rig with fine wires and probes attached to its case, warm tungsten studio lighting, slightly desaturated, shallow depth of field, editorial documentary photography, ink-and-gold color palette, premium engineering aesthetic — feels like a quality-lab photograph in a Wallpaper magazine feature."
+    },
+    {
+      "slug": "brand-materials",
+      "aspect_ratio": "4:3",
+      "prompt": "Top-down editorial arrangement of premium raw materials for consumer hardware: a polished grade-5 titanium block, a sapphire crystal disc, a sheet of bio-acetate, a recycled aluminium ingot, and a small brushed steel component, laid out with editorial spacing on warm cream paper, soft directional light from the left casting gentle shadows, ink-and-gold palette, premium catalog still-life photography."
+    },
+    {
+      "slug": "brand-testing",
+      "aspect_ratio": "4:3",
+      "prompt": "Editorial still-life: a test report printed on warm cream paper showing minimalist battery-life curves and water-resistance graphs as soft pencil-style line charts, partially overlapping a brushed-titanium smartwatch on a warm walnut studio bench, soft side lighting from the right, documentary feel, ink-and-gold palette, premium product transparency aesthetic."
+    },
+    {
+      "slug": "flagship",
+      "aspect_ratio": "4:3",
+      "prompt": "Hero product shot of a premium titanium smartwatch with sapphire AMOLED display, floating just above a warm cream-colored surface with a soft contact shadow, golden-hour studio lighting from the right, generous negative space, minimalist composition, ultra-premium product photography, hyper-detailed, ink-and-gold mood — flagship-launch quality."
+    },
+    {
+      "slug": "flagship-thumb-front",
+      "aspect_ratio": "1:1",
+      "prompt": "Direct front-on view of a premium titanium smartwatch with sapphire display, centered on a warm cream seamless background, soft frontal studio lighting, minimalist square-format product photography, ink-and-gold palette."
+    },
+    {
+      "slug": "flagship-thumb-three-quarter",
+      "aspect_ratio": "1:1",
+      "prompt": "Three-quarter perspective of a premium titanium smartwatch with woven charcoal band, slight overhead angle, warm cream seamless background, soft studio lighting, minimalist square-format product photography, ink-and-gold palette."
+    },
+    {
+      "slug": "flagship-thumb-side",
+      "aspect_ratio": "1:1",
+      "prompt": "Side profile of a premium titanium smartwatch showing the crown and case thickness, warm cream seamless background, soft directional lighting, minimalist square-format product photography, ink-and-gold palette."
+    },
+    {
+      "slug": "flagship-thumb-lifestyle",
+      "aspect_ratio": "1:1",
+      "prompt": "Lifestyle close-up of a wrist (no skin tone preference) wearing a premium titanium smartwatch, warm interior light, soft-focus background of a wooden surface and a coffee cup, editorial photography, ink-and-gold mood, square format."
+    },
+    {
+      "slug": "cat-watches",
+      "aspect_ratio": "5:4",
+      "prompt": "Editorial arrangement of three premium smartwatches side by side in different finishes (titanium, brushed steel, recycled aluminium), each with a different strap, laid on a warm cream paper surface, slight overhead angle, soft studio lighting, ink-and-gold palette, premium catalog photography."
+    },
+    {
+      "slug": "cat-glasses",
+      "aspect_ratio": "5:4",
+      "prompt": "Editorial composition of premium smart glasses with matte black bio-acetate frames and subtle brushed silver hinges, floating with a soft contact shadow on a warm cream backdrop, soft studio lighting from above-left, minimalist product photography, ink-and-gold palette."
+    },
+    {
+      "slug": "cat-assistants",
+      "aspect_ratio": "5:4",
+      "prompt": "Editorial pair of premium smart speakers in heathered warm-grey fabric — one small Mini and one full-size Standard — on a warm cream surface, each with a soft glowing gold-tinted LED ring on top, soft studio lighting, ink-and-gold palette."
+    },
+    {
+      "slug": "cat-home",
+      "aspect_ratio": "5:4",
+      "prompt": "Editorial arrangement of premium connected-home devices (a wall-mounted hub display showing minimalist gold iconography, a smart bulb, a small motion sensor) on a warm cream surface against a soft beige wall, natural side-window lighting, ink-and-gold palette, premium architectural product photography."
+    },
+    {
+      "slug": "product-watch",
+      "aspect_ratio": "1:1",
+      "prompt": "Premium titanium smartwatch with a polished milanese loop band, dark sapphire screen showing a minimalist analog watch face with thin gold hands, three-quarter angle, clean warm cream seamless background, soft studio softbox lighting, shallow depth of field, premium catalog product photography, ink-and-gold palette."
+    },
+    {
+      "slug": "product-glasses",
+      "aspect_ratio": "1:1",
+      "prompt": "Minimalist smart glasses with matte black bio-acetate frames and brushed silver hinges, a tiny micro-LED indicator inside one temple, three-quarter perspective floating slightly above a warm cream background with a soft contact shadow, soft directional studio lighting from above-left, premium catalog product photography, ink-and-gold palette."
+    },
+    {
+      "slug": "product-voice",
+      "aspect_ratio": "1:1",
+      "prompt": "Modern smart speaker with a short cylindrical form, fabric-wrapped exterior in heathered warm grey, with a soft glowing pale-gold LED ring on top indicating active state, warm cream seamless background, soft studio lighting with a gentle shadow underneath, premium contemporary product photography, ink-and-gold palette."
+    },
+    {
+      "slug": "product-ring",
+      "aspect_ratio": "1:1",
+      "prompt": "Sleek titanium smart ring with a brushed matte finish on the outer band and a polished mirror finish on the inner band, photographed from a low angle floating slightly above a warm cream reflective surface, warm soft studio lighting, shallow depth of field, premium minimal wearable product photography, jewellery-grade rendering, ink-and-gold palette."
+    },
+    {
+      "slug": "product-hub",
+      "aspect_ratio": "1:1",
+      "prompt": "Modern smart home control panel mounted on a warm cream textured wall, rectangular 7-inch touchscreen displaying minimalist soft-gold iconography for climate (temperature 21 degrees), captured at a slight angle, soft warm late-afternoon interior lighting, contemporary minimal interior, premium architectural product photography, ink-and-gold palette."
+    },
+    {
+      "slug": "product-kit",
+      "aspect_ratio": "1:1",
+      "prompt": "Top-down editorial composition of a premium titanium smartwatch, a brushed titanium smart ring, and a small fabric-wrapped smart speaker arranged neatly on warm cream paper with editorial spacing, soft directional studio lighting casting subtle shadows, premium catalog still-life photography, ink-and-gold palette."
+    },
+    {
+      "slug": "spotlight-glasses",
+      "aspect_ratio": "4:5",
+      "prompt": "Editorial portrait of premium smart glasses (matte black bio-acetate frames with brushed silver hinges) resting on a warm dark walnut surface, dramatic side lighting with subtle warm-gold rim highlights on the hinges, deep ink shadows, premium luxury product photography, hyper-detailed, magazine-cover quality."
+    }
+  ]
+}
