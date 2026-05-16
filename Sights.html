@@ -3,10 +3,9 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Tester Tech · 2030 — A Vision · Tester.io</title>
-  <meta name="description" content="A speculative vision of consumer technology five years on. Quietly extraordinary." />
+  <title>Sights — A landmark study · Tester.io</title>
+  <meta name="description" content="Sights — a forthcoming scroll-driven landmark study from Tester.io." />
   <link rel="icon" href="brand_assets/tester-logo.png" />
-  <link rel="preload" as="video" href="tester-2030.mp4" />
 
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -58,10 +57,10 @@
     ::selection { background: rgba(232,185,121,0.40); color: var(--text-warm); }
 
     /* ===== Typography ===== */
-    .display       { font-family: 'Montserrat', system-ui, sans-serif; font-weight: 800; letter-spacing: -0.045em; line-height: 0.94; }
-    .display-it    { font-family: 'Fraunces', serif; font-style: italic; font-weight: 500; letter-spacing: -0.025em; line-height: 0.9; }
-    .h2            { font-family: 'Montserrat', system-ui, sans-serif; font-weight: 700; letter-spacing: -0.030em; line-height: 1.04; }
-    .serif-it      { font-family: 'Fraunces', serif; font-style: italic; }
+    .display    { font-family: 'Montserrat', system-ui, sans-serif; font-weight: 800; letter-spacing: -0.045em; line-height: 0.94; }
+    .display-it { font-family: 'Fraunces', serif; font-style: italic; font-weight: 500; letter-spacing: -0.025em; line-height: 0.9; }
+    .h2         { font-family: 'Montserrat', system-ui, sans-serif; font-weight: 700; letter-spacing: -0.030em; line-height: 1.04; }
+    .serif-it   { font-family: 'Fraunces', serif; font-style: italic; }
 
     .text-gold {
       background: linear-gradient(135deg, #F5D38A 0%, #E8B979 35%, #C6A559 70%, #A8853F 100%);
@@ -82,7 +81,6 @@
     .wordmark { font-weight: 700; letter-spacing: -0.025em; }
     .wordmark .dot { color: #C6A559; }
 
-    /* ===== Hairline ===== */
     .hairline { border-top: 1px solid rgba(232,185,121,0.10); }
 
     /* ===== Grain ===== */
@@ -107,47 +105,21 @@
       min-height: 100vh; min-height: 100dvh;
       overflow: hidden;
     }
-    .hero-video {
-      position: absolute; inset: 0;
-      width: 100%; height: 100%;
-      object-fit: cover;
-      z-index: 0;
-    }
     .hero-veil {
-      position: absolute; inset: 0; z-index: 1; pointer-events: none;
+      position: absolute; inset: 0; z-index: 0; pointer-events: none;
       background:
-        radial-gradient(70% 55% at 50% 50%, rgba(0,0,0,0.10) 0%, rgba(0,0,0,0.55) 60%, rgba(0,0,0,0.95) 100%),
-        linear-gradient(180deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.18) 38%, rgba(0,0,0,0.30) 62%, #000 100%);
+        radial-gradient(700px 500px at 50% 35%, rgba(232,185,121,0.07), transparent 60%),
+        radial-gradient(900px 700px at 50% 100%, rgba(168,133,63,0.05), transparent 60%),
+        #000;
     }
 
-    /* ===== Reveal anims — slow, meditative ===== */
-    .reveal { opacity: 0; transform: translateY(24px); transition: opacity 1.4s cubic-bezier(.2,.8,.2,1), transform 1.4s cubic-bezier(.2,.8,.2,1); }
+    /* ===== Reveal anims ===== */
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity 1.2s cubic-bezier(.2,.8,.2,1), transform 1.2s cubic-bezier(.2,.8,.2,1); }
     .reveal.in { opacity: 1; transform: translateY(0); }
-    .rd-1 { transition-delay: .18s; }
-    .rd-2 { transition-delay: .36s; }
-    .rd-3 { transition-delay: .54s; }
-    .rd-4 { transition-delay: .72s; }
-    .rd-5 { transition-delay: .90s; }
-
-    /* ===== Manifesto rows ===== */
-    .manifesto-row { padding: 18vh 0; }
-    @media (max-width: 767px) {
-      .manifesto-row { padding: 10vh 0; }
-    }
-
-    /* ===== Vision quote frame ===== */
-    .vision-stage {
-      position: relative;
-      aspect-ratio: 16/9;
-      border-radius: 22px;
-      overflow: hidden;
-      border: 1px solid rgba(232,185,121,0.14);
-      box-shadow: 0 60px 120px -50px rgba(0,0,0,0.85);
-      background: #000;
-    }
-    .vision-stage video {
-      width: 100%; height: 100%; object-fit: cover; display: block;
-    }
+    .rd-1 { transition-delay: .14s; }
+    .rd-2 { transition-delay: .28s; }
+    .rd-3 { transition-delay: .42s; }
+    .rd-4 { transition-delay: .56s; }
 
     /* ===== Scroll cue ===== */
     .scroll-cue {
@@ -224,6 +196,114 @@
     .nav-toggle[aria-expanded="true"] .bar-mid    { opacity: 0; }
     .nav-toggle[aria-expanded="true"] .bar-bottom { transform: translateY(-5px) rotate(-45deg); }
 
+    /* ============================================================
+       Scroll-driven frame animation (per SCROLL-ANIMATION-BEST-
+       PRACTICES.md). Sticky-pinned canvas + tall scroll runway;
+       scroll calc passive, draw via rAF, phases bound to progress.
+       ============================================================ */
+    .scroll-pin-section { position: relative; background: #000; }
+    .scroll-track { position: relative; height: 360vh; }
+    .canvas-pin {
+      position: sticky; top: 0;
+      height: 100vh; height: 100dvh;
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden;
+      background: #000;
+    }
+    #frame-canvas {
+      display: block;
+      width: min(92vw, 900px);
+      max-height: 88vh; max-height: 88dvh;
+      aspect-ratio: 1 / 1; height: auto;
+      /* Soft radial mask so the frame floats into the dark page (brief §8) */
+      -webkit-mask-image: radial-gradient(ellipse 70% 65% at 50% 50%, black 45%, transparent 80%);
+              mask-image: radial-gradient(ellipse 70% 65% at 50% 50%, black 45%, transparent 80%);
+    }
+    @media (max-width: 767px) {
+      .scroll-track { height: 280vh; }
+      #frame-canvas { width: 90vw; }
+    }
+
+    /* Scroll-position phase overlays (brief §7) */
+    .phase-overlay {
+      position: absolute;
+      left: 0; right: 0; bottom: 7vh;
+      display: flex; justify-content: center;
+      opacity: 0; transform: translateY(8px);
+      transition: opacity .55s cubic-bezier(.2,.8,.2,1), transform .55s cubic-bezier(.2,.8,.2,1);
+      pointer-events: none;
+      z-index: 4;
+    }
+    .phase-overlay.visible { opacity: 1; transform: translateY(0); }
+    .phase-overlay .label {
+      display: inline-flex; align-items: center; gap: 0.65rem;
+      font-family: 'Fraunces', serif; font-style: italic; font-weight: 500;
+      font-size: clamp(1.4rem, 3.4vw, 2.4rem);
+      letter-spacing: -0.02em;
+      color: #F5E5B8;
+      background: rgba(8,7,10,0.55);
+      border: 1px solid rgba(232,185,121,0.22);
+      -webkit-backdrop-filter: blur(12px) saturate(130%);
+              backdrop-filter: blur(12px) saturate(130%);
+      border-radius: 999px;
+      padding: 0.6rem 1.25rem 0.7rem;
+      line-height: 1;
+    }
+    .phase-overlay .label::before {
+      content: '';
+      width: 7px; height: 7px; border-radius: 999px;
+      background: #E8B979;
+      box-shadow: 0 0 12px rgba(232,185,121,0.6);
+      animation: phase-pulse 2.4s ease-in-out infinite;
+    }
+    @keyframes phase-pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50%      { opacity: 0.5; transform: scale(0.85); }
+    }
+
+    /* Scroll loader overlay — sits over the canvas until all frames preload */
+    .scroll-loader {
+      position: absolute; inset: 0; z-index: 8;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: 1.4rem;
+      background: #000;
+      transition: opacity .7s ease;
+    }
+    .scroll-loader.hidden { opacity: 0; pointer-events: none; }
+    .scroll-loader-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem; letter-spacing: 0.3em; text-transform: uppercase;
+      color: rgba(232,185,121,0.75);
+    }
+    .scroll-loader-bar {
+      width: 220px; height: 1px;
+      background: rgba(232,185,121,0.16);
+      position: relative;
+    }
+    .scroll-loader-bar::after {
+      content: ''; position: absolute; inset: 0 auto 0 0;
+      width: var(--p, 0%); background: #E8B979;
+      transition: width .15s linear;
+      box-shadow: 0 0 8px rgba(232,185,121,0.45);
+    }
+    .scroll-loader-count {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.66rem; letter-spacing: 0.22em; text-transform: uppercase;
+      color: rgba(232,185,121,0.42);
+    }
+
+    /* Top-of-viewport scroll progress accent — only visible while pinned */
+    .scroll-progress-bar {
+      position: fixed; top: 0; left: 0;
+      width: var(--p, 0%); height: 2px; z-index: 60;
+      background: linear-gradient(90deg, rgba(232,185,121,0.0), #E8B979 50%, #C6A559 100%);
+      opacity: 0;
+      transition: opacity .35s ease;
+      pointer-events: none;
+    }
+    .scroll-progress-bar.active { opacity: 1; }
+
     @media (prefers-reduced-motion: reduce) {
       html { scroll-behavior: auto; }
       *, *::before, *::after {
@@ -234,6 +314,7 @@
       }
       .reveal { opacity: 1 !important; transform: none !important; }
       .scroll-cue::after { animation: none !important; }
+      .phase-overlay .label::before { animation: none !important; }
     }
   </style>
 
@@ -257,26 +338,26 @@
       <div class="flex items-center gap-4 sm:gap-6 min-w-0">
         <span class="inline-flex items-center gap-2 text-gold-300 shrink-0">
           <span class="w-1.5 h-1.5 rounded-full bg-gold-300 inline-block"></span>
-          A Tester Tech Vision
+          A Landmark Study
         </span>
-        <span class="hidden md:inline text-ink-100/65">Filed · 2030</span>
+        <span class="hidden md:inline text-ink-100/65">In development</span>
       </div>
       <div class="flex items-center gap-3 sm:gap-5 text-ink-100/65 shrink-0">
-        <a href="./product.html" class="inline-block py-1.5 hover:text-gold-300">Return to the present</a>
+        <a href="./index.html" class="inline-block py-1.5 hover:text-gold-300">tester.io</a>
         <a href="mailto:hello@tester.io" class="hidden sm:inline-block py-1.5 hover:text-gold-300">hello@tester.io</a>
       </div>
     </div>
   </div>
 
   <!-- ============================================== -->
-  <!-- NAV — Vision marked as current                 -->
+  <!-- NAV — Sights marked as current                 -->
   <!-- ============================================== -->
   <header id="nav" class="nav-bar sticky top-0 z-50 bg-transparent border-b border-transparent">
     <div class="relative max-w-[1500px] mx-auto px-5 sm:px-6 lg:px-10 py-4 lg:py-5 flex items-center justify-between gap-3">
       <a href="./index.html" class="flex items-center gap-2.5 group min-w-0">
         <img src="brand_assets/tester-logo.png" alt="Tester.io home" class="h-8 w-8 lg:h-9 lg:w-9 object-contain drop-shadow-[0_4px_12px_rgba(198,165,89,0.45)]" />
         <span class="wordmark text-[1.2rem] lg:text-[1.35rem] text-ink-50">Tester<span class="dot">.</span>io</span>
-        <span class="hidden lg:inline ml-2 px-2 py-0.5 rounded-full border border-gold-500/40 text-[10px] font-mono tracking-[0.22em] uppercase text-gold-300">Vision</span>
+        <span class="hidden lg:inline ml-2 px-2 py-0.5 rounded-full border border-gold-500/40 text-[10px] font-mono tracking-[0.22em] uppercase text-gold-300">Sights</span>
       </a>
 
       <nav class="hidden md:flex items-center gap-7 lg:gap-9 text-[0.82rem] tracking-[0.04em] text-ink-100/65 font-medium">
@@ -296,13 +377,13 @@
           Products
           <span class="absolute left-0 -bottom-1 h-px w-0 bg-gold-500 group-hover:w-full transition-[width] duration-500"></span>
         </a>
-        <a href="./tester-2030.html" class="text-ink-50 relative group" aria-current="page">
+        <a href="./tester-2030.html" class="hover:text-ink-50 relative group">
           Vision
-          <span class="absolute left-0 -bottom-1 h-px w-full bg-gold-500"></span>
-        </a>
-        <a href="./Sights.html" class="hover:text-ink-50 relative group">
-          Sights
           <span class="absolute left-0 -bottom-1 h-px w-0 bg-gold-500 group-hover:w-full transition-[width] duration-500"></span>
+        </a>
+        <a href="./Sights.html" class="text-ink-50 relative group" aria-current="page">
+          Sights
+          <span class="absolute left-0 -bottom-1 h-px w-full bg-gold-500"></span>
         </a>
         <a href="./index.html#work" class="hover:text-ink-50 relative group">
           Work
@@ -315,10 +396,6 @@
       </nav>
 
       <div class="flex items-center gap-2 sm:gap-3 shrink-0">
-        <a href="./product.html" class="hidden sm:inline-flex items-center gap-2 text-[0.78rem] text-ink-100/55 hover:text-gold-300 transition-colors font-mono tracking-[0.18em] uppercase">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
-          2026
-        </a>
         <button type="button" class="nav-toggle md:hidden" id="mobile-menu-toggle"
                 aria-label="Open menu" aria-controls="mobile-menu" aria-expanded="false">
           <svg width="20" height="14" viewBox="0 0 20 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
@@ -334,8 +411,8 @@
         <a href="./index.html#services">Services <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
         <a href="./TesterTech.html">Tech <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
         <a href="./product.html">Products <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
-        <a href="./tester-2030.html" aria-current="page">Vision <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
-        <a href="./Sights.html">Sights <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
+        <a href="./tester-2030.html">Vision <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
+        <a href="./Sights.html" aria-current="page">Sights <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
         <a href="./index.html#work">Work <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
         <a href="./index.html#contact">Contact <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
       </div>
@@ -343,14 +420,9 @@
   </header>
 
   <!-- ============================================== -->
-  <!-- HERO — full-bleed mood video                   -->
+  <!-- HERO — placeholder until the landmark animation -->
   <!-- ============================================== -->
   <section id="main" class="hero -mt-[64px] pt-[64px] lg:-mt-[76px] lg:pt-[76px]">
-    <video class="hero-video" id="hero-video"
-           muted loop playsinline preload="auto" autoplay
-           aria-label="Tester Tech 2030 — atmospheric mood film">
-      <source src="tester-2030.mp4" type="video/mp4" />
-    </video>
     <div class="hero-veil" aria-hidden="true"></div>
 
     <div class="relative z-10 max-w-[1500px] mx-auto px-5 sm:px-6 lg:px-10 min-h-[calc(100vh-64px)] min-h-[calc(100dvh-64px)] lg:min-h-[calc(100vh-76px)] lg:min-h-[calc(100dvh-76px)] flex flex-col justify-between gap-10 sm:gap-12 pt-10 sm:pt-14 lg:pt-20 pb-12 sm:pb-16 lg:pb-20">
@@ -358,24 +430,32 @@
       <div class="reveal flex items-center justify-center text-center">
         <div class="flex items-center gap-3 text-gold-300">
           <span class="h-px w-10 bg-gold-300/55"></span>
-          <span class="eyebrow">A Tester Tech Vision · 2030</span>
+          <span class="eyebrow">A Tester.io Landmark Study</span>
           <span class="h-px w-10 bg-gold-300/55"></span>
         </div>
       </div>
 
-      <div class="text-center max-w-[60ch] mx-auto">
-        <h1 class="reveal rd-1 display-it text-gold text-[clamp(6rem,22vw,16rem)]">
-          2030.
-        </h1>
-        <p class="reveal rd-3 mt-6 sm:mt-8 text-[clamp(1.4rem,3vw,2.2rem)] text-ink-50 font-light tracking-[-0.01em]">
-          <span class="serif-it text-gold-soft">Quietly</span> extraordinary.
+      <div class="text-center max-w-[60ch] mx-auto overflow-visible">
+        <!-- Headline wrapper: caps at 90vw on ultra-wide screens; overflow visible
+             so italic descenders/swashes never get clipped by .hero's overflow:hidden. -->
+        <div class="max-w-[90vw] mx-auto overflow-visible pb-3 sm:pb-5 px-2">
+          <h1 class="reveal rd-1 display-it text-gold text-[clamp(3.5rem,14vw,10rem)] leading-[1.08] pb-[0.18em] overflow-visible">
+            Sights.
+          </h1>
+        </div>
+        <p class="reveal rd-2 mt-6 sm:mt-8 text-[clamp(1.4rem,3vw,2.2rem)] text-ink-50 font-light tracking-[-0.01em]">
+          Architecture, <span class="serif-it text-gold-soft">scrolled.</span>
+        </p>
+        <p class="reveal rd-3 mt-7 max-w-[44ch] mx-auto text-[1.02rem] sm:text-[1.1rem] text-ink-100/55 leading-[1.7]">
+          A forthcoming scroll-driven study of a single landmark — drawn, framed,
+          and finished as you scroll. In development.
         </p>
       </div>
 
-      <div class="reveal rd-5 flex items-end justify-between gap-6 flex-wrap">
+      <div class="reveal rd-4 flex items-end justify-between gap-6 flex-wrap">
         <div class="flex items-center gap-3 text-[11px] font-mono tracking-[0.22em] uppercase text-ink-100/55">
           <span class="w-1 h-1 rounded-full bg-gold-300/60"></span>
-          A speculative manifesto
+          Coming soon
         </div>
         <div class="flex items-center gap-3 text-[11px] font-mono tracking-[0.22em] uppercase text-ink-100/55">
           <span>Scroll</span>
@@ -386,193 +466,88 @@
   </section>
 
   <!-- ============================================== -->
-  <!-- MANIFESTO — three statements                   -->
+  <!-- INTRO — short copy before the scroll study     -->
   <!-- ============================================== -->
-  <section id="manifesto" class="relative bg-black overflow-hidden border-t border-gold-500/[0.06]">
-    <div class="max-w-[1500px] mx-auto px-5 sm:px-6 lg:px-10 pt-20 sm:pt-32 lg:pt-40 pb-8">
+  <section class="relative bg-black overflow-hidden border-t border-gold-500/[0.06]">
+    <div class="max-w-[1500px] mx-auto px-5 sm:px-6 lg:px-10 pt-20 sm:pt-28 lg:pt-36 pb-16 sm:pb-20 lg:pb-24">
       <div class="reveal max-w-[44rem]">
         <div class="eyebrow eyebrow-muted mb-5 flex items-center gap-3">
           <span class="h-px w-8 bg-gold-500/45"></span>
-          002 · Manifesto
+          002 · The study
         </div>
-        <h2 class="h2 display text-[clamp(2rem,4vw,3.4rem)] text-ink-50">
-          What we believe <span class="serif-it text-gold">about the future.</span>
+        <h2 class="h2 display text-[clamp(2.2rem,5vw,4rem)] text-ink-50">
+          La Sagrada Familia. <span class="serif-it text-gold">Drawn, then realized.</span>
         </h2>
-      </div>
-    </div>
-
-    <!-- 01 — left aligned -->
-    <article class="manifesto-row">
-      <div class="max-w-[1500px] mx-auto px-5 sm:px-6 lg:px-10 grid lg:grid-cols-12 gap-6 lg:gap-12">
-        <div class="lg:col-span-8 lg:col-start-1">
-          <div class="reveal eyebrow eyebrow-muted mb-6 flex items-center gap-3">
-            <span class="h-px w-7 bg-gold-500/40"></span>
-            <span class="serif-it text-gold-soft normal-case tracking-normal text-[1rem] font-medium">i.</span>
-            <span>On calm</span>
-          </div>
-          <h3 class="reveal rd-1 display text-[clamp(2.4rem,7vw,5.6rem)] text-ink-50 max-w-[18ch]">
-            Technology should feel <span class="serif-it text-gold">like nothing.</span>
-          </h3>
-          <p class="reveal rd-2 mt-7 max-w-[44ch] text-[1.05rem] sm:text-[1.15rem] text-ink-100/65 leading-[1.7]">
-            The future of design is invisibility. The best interface is the one
-            you forget you are using — a hum beneath the day, present only
-            when called.
-          </p>
-        </div>
-      </div>
-    </article>
-
-    <!-- 02 — right aligned -->
-    <article class="manifesto-row">
-      <div class="max-w-[1500px] mx-auto px-5 sm:px-6 lg:px-10 grid lg:grid-cols-12 gap-6 lg:gap-12">
-        <div class="lg:col-span-8 lg:col-start-5 lg:text-right">
-          <div class="reveal eyebrow eyebrow-muted mb-6 flex lg:justify-end items-center gap-3">
-            <span class="h-px w-7 bg-gold-500/40 lg:hidden"></span>
-            <span class="serif-it text-gold-soft normal-case tracking-normal text-[1rem] font-medium">ii.</span>
-            <span>On craftsmanship</span>
-            <span class="h-px w-7 bg-gold-500/40 hidden lg:inline-block"></span>
-          </div>
-          <h3 class="reveal rd-1 display text-[clamp(2.4rem,7vw,5.6rem)] text-ink-50 max-w-[18ch] lg:ml-auto">
-            <span class="serif-it text-gold">Material</span> over marketing.
-          </h3>
-          <p class="reveal rd-2 mt-7 max-w-[44ch] lg:ml-auto text-[1.05rem] sm:text-[1.15rem] text-ink-100/65 leading-[1.7]">
-            We believe in the patience of a chamfered edge, the weight of a
-            milled case, the honest sheen of brushed titanium. Marketing fades.
-            Material doesn't.
-          </p>
-        </div>
-      </div>
-    </article>
-
-    <!-- 03 — left aligned -->
-    <article class="manifesto-row">
-      <div class="max-w-[1500px] mx-auto px-5 sm:px-6 lg:px-10 grid lg:grid-cols-12 gap-6 lg:gap-12">
-        <div class="lg:col-span-8 lg:col-start-1">
-          <div class="reveal eyebrow eyebrow-muted mb-6 flex items-center gap-3">
-            <span class="h-px w-7 bg-gold-500/40"></span>
-            <span class="serif-it text-gold-soft normal-case tracking-normal text-[1rem] font-medium">iii.</span>
-            <span>On restraint</span>
-          </div>
-          <h3 class="reveal rd-1 display text-[clamp(2.4rem,7vw,5.6rem)] text-ink-50 max-w-[18ch]">
-            Built to <span class="serif-it text-gold">disappear</span> into life.
-          </h3>
-          <p class="reveal rd-2 mt-7 max-w-[44ch] text-[1.05rem] sm:text-[1.15rem] text-ink-100/65 leading-[1.7]">
-            Devices should sit at the edge of attention, never the center.
-            Quiet by default. Loud only when summoned. Designed to retreat.
-          </p>
-        </div>
-      </div>
-    </article>
-  </section>
-
-  <!-- ============================================== -->
-  <!-- PILLARS — three directions                     -->
-  <!-- ============================================== -->
-  <section id="pillars" class="relative bg-black border-t border-gold-500/[0.06]">
-    <div class="max-w-[1500px] mx-auto px-5 sm:px-6 lg:px-10 pt-20 sm:pt-32 lg:pt-40 pb-16 sm:pb-24 lg:pb-32">
-
-      <div class="reveal max-w-[44rem] mb-14 sm:mb-20 lg:mb-28">
-        <div class="eyebrow eyebrow-muted mb-5 flex items-center gap-3">
-          <span class="h-px w-8 bg-gold-500/45"></span>
-          003 · Directions
-        </div>
-        <h2 class="h2 display text-[clamp(2rem,4vw,3.4rem)] text-ink-50">
-          Three concept pillars. <span class="serif-it text-gold">Not products.</span>
-        </h2>
-        <p class="mt-5 text-[1rem] sm:text-[1.05rem] text-ink-100/55 leading-[1.7] max-w-[52ch]">
-          Where we'd point the team if we were building today, for 2030.
+        <p class="mt-6 max-w-[52ch] text-[1rem] sm:text-[1.05rem] text-ink-100/65 leading-[1.7]">
+          Scroll the basilica from a blueprint outline into a finished facade. The
+          animation is bound to your scroll &mdash; every frame waits on you.
+          Take it slow.
         </p>
       </div>
+    </div>
+  </section>
 
-      <div class="grid lg:grid-cols-3 gap-14 sm:gap-16 lg:gap-12">
-        <div class="reveal">
-          <div class="display-it text-gold text-[clamp(4rem,7vw,6.5rem)] leading-none mb-6">I</div>
-          <h3 class="h2 text-[clamp(1.6rem,2.4vw,2.2rem)] text-ink-50">
-            Ambient <span class="serif-it text-gold-soft">intelligence.</span>
-          </h3>
-          <p class="mt-5 text-[0.98rem] text-ink-100/65 leading-[1.7] max-w-[36ch]">
-            Devices that listen for context, not commands. They learn the
-            rhythms of your day and arrive only when invited.
-          </p>
+  <!-- ============================================== -->
+  <!-- SCROLL-PIN ANIMATION — 121 frames on canvas    -->
+  <!-- ============================================== -->
+  <section class="scroll-pin-section">
+    <div class="scroll-track" id="scroll-track">
+      <div class="canvas-pin">
+        <canvas id="frame-canvas" width="960" height="960"
+                aria-label="La Sagrada Familia: scroll-driven transition from blueprint to built"></canvas>
+
+        <!-- Loader: covers canvas until every frame is preloaded -->
+        <div class="scroll-loader" id="scroll-loader" role="status" aria-live="polite">
+          <span class="scroll-loader-label">Drawing</span>
+          <span class="scroll-loader-bar" id="scroll-loader-bar" aria-hidden="true"></span>
+          <span class="scroll-loader-count" id="scroll-loader-count">000 / 000</span>
         </div>
 
-        <div class="reveal rd-1">
-          <div class="display-it text-gold text-[clamp(4rem,7vw,6.5rem)] leading-none mb-6">II</div>
-          <h3 class="h2 text-[clamp(1.6rem,2.4vw,2.2rem)] text-ink-50">
-            Material <span class="serif-it text-gold-soft">honesty.</span>
-          </h3>
-          <p class="mt-5 text-[0.98rem] text-ink-100/65 leading-[1.7] max-w-[36ch]">
-            Premium materials shown as they are. No surface that imitates
-            another. Titanium is titanium; leather is leather; sapphire is
-            sapphire.
-          </p>
+        <!-- Phase overlays — bound to scroll-position ranges (brief §7) -->
+        <div class="phase-overlay" id="phase-blueprint" aria-hidden="true">
+          <span class="label">Blueprint.</span>
         </div>
-
-        <div class="reveal rd-2">
-          <div class="display-it text-gold text-[clamp(4rem,7vw,6.5rem)] leading-none mb-6">III</div>
-          <h3 class="h2 text-[clamp(1.6rem,2.4vw,2.2rem)] text-ink-50">
-            Calm <span class="serif-it text-gold-soft">computing.</span>
-          </h3>
-          <p class="mt-5 text-[0.98rem] text-ink-100/65 leading-[1.7] max-w-[36ch]">
-            Interfaces that quiet the mind. One thing at a time. Notifications
-            opt-in. Color used sparingly, never to startle.
-          </p>
+        <div class="phase-overlay" id="phase-building" aria-hidden="true">
+          <span class="label">Building.</span>
+        </div>
+        <div class="phase-overlay" id="phase-built" aria-hidden="true">
+          <span class="label">Built.</span>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ============================================== -->
-  <!-- VISION MOMENT — smaller video + meditative quote -->
-  <!-- ============================================== -->
-  <section id="vision" class="relative bg-black border-t border-gold-500/[0.06] overflow-hidden">
-    <div class="max-w-[1500px] mx-auto px-5 sm:px-6 lg:px-10 pt-20 sm:pt-32 lg:pt-40 pb-20 sm:pb-32 lg:pb-40">
+  <!-- Fixed top progress bar (brief §8 polish) -->
+  <div class="scroll-progress-bar" id="scroll-progress-bar" aria-hidden="true"></div>
 
-      <div class="reveal max-w-[44rem] mb-14 sm:mb-20">
-        <div class="eyebrow eyebrow-muted mb-5 flex items-center gap-3">
+  <!-- ============================================== -->
+  <!-- CLOSING — reflection after the animation       -->
+  <!-- ============================================== -->
+  <section class="relative bg-black overflow-hidden border-t border-gold-500/[0.06]">
+    <div class="max-w-[1500px] mx-auto px-5 sm:px-6 lg:px-10 pt-20 sm:pt-28 lg:pt-36 pb-20 sm:pb-28 lg:pb-32 text-center">
+      <div class="reveal max-w-[48rem] mx-auto">
+        <div class="eyebrow eyebrow-muted mb-5 flex items-center gap-3 justify-center">
           <span class="h-px w-8 bg-gold-500/45"></span>
-          004 · A moment
+          003 · Reflection
+          <span class="h-px w-8 bg-gold-500/45"></span>
         </div>
-      </div>
-
-      <div class="reveal vision-stage max-w-[920px] mx-auto">
-        <video id="vision-video"
-               muted loop playsinline preload="metadata" autoplay
-               aria-label="Tester Tech 2030 — atmospheric mood film, reprise">
-          <source src="tester-2030.mp4" type="video/mp4" />
-        </video>
-      </div>
-
-      <div class="reveal rd-2 max-w-[58ch] mx-auto mt-14 sm:mt-20 text-center">
-        <blockquote class="serif-it text-[clamp(1.8rem,3.5vw,3.2rem)] text-ink-50 leading-[1.18] tracking-[-0.015em]">
-          “The best technology is the kind you forget you're <span class="text-gold">using</span>.”
-        </blockquote>
-        <cite class="not-italic block mt-7 eyebrow eyebrow-muted">
-          — Tester Tech, 2030
-        </cite>
+        <h2 class="h2 display text-[clamp(2.2rem,5vw,4rem)] text-ink-50">
+          From plan to <span class="serif-it text-gold">permanence.</span>
+        </h2>
+        <p class="mt-6 max-w-[52ch] mx-auto text-[1rem] sm:text-[1.05rem] text-ink-100/65 leading-[1.7]">
+          A drawing becomes a wall becomes a tower becomes a building.
+          Each line a decision, each frame a small commitment.
+          Architecture is patience made visible.
+        </p>
       </div>
     </div>
   </section>
 
   <!-- ============================================== -->
-  <!-- SIGNATURE FOOTER                               -->
+  <!-- FOOTER                                         -->
   <!-- ============================================== -->
   <footer class="relative bg-black overflow-hidden border-t border-gold-500/[0.06]">
-    <div class="max-w-[1500px] mx-auto px-5 sm:px-6 lg:px-10 pt-16 sm:pt-24 lg:pt-32 pb-8 sm:pb-10">
-
-      <div class="reveal max-w-[58ch] mx-auto text-center mb-12 sm:mb-16 lg:mb-20">
-        <p class="serif-it text-[clamp(1.6rem,3vw,2.4rem)] text-ink-50 leading-[1.3]">
-          From the workshop.
-        </p>
-        <p class="serif-it text-[clamp(1.6rem,3vw,2.4rem)] text-gold leading-[1.3]">
-          Tester Tech, 2030.
-        </p>
-
-        <a href="./product.html" class="inline-flex items-center gap-2 mt-9 text-[0.82rem] text-ink-100/70 hover:text-gold-300 transition-colors font-mono tracking-[0.18em] uppercase group">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="transition-transform group-hover:-translate-x-0.5"><path d="m15 18-6-6 6-6"/></svg>
-          Return to the present
-        </a>
-      </div>
+    <div class="max-w-[1500px] mx-auto px-5 sm:px-6 lg:px-10 pt-16 sm:pt-24 pb-8 sm:pb-10">
 
       <div class="grid md:grid-cols-3 gap-8 sm:gap-10 items-start">
 
@@ -580,10 +555,10 @@
           <a href="./index.html" class="inline-flex items-center gap-2.5">
             <img src="brand_assets/tester-logo.png" alt="Tester.io home" class="h-10 w-10 object-contain" />
             <span class="wordmark text-[1.4rem] text-ink-50">Tester<span class="dot">.</span>io</span>
-            <span class="ml-2 px-2 py-0.5 rounded-full border border-gold-500/35 text-[10px] font-mono tracking-[0.22em] uppercase text-gold-300">Vision</span>
+            <span class="ml-2 px-2 py-0.5 rounded-full border border-gold-500/35 text-[10px] font-mono tracking-[0.22em] uppercase text-gold-300">Sights</span>
           </a>
           <p class="mt-5 text-[0.92rem] text-ink-100/55 leading-[1.7] max-w-[34ch]">
-            A speculative manifesto. Not a roadmap. A direction.
+            A landmark study, drawn in scroll. From the Tester.io studio.
           </p>
         </div>
 
@@ -614,24 +589,23 @@
       <div class="hairline mt-12"></div>
 
       <div class="py-7 flex flex-wrap items-center justify-between gap-4 text-[0.78rem] font-mono tracking-[0.16em] uppercase text-ink-100/45">
-        <span>© 2026 Tester.io GmbH — Filed under 2030</span>
-        <span>Designed in Berlin · A speculation, not a roadmap</span>
+        <span>© 2026 Tester.io GmbH</span>
+        <span>Designed in Berlin · Drawn in scroll</span>
       </div>
 
       <div class="relative pt-2 pb-2 select-none" aria-hidden="true">
         <div class="megamark text-[clamp(3rem,17vw,16rem)]">
-          2<span class="megamark-gold">0</span><span class="megamark-gold">3</span>0
+          Sights<span class="megamark-gold">.</span>
         </div>
       </div>
     </div>
   </footer>
 
   <!-- ============================================== -->
-  <!-- MINIMAL JS — ping-pong loop + reveals          -->
+  <!-- MINIMAL JS — nav, reveals, smooth scroll       -->
   <!-- ============================================== -->
   <script>
     (function () {
-      // ===== Nav background on scroll =====
       const nav = document.getElementById('nav');
       if (nav) {
         let scrolled = false;
@@ -643,7 +617,7 @@
         onScroll();
       }
 
-      // ===== Mobile menu toggle =====
+      // Mobile menu toggle
       const menuToggle = document.getElementById('mobile-menu-toggle');
       const mobileMenu = document.getElementById('mobile-menu');
       const setMenu = (open) => {
@@ -665,7 +639,7 @@
         else if (mq.addListener) mq.addListener(onMq);
       }
 
-      // ===== Smooth scroll for anchor links (with sticky nav offset) =====
+      // Smooth scroll for in-page anchors with sticky nav offset
       document.querySelectorAll('a[href^="#"]').forEach(a => {
         a.addEventListener('click', (e) => {
           const id = a.getAttribute('href');
@@ -679,7 +653,7 @@
         });
       });
 
-      // ===== Reveal-on-scroll (slow, meditative) =====
+      // Reveal-on-scroll
       const revealEls = document.querySelectorAll('.reveal');
       if ('IntersectionObserver' in window) {
         const io = new IntersectionObserver((entries) => {
@@ -696,79 +670,143 @@
         revealEls.forEach(el => el.classList.add('in'));
       }
 
-      // =================================================================
-      // PING-PONG VIDEO LOOP
-      // Forward via native playback; reverse via manual currentTime decrement.
-      // This is the only technique that works in Safari/iOS — negative
-      // playbackRate is not supported there. requestAnimationFrame keeps
-      // reverse playback in sync with the display refresh.
-      // =================================================================
-      function pingPong(video) {
-        if (!video) return;
-        // Strip the loop attribute — we manage looping manually
-        video.removeAttribute('loop');
-        video.muted = true;
-        video.playsInline = true;
+      // ============================================================
+      // SCROLL-DRIVEN FRAME ANIMATION
+      // Per SCROLL-ANIMATION-BEST-PRACTICES.md:
+      //   - Canvas (not <video>) for frame-accurate scrubbing
+      //   - Batched preload behind a loading overlay
+      //   - Scroll handler {passive:true} sets state only
+      //   - Separate rAF loop draws ONLY when frame index changed
+      //   - Phase overlays bound to scroll-position ranges
+      // Mobile (≤767px) loads every-other source frame (~4 MB vs ~8 MB)
+      // and uses a shorter scroll runway so it never feels like a tar pit.
+      // ============================================================
+      (function initScrollAnimation () {
+        const canvas = document.getElementById('frame-canvas');
+        const track  = document.getElementById('scroll-track');
+        if (!canvas || !track) return;
+        const ctx = canvas.getContext('2d');
+        if (!ctx) return;
 
-        let forward = true;
-        let lastTs = 0;
-        let raf = null;
+        const SOURCE_TOTAL = 121;
+        const isMobile = window.matchMedia('(max-width: 767px)').matches;
+        const STRIDE = isMobile ? 2 : 1;
+        const TOTAL  = Math.ceil(SOURCE_TOTAL / STRIDE);
+        const pad3   = (n) => String(n).padStart(3, '0');
+        const sourceIndexFor = (i) => Math.min(SOURCE_TOTAL, (i * STRIDE) + 1);
+        const frameUrl = (i) => 'sights_assets/frames/frame-' + pad3(sourceIndexFor(i)) + '.webp';
 
-        const tryPlay = () => video.play().catch(() => {});
-        video.addEventListener('loadedmetadata', tryPlay, { once: true });
-        // Unlock autoplay on first user interaction (some browsers block it)
-        const unlock = () => tryPlay();
-        document.addEventListener('click', unlock, { once: true });
-        document.addEventListener('touchstart', unlock, { once: true, passive: true });
+        const FW = 960, FH = 960; // source intrinsic
+        // Crisper rendering with DPR scaling; cap at 2 to keep memory sane
+        const dpr = Math.min(window.devicePixelRatio || 1, 2);
+        canvas.width  = FW * dpr;
+        canvas.height = FH * dpr;
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
-        function step(ts) {
-          const dur = video.duration;
-          if (!dur || isNaN(dur)) {
-            raf = requestAnimationFrame(step);
+        const loader      = document.getElementById('scroll-loader');
+        const loaderBar   = document.getElementById('scroll-loader-bar');
+        const loaderCount = document.getElementById('scroll-loader-count');
+        const progBar     = document.getElementById('scroll-progress-bar');
+
+        const phases = [
+          { el: document.getElementById('phase-blueprint'), start: 0.02, end: 0.18 },
+          { el: document.getElementById('phase-building'),  start: 0.40, end: 0.58 },
+          { el: document.getElementById('phase-built'),     start: 0.82, end: 1.00 },
+        ];
+
+        // -------- Frame preload (batched per brief §4) -----------
+        const frames = new Array(TOTAL);
+        let loaded = 0;
+        let firstDrawn = false;
+        const updateLoader = () => {
+          if (loaderBar)   loaderBar.style.setProperty('--p', ((loaded / TOTAL) * 100).toFixed(1) + '%');
+          if (loaderCount) loaderCount.textContent = pad3(loaded) + ' / ' + pad3(TOTAL);
+        };
+        updateLoader();
+
+        const loadFrame = (i) => new Promise((resolve) => {
+          const img = new Image();
+          img.decoding = 'async';
+          img.onload = () => {
+            frames[i] = img;
+            loaded++;
+            updateLoader();
+            // Paint frame 0 the moment it's available so the loader has
+            // something to fade away from when it's eventually hidden.
+            if (i === 0 && !firstDrawn) {
+              try { ctx.drawImage(img, 0, 0, FW, FH); firstDrawn = true; } catch (e) {}
+            }
+            resolve();
+          };
+          img.onerror = () => { loaded++; updateLoader(); resolve(); };
+          img.src = frameUrl(i);
+        });
+
+        // Browsers cap parallel requests per host (~6 on HTTP/1, more on HTTP/2).
+        // Batches of 18 keep the pipeline saturated without thrashing.
+        const BATCH = 18;
+        const loadBatch = (start) => {
+          if (start >= TOTAL) {
+            if (loader) loader.classList.add('hidden');
+            attachScroll();
             return;
           }
-          if (forward) {
-            // Native playback handles forward. Watch for end-of-clip.
-            if (video.currentTime >= dur - 0.08) {
-              forward = false;
-              video.pause();
-              lastTs = ts;
-            }
-          } else {
-            // Reverse: decrement currentTime each frame.
-            if (lastTs === 0) lastTs = ts;
-            const dt = (ts - lastTs) / 1000;
-            lastTs = ts;
-            const next = video.currentTime - dt;
-            if (next <= 0.04) {
-              video.currentTime = 0;
-              forward = true;
-              tryPlay();
-            } else {
-              video.currentTime = next;
+          const promises = [];
+          for (let i = start; i < Math.min(start + BATCH, TOTAL); i++) {
+            promises.push(loadFrame(i));
+          }
+          Promise.all(promises).then(() => loadBatch(start + BATCH));
+        };
+        loadBatch(0);
+
+        // -------- Scroll → frame mapping (state only; brief §6) ---
+        let currentFrame = 0, drawnFrame = -1, currentProgress = 0;
+        const computeProgress = () => {
+          const r = track.getBoundingClientRect();
+          const total = r.height - window.innerHeight;
+          if (total <= 0) return 0;
+          return Math.min(1, Math.max(0, -r.top / total));
+        };
+
+        const onScroll = () => {
+          const p = computeProgress();
+          currentProgress = p;
+          currentFrame = Math.min(Math.floor(p * TOTAL), TOTAL - 1);
+        };
+
+        // -------- rAF render loop (brief §6) ---------------------
+        const tick = () => {
+          // Draw only when the frame index has changed AND the image is ready
+          if (currentFrame !== drawnFrame) {
+            const img = frames[currentFrame];
+            if (img && img.complete && img.naturalWidth) {
+              ctx.clearRect(0, 0, FW, FH);
+              ctx.drawImage(img, 0, 0, FW, FH);
+              drawnFrame = currentFrame;
             }
           }
-          raf = requestAnimationFrame(step);
-        }
-        raf = requestAnimationFrame(step);
-
-        // Pause/resume the rAF loop when tab loses visibility, to be polite
-        // (autoplay still pauses natively, but we don't want reverse to keep
-        // ticking in background).
-        document.addEventListener('visibilitychange', () => {
-          if (document.hidden) {
-            if (raf) { cancelAnimationFrame(raf); raf = null; }
-            video.pause();
-          } else if (!raf) {
-            lastTs = 0;
-            if (forward) tryPlay();
-            raf = requestAnimationFrame(step);
+          // Phase overlays — pure progress check (brief §7)
+          for (const ph of phases) {
+            if (!ph.el) continue;
+            const inRange = currentProgress >= ph.start && currentProgress <= ph.end;
+            ph.el.classList.toggle('visible', inRange);
           }
-        });
-      }
+          // Top scroll-progress accent
+          if (progBar) {
+            const inPin = currentProgress > 0 && currentProgress < 1;
+            progBar.classList.toggle('active', inPin);
+            progBar.style.setProperty('--p', (currentProgress * 100).toFixed(2) + '%');
+          }
+          requestAnimationFrame(tick);
+        };
 
-      pingPong(document.getElementById('hero-video'));
-      pingPong(document.getElementById('vision-video'));
+        const attachScroll = () => {
+          window.addEventListener('scroll', onScroll, { passive: true });
+          window.addEventListener('resize', onScroll, { passive: true });
+          onScroll();           // catch initial position (e.g., user already scrolled past during load)
+          requestAnimationFrame(tick);
+        };
+      })();
     })();
   </script>
 </body>
