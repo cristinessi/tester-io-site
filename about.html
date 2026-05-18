@@ -1,0 +1,581 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>About — Cristine Crisolo · Tester.io</title>
+  <meta name="description" content="Cristine Crisolo — Support Specialist & Subject Matter Expert from Manila, learning to build with AI. Portfolio of projects shipped on the Tester.io site." />
+  <link rel="icon" href="brand_assets/tester-logo.png" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&family=Fraunces:ital,wght@1,400;1,500;1,600;1,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = { theme: { extend: {
+      fontFamily: { sans:['Montserrat','system-ui','sans-serif'], mono:['JetBrains Mono','ui-monospace','monospace'], serif:['Fraunces','serif'] },
+      colors: { ink:{900:'#08070A',800:'#100D11',500:'#15110D',400:'#3A332C',300:'#6B6259',200:'#A29A8E',100:'#D8D1C4',50:'#F2EDE3'}, gold:{50:'#FBF4DE',100:'#F5E5B8',200:'#EFD491',300:'#E8B979',400:'#D6A765',500:'#C6A559',600:'#A8853F',700:'#7A6029',800:'#4E3E1B'} },
+    }}}
+  </script>
+
+  <style>
+    :root {
+      --bg: #08070A;
+      --warm: #F2EDE3;
+      --warm-mute: rgba(242, 237, 227, 0.62);
+      --warm-faint: rgba(242, 237, 227, 0.42);
+      --gold: #E8B979;
+      --gold-deep: #A8853F;
+      --gold-soft: #F5E5B8;
+      --hairline: rgba(232, 185, 121, 0.12);
+      --hairline-soft: rgba(232, 185, 121, 0.06);
+      /* One additional warm accent — muted peach.
+         Used sparingly: off-the-clock line, stat-chip hover, ghost-btn hover. */
+      --peach: #E8A78A;
+      --peach-soft: rgba(232, 167, 138, 0.18);
+      --ease: cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; background: var(--bg); color-scheme: dark; }
+    body { background: var(--bg); color: var(--warm); margin: 0; font-family: 'Montserrat', system-ui, sans-serif; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+    ::selection { background: rgba(232,185,121,0.4); color: var(--warm); }
+
+    .serif-it    { font-family: 'Fraunces', serif; font-style: italic; font-weight: 500; letter-spacing: -0.02em; }
+    .display-it  { font-family: 'Fraunces', serif; font-style: italic; font-weight: 500; letter-spacing: -0.025em; line-height: 0.92; }
+    .display     { font-family: 'Montserrat', system-ui, sans-serif; font-weight: 800; letter-spacing: -0.04em; line-height: 0.94; }
+    .h2          { font-family: 'Montserrat', system-ui, sans-serif; font-weight: 700; letter-spacing: -0.03em; line-height: 1.05; }
+    .wordmark    { font-weight: 700; letter-spacing: -0.025em; } .wordmark .dot { color: #C6A559; }
+    .text-gold   { background: linear-gradient(135deg,#F5D38A 0%,#E8B979 35%,#C6A559 70%,#A8853F 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .text-gold-soft { background: linear-gradient(135deg,#F5E5B8 0%,#E8B979 50%,#C6A559 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; letter-spacing: 0.26em; text-transform: uppercase; color: var(--gold); font-weight: 500; }
+    .eyebrow-muted { color: var(--warm-faint); }
+
+    .grain { position: fixed; inset: 0; pointer-events: none; z-index: 80; background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.5 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/></svg>"); opacity: 0.045; mix-blend-mode: overlay; }
+    .hero-glow { position: absolute; inset: 0; z-index: 0; pointer-events: none; background: radial-gradient(640px 480px at 18% 22%, rgba(232,185,121,0.08), transparent 60%), radial-gradient(720px 540px at 95% 95%, rgba(232,167,138,0.06), transparent 65%), radial-gradient(900px 700px at 50% 100%, rgba(168,133,63,0.05), transparent 60%), #08070A; }
+    .hairline-rule { border-top: 1px solid var(--hairline); }
+
+    /* Nav */
+    .nav-bar { transition: background-color .5s ease, backdrop-filter .5s ease, border-color .5s; }
+    .nav-bar.is-scrolled { background-color: rgba(8,7,10,0.78); backdrop-filter: blur(18px) saturate(140%); border-bottom-color: var(--hairline); }
+    .mobile-menu { position: absolute; left: 0; right: 0; top: 100%; background: rgba(8,7,10,0.94); -webkit-backdrop-filter: blur(18px) saturate(140%); backdrop-filter: blur(18px) saturate(140%); border-bottom: 1px solid var(--hairline); transform-origin: top; transform: scaleY(0.96); opacity: 0; pointer-events: none; transition: opacity .25s ease, transform .25s ease; }
+    .mobile-menu.is-open { opacity: 1; transform: scaleY(1); pointer-events: auto; }
+    .mobile-menu a { display: flex; align-items: center; justify-content: space-between; padding: 1rem 1.25rem; border-bottom: 1px solid rgba(232,185,121,0.06); color: var(--warm); font-size: 0.95rem; font-weight: 500; transition: color .2s, background-color .2s; }
+    .mobile-menu a:hover, .mobile-menu a:focus-visible { color: var(--gold); background: rgba(232,185,121,0.04); }
+    .mobile-menu a[aria-current="page"] { color: var(--gold); }
+    .nav-toggle { width: 40px; height: 40px; display: inline-flex; align-items: center; justify-content: center; border: 1px solid rgba(232,185,121,0.30); border-radius: 10px; color: var(--warm); background: rgba(255,255,255,0.02); }
+    .nav-toggle .bar { transition: transform .25s ease, opacity .2s ease; transform-origin: center; }
+    .nav-toggle[aria-expanded="true"] .bar-top { transform: translateY(5px) rotate(45deg); }
+    .nav-toggle[aria-expanded="true"] .bar-mid { opacity: 0; }
+    .nav-toggle[aria-expanded="true"] .bar-bottom { transform: translateY(-5px) rotate(-45deg); }
+
+    /* Buttons */
+    .btn { display: inline-flex; align-items: center; gap: 0.55rem; padding: 0.85rem 1.5rem; border-radius: 999px; font-weight: 600; font-size: 0.88rem; transition: transform .3s var(--ease), box-shadow .3s var(--ease), background-color .25s, color .25s, border-color .25s; will-change: transform; }
+    .btn-gold { background: linear-gradient(135deg,#F5D38A 0%,#E8B979 35%,#D6A765 60%,#C6A559 100%); color: #2A220F; box-shadow: 0 12px 28px -10px rgba(198,165,89,0.45), inset 0 1px 0 rgba(255,232,184,0.55); }
+    .btn-gold:hover { transform: translateY(-2px); box-shadow: 0 20px 44px -12px rgba(232,185,121,0.6), inset 0 1px 0 rgba(255,232,184,0.6); }
+    .btn-ghost { background: rgba(255,255,255,0.025); color: var(--warm); border: 1px solid var(--hairline); backdrop-filter: blur(6px); }
+    .btn-ghost:hover { border-color: var(--peach); color: var(--peach); transform: translateY(-2px); }
+
+    /* Stat chips */
+    .stat-chip { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.5rem 0.9rem; border: 1px solid var(--hairline); background: rgba(255,255,255,0.02); backdrop-filter: blur(6px); border-radius: 999px; font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; letter-spacing: 0.14em; color: var(--warm-mute); transition: border-color .35s var(--ease), color .25s, box-shadow .35s var(--ease); }
+    .stat-chip:hover { border-color: var(--peach); color: var(--warm); box-shadow: 0 0 0 4px var(--peach-soft); }
+    .stat-chip .dot { width: 5px; height: 5px; border-radius: 999px; background: var(--gold); box-shadow: 0 0 8px rgba(232,185,121,0.65); }
+
+    /* Profile photo treatment — tall portrait with subtle rotation + offset frame */
+    .portrait-frame { position: relative; max-width: 360px; aspect-ratio: 4/5; transform: rotate(-1.5deg); transition: transform 0.6s var(--ease); }
+    .portrait-frame::before { content: ''; position: absolute; inset: 0; transform: translate(14px, 14px) rotate(1deg); border: 1px solid rgba(232,185,121,0.45); border-radius: 12px; background: linear-gradient(180deg, rgba(232,185,121,0.04), rgba(232,167,138,0.025)); z-index: 0; }
+    .portrait-frame img { position: relative; z-index: 1; width: 100%; height: 100%; object-fit: cover; border-radius: 12px; border: 1px solid rgba(232,185,121,0.30); box-shadow: 0 30px 60px -25px rgba(0,0,0,0.7), inset 0 1px 0 rgba(255,255,255,0.05); }
+    .portrait-frame:hover { transform: rotate(0deg); }
+    @media (max-width: 900px) { .portrait-frame { max-width: 280px; margin: 0 auto; } }
+
+    /* The one peach touch */
+    .creative-line { font-family: 'Fraunces', serif; font-style: italic; font-weight: 400; color: var(--peach); font-size: 0.92rem; letter-spacing: 0.005em; opacity: 0.85; }
+
+    /* Skills */
+    .skill-pill { display: inline-flex; align-items: center; padding: 0.35rem 0.8rem; border: 1px solid var(--hairline); background: rgba(255,255,255,0.02); border-radius: 999px; font-size: 0.78rem; color: var(--warm-mute); margin: 0.2rem 0.25rem 0.2rem 0; transition: border-color .25s, color .2s, background-color .25s; }
+    .skill-pill:hover { border-color: rgba(232,185,121,0.35); color: var(--warm); background: rgba(232,185,121,0.04); }
+    .skill-col h3 { font-family: 'JetBrains Mono', monospace; font-size: 0.66rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); margin: 0 0 1rem; font-weight: 500; }
+    .skill-col .lead { font-family: 'Fraunces', serif; font-style: italic; font-weight: 500; color: var(--warm); font-size: 1.4rem; letter-spacing: -0.015em; line-height: 1.15; margin-bottom: 1rem; }
+
+    /* Glass experience cards */
+    .glass { position: relative; background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.015)); border: 1px solid rgba(232,185,121,0.10); border-radius: 22px; backdrop-filter: blur(14px) saturate(120%); -webkit-backdrop-filter: blur(14px) saturate(120%); box-shadow: inset 0 1px 0 rgba(255,255,255,0.05), 0 30px 60px -30px rgba(0,0,0,0.6); padding: 2rem 2rem 1.85rem; transition: transform .35s var(--ease), border-color .35s, box-shadow .35s var(--ease); }
+    .glass:hover { transform: translateY(-3px); border-color: rgba(232,185,121,0.22); box-shadow: inset 0 1px 0 rgba(255,255,255,0.05), 0 36px 80px -30px rgba(0,0,0,0.7); }
+    .glass .role-eyebrow { display: flex; flex-wrap: wrap; gap: 0.7rem; align-items: baseline; }
+    .glass .dates { font-family: 'JetBrains Mono', monospace; font-size: 0.66rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--warm-faint); }
+    .glass h4 { font-family: 'Montserrat', system-ui, sans-serif; font-weight: 700; font-size: 1.4rem; letter-spacing: -0.02em; margin: 0.6rem 0 0.15rem; color: var(--warm); }
+    .glass h4 .co { font-family: 'Fraunces', serif; font-style: italic; font-weight: 500; color: var(--gold-soft); letter-spacing: -0.01em; }
+    .glass ul { list-style: none; padding: 0; margin: 1.1rem 0 0; display: flex; flex-direction: column; gap: 0.6rem; }
+    .glass ul li { position: relative; padding-left: 1.4rem; color: var(--warm-mute); line-height: 1.6; font-size: 0.97rem; }
+    .glass ul li::before { content: ''; position: absolute; left: 0; top: 0.7em; width: 0.55rem; height: 1px; background: var(--gold); }
+
+    /* Earlier roles */
+    .earlier-row { display: grid; grid-template-columns: 1fr auto auto; gap: 1.2rem; padding: 1rem 0; border-bottom: 1px solid var(--hairline-soft); align-items: baseline; }
+    .earlier-row:last-child { border-bottom: 0; }
+    .earlier-row .role { color: var(--warm); font-weight: 500; }
+    .earlier-row .co { color: var(--warm-mute); font-family: 'Fraunces', serif; font-style: italic; font-weight: 400; }
+    .earlier-row .yr { font-family: 'JetBrains Mono', monospace; font-size: 0.74rem; letter-spacing: 0.16em; color: var(--warm-faint); }
+    @media (max-width: 640px) { .earlier-row { grid-template-columns: 1fr; gap: 0.2rem; } }
+
+    /* Reel */
+    .reel-shell { position: relative; max-width: 1024px; margin: 0 auto; border-radius: 18px; padding: 6px; background: linear-gradient(135deg, rgba(232,185,121,0.35), rgba(232,167,138,0.18) 50%, rgba(168,133,63,0.30)); box-shadow: 0 50px 100px -40px rgba(0,0,0,0.75); }
+    .reel-shell video { display: block; width: 100%; height: auto; border-radius: 14px; background: #000; }
+
+    /* Project grid */
+    .project-card { display: flex; flex-direction: column; background: rgba(255,255,255,0.025); border: 1px solid var(--hairline); border-radius: 18px; overflow: hidden; color: inherit; text-decoration: none; transition: transform .4s var(--ease), border-color .35s, box-shadow .35s var(--ease); }
+    .project-card:hover { transform: translateY(-4px); border-color: rgba(232,185,121,0.30); box-shadow: 0 30px 60px -25px rgba(0,0,0,0.7); }
+    .project-card .img-wrap { position: relative; aspect-ratio: 16/10; overflow: hidden; background: #000; }
+    .project-card .img-wrap img { width: 100%; height: 100%; object-fit: cover; object-position: top center; transition: transform .8s var(--ease); }
+    .project-card:hover .img-wrap img { transform: scale(1.03); }
+    .project-card .body { padding: 1.1rem 1.2rem 1.3rem; }
+    .project-card h4 { font-family: 'Fraunces', serif; font-style: italic; font-weight: 500; font-size: 1.35rem; color: var(--warm); margin: 0 0 0.4rem; letter-spacing: -0.015em; }
+    .project-card p { color: var(--warm-mute); font-size: 0.92rem; line-height: 1.55; margin: 0 0 0.85rem; }
+    .project-card .view { font-family: 'JetBrains Mono', monospace; font-size: 0.66rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); display: inline-flex; align-items: center; gap: 0.45rem; transition: gap .2s var(--ease); }
+    .project-card:hover .view { gap: 0.7rem; }
+
+    /* Contact */
+    .contact-shell { position: relative; max-width: 1024px; margin: 0 auto; padding: 4rem 2rem; background: radial-gradient(700px 400px at 50% 100%, rgba(232,167,138,0.10), transparent 65%), radial-gradient(800px 500px at 50% 0%, rgba(232,185,121,0.08), transparent 65%), rgba(255,255,255,0.015); border: 1px solid rgba(232,185,121,0.18); border-radius: 24px; text-align: center; }
+    .contact-shell h2 { font-family: 'Fraunces', serif; font-style: italic; font-weight: 500; font-size: clamp(2.6rem, 6vw, 4.2rem); line-height: 1.05; color: var(--gold-soft); margin: 0; letter-spacing: -0.025em; }
+    .contact-shell p { color: var(--warm-mute); margin: 1rem auto 0; max-width: 48ch; line-height: 1.65; font-size: 1.02rem; }
+
+    /* Reveal-on-scroll */
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity .9s var(--ease), transform .9s var(--ease); }
+    .reveal.in { opacity: 1; transform: translateY(0); }
+    .rd-1 { transition-delay: .12s; } .rd-2 { transition-delay: .24s; } .rd-3 { transition-delay: .36s; } .rd-4 { transition-delay: .48s; } .rd-5 { transition-delay: .60s; }
+    /* grid stagger — 80ms per child (up to 7) */
+    .grid-stagger > * { transition-delay: 0ms; }
+    .grid-stagger > *:nth-child(2) { transition-delay: 80ms; }
+    .grid-stagger > *:nth-child(3) { transition-delay: 160ms; }
+    .grid-stagger > *:nth-child(4) { transition-delay: 240ms; }
+    .grid-stagger > *:nth-child(5) { transition-delay: 320ms; }
+    .grid-stagger > *:nth-child(6) { transition-delay: 400ms; }
+    .grid-stagger > *:nth-child(7) { transition-delay: 480ms; }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+      .reveal { opacity: 1 !important; transform: none !important; }
+      .portrait-frame { transform: none !important; }
+    }
+  </style>
+  <noscript><style>.reveal { opacity: 1 !important; transform: none !important; }</style></noscript>
+</head>
+<body class="relative">
+
+  <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[100] focus:px-4 focus:py-2 focus:rounded-md focus:bg-ink-900 focus:text-gold-300 focus:text-sm focus:font-semibold">Skip to content</a>
+  <div class="grain" aria-hidden="true"></div>
+
+  <!-- TOP STRIP -->
+  <div class="relative z-40 bg-black text-ink-100 border-b border-white/[0.04]">
+    <div class="max-w-[1500px] mx-auto px-5 sm:px-6 lg:px-10 py-2.5 flex items-center justify-between gap-3 text-[10px] sm:text-[11px] font-mono tracking-[0.18em] uppercase">
+      <div class="flex items-center gap-3 sm:gap-6 min-w-0">
+        <span class="inline-flex items-center gap-2 text-gold-300 shrink-0"><span class="w-1.5 h-1.5 rounded-full bg-emerald-400 inline-block animate-pulse"></span>Open to projects</span>
+        <span class="hidden md:inline text-ink-100/65">Manila &middot; Remote</span>
+      </div>
+      <div class="flex items-center gap-3 sm:gap-5 text-ink-100/65 shrink-0">
+        <a href="./index.html" class="inline-block py-1.5 hover:text-gold-300">tester.io</a>
+        <a href="mailto:heycristinecrisolo@gmail.com" class="hidden sm:inline-block py-1.5 hover:text-gold-300">heycristinecrisolo@gmail.com</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- NAV — About marked current -->
+  <header id="nav" class="nav-bar sticky top-0 z-50 bg-transparent border-b border-transparent">
+    <div class="relative max-w-[1500px] mx-auto px-5 sm:px-6 lg:px-10 py-4 lg:py-5 flex items-center justify-between gap-3">
+      <a href="./index.html" class="flex items-center gap-2.5 group min-w-0">
+        <img src="brand_assets/tester-logo.png" alt="Tester.io home" class="h-8 w-8 lg:h-9 lg:w-9 object-contain drop-shadow-[0_4px_12px_rgba(198,165,89,0.45)]" />
+        <span class="wordmark text-[1.2rem] lg:text-[1.35rem] text-ink-50">Tester<span class="dot">.</span>io</span>
+        <span class="hidden lg:inline ml-2 px-2 py-0.5 rounded-full border border-gold-500/40 text-[10px] font-mono tracking-[0.22em] uppercase text-gold-300">About</span>
+      </a>
+      <nav class="hidden md:flex items-center gap-7 lg:gap-9 text-[0.82rem] tracking-[0.04em] text-ink-100/65 font-medium">
+        <a href="./about.html"       class="text-ink-50 relative group" aria-current="page">About<span class="absolute left-0 -bottom-1 h-px w-full bg-gold-500"></span></a>
+        <a href="./services.html"    class="hover:text-ink-50 relative group">Services<span class="absolute left-0 -bottom-1 h-px w-0 bg-gold-500 group-hover:w-full transition-[width] duration-500"></span></a>
+        <a href="./tech.html"        class="hover:text-ink-50 relative group">Tech<span class="absolute left-0 -bottom-1 h-px w-0 bg-gold-500 group-hover:w-full transition-[width] duration-500"></span></a>
+        <a href="./products.html"    class="hover:text-ink-50 relative group">Products<span class="absolute left-0 -bottom-1 h-px w-0 bg-gold-500 group-hover:w-full transition-[width] duration-500"></span></a>
+        <a href="./tester-2030.html" class="hover:text-ink-50 relative group">Vision<span class="absolute left-0 -bottom-1 h-px w-0 bg-gold-500 group-hover:w-full transition-[width] duration-500"></span></a>
+        <a href="./Sights.html"      class="hover:text-ink-50 relative group">Sights<span class="absolute left-0 -bottom-1 h-px w-0 bg-gold-500 group-hover:w-full transition-[width] duration-500"></span></a>
+        <a href="./trend-finder.html" class="hover:text-ink-50 relative group">Trend Finder<span class="absolute left-0 -bottom-1 h-px w-0 bg-gold-500 group-hover:w-full transition-[width] duration-500"></span></a>
+        <a href="./work.html"        class="hover:text-ink-50 relative group">Work<span class="absolute left-0 -bottom-1 h-px w-0 bg-gold-500 group-hover:w-full transition-[width] duration-500"></span></a>
+        <a href="./contact.html"     class="hover:text-ink-50 relative group">Contact<span class="absolute left-0 -bottom-1 h-px w-0 bg-gold-500 group-hover:w-full transition-[width] duration-500"></span></a>
+      </nav>
+      <div class="flex items-center gap-2 sm:gap-3 shrink-0">
+        <a href="mailto:heycristinecrisolo@gmail.com" class="hidden sm:inline-flex items-center gap-2 text-[0.78rem] text-ink-100/55 hover:text-gold-300 transition-colors font-mono tracking-[0.18em] uppercase">Say hi</a>
+        <button type="button" class="nav-toggle md:hidden" id="mobile-menu-toggle" aria-label="Open menu" aria-controls="mobile-menu" aria-expanded="false">
+          <svg width="20" height="14" viewBox="0 0 20 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><line class="bar bar-top" x1="2" y1="2" x2="18" y2="2"/><line class="bar bar-mid" x1="2" y1="7" x2="18" y2="7"/><line class="bar bar-bottom" x1="2" y1="12" x2="18" y2="12"/></svg>
+        </button>
+      </div>
+      <div class="mobile-menu md:hidden" id="mobile-menu" aria-label="Mobile navigation">
+        <a href="./about.html" aria-current="page">About <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
+        <a href="./services.html">Services <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
+        <a href="./tech.html">Tech <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
+        <a href="./products.html">Products <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
+        <a href="./tester-2030.html">Vision <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
+        <a href="./Sights.html">Sights <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
+        <a href="./trend-finder.html">Trend Finder <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
+        <a href="./work.html">Work <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
+        <a href="./contact.html">Contact <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ============================================== -->
+  <!-- HERO                                            -->
+  <!-- ============================================== -->
+  <section id="main" class="relative overflow-hidden">
+    <div class="hero-glow" aria-hidden="true"></div>
+    <div class="relative max-w-[1400px] mx-auto px-5 sm:px-6 lg:px-10 pt-12 sm:pt-16 lg:pt-24 pb-20 sm:pb-28 lg:pb-32">
+      <div class="grid lg:grid-cols-12 gap-10 lg:gap-16 items-center">
+        <div class="lg:col-span-7 order-2 lg:order-1">
+          <div class="reveal eyebrow flex items-center gap-3">
+            <span class="h-px w-8 bg-gold-500/60"></span>
+            Cristine Crisolo &middot; Portfolio &middot; MMXXVI
+          </div>
+          <h1 class="reveal rd-1 mt-5 display text-[clamp(2.6rem,6.4vw,5rem)] text-ink-50">
+            Cristine <span class="display-it text-gold">Crisolo.</span>
+          </h1>
+          <p class="reveal rd-2 mt-5 text-[1.05rem] sm:text-[1.15rem] text-ink-50/85 max-w-[44ch] leading-[1.5]">
+            Support Specialist &amp; Subject Matter Expert
+            <span class="serif-it text-gold-soft">&middot; learning to build with AI.</span>
+          </p>
+          <p class="reveal rd-3 mt-7 max-w-[58ch] text-[1.02rem] text-ink-100/65 leading-[1.75]">
+            I'm a remote support and operations professional from the Philippines with
+            9+ years across customer service, technical support, and team enablement.
+            I've grown through roles as a Subject Matter Expert and Operations
+            Validator &mdash; work that rewards precision, calm under volume, and
+            getting it right the first time. Now I'm learning to build with AI as a
+            creative partner, shipping a new mini-project every day.
+          </p>
+          <div class="reveal rd-4 mt-8 flex flex-wrap gap-2.5 max-w-[44rem]">
+            <span class="stat-chip"><span class="dot"></span>9+ years &middot; Support &amp; Ops</span>
+            <span class="stat-chip"><span class="dot"></span>Manila, PH &middot; Remote</span>
+            <span class="stat-chip"><span class="dot"></span>Shopify &middot; Zendesk &middot; Salesforce</span>
+            <span class="stat-chip"><span class="dot"></span>Learning AI-native building</span>
+          </div>
+          <div class="reveal rd-5 mt-9 flex flex-wrap items-center gap-3">
+            <a href="mailto:heycristinecrisolo@gmail.com" class="btn btn-gold">
+              Email me
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><path d="m22 6-10 7L2 6"/></svg>
+            </a>
+            <a href="https://www.linkedin.com/in/cristinecrisolo/" target="_blank" rel="noopener" class="btn btn-ghost">
+              LinkedIn
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+            </a>
+          </div>
+          <p class="reveal rd-5 mt-10 creative-line">Off the clock: cats, books, slow mornings.</p>
+        </div>
+
+        <div class="lg:col-span-5 order-1 lg:order-2 flex lg:justify-end">
+          <div class="reveal rd-2 portrait-frame">
+            <img src="profile.jpg" alt="Cristine Crisolo, smiling portrait" loading="eager" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================== -->
+  <!-- SKILLS                                          -->
+  <!-- ============================================== -->
+  <section class="relative overflow-hidden border-t border-gold-500/[0.06]">
+    <div class="max-w-[1400px] mx-auto px-5 sm:px-6 lg:px-10 py-20 sm:py-28">
+      <div class="reveal max-w-[44rem]">
+        <div class="eyebrow eyebrow-muted mb-4 flex items-center gap-3">
+          <span class="h-px w-8 bg-gold-500/60"></span>
+          What I bring
+        </div>
+        <h2 class="h2 text-[clamp(2rem,4.4vw,3.4rem)] text-ink-50">
+          Two practices, <span class="serif-it text-gold">one toolkit.</span>
+        </h2>
+        <p class="mt-5 max-w-[58ch] text-[1rem] text-ink-100/65 leading-[1.7]">
+          Nearly a decade in customer success and operations, now extending into building with AI as a creative partner.
+        </p>
+      </div>
+      <div class="mt-14 grid md:grid-cols-2 lg:grid-cols-3 gap-10 lg:gap-12">
+        <div class="reveal rd-1 skill-col">
+          <h3>01 &middot; Customer success &amp; ops</h3>
+          <div class="lead">Where I've shipped for nine&nbsp;years.</div>
+          <div class="flex flex-wrap">
+            <span class="skill-pill">Email &amp; chat support</span>
+            <span class="skill-pill">Inbound voice</span>
+            <span class="skill-pill">Ticket management</span>
+            <span class="skill-pill">Escalation handling</span>
+            <span class="skill-pill">SME coaching</span>
+            <span class="skill-pill">Operations validation</span>
+            <span class="skill-pill">Quality assurance</span>
+            <span class="skill-pill">Customer retention</span>
+            <span class="skill-pill">Process documentation</span>
+          </div>
+        </div>
+        <div class="reveal rd-2 skill-col">
+          <h3>02 &middot; Platforms &amp; tools</h3>
+          <div class="lead">The stack I'm fluent in.</div>
+          <div class="flex flex-wrap">
+            <span class="skill-pill">Shopify</span>
+            <span class="skill-pill">Zendesk</span>
+            <span class="skill-pill">Salesforce</span>
+            <span class="skill-pill">Slack</span>
+            <span class="skill-pill">LivePerson</span>
+            <span class="skill-pill">Microsoft Excel (advanced)</span>
+            <span class="skill-pill">Google Workspace</span>
+            <span class="skill-pill">Claude AI</span>
+          </div>
+        </div>
+        <div class="reveal rd-3 skill-col">
+          <h3>03 &middot; AI-native building <span class="text-ink-100/45">(in progress)</span></h3>
+          <div class="lead">Where I'm <span class="serif-it text-gold">currently learning.</span></div>
+          <div class="flex flex-wrap">
+            <span class="skill-pill">Claude Code</span>
+            <span class="skill-pill">Prompt engineering</span>
+            <span class="skill-pill">kie.ai</span>
+            <span class="skill-pill">VS Code</span>
+            <span class="skill-pill">HTML</span>
+            <span class="skill-pill">CSS</span>
+            <span class="skill-pill">Tailwind</span>
+            <span class="skill-pill">JavaScript basics</span>
+            <span class="skill-pill">Puppeteer</span>
+            <span class="skill-pill">Playwright</span>
+            <span class="skill-pill">FFmpeg</span>
+            <span class="skill-pill">Git</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================== -->
+  <!-- EXPERIENCE                                      -->
+  <!-- ============================================== -->
+  <section class="relative overflow-hidden border-t border-gold-500/[0.06]">
+    <div class="max-w-[1400px] mx-auto px-5 sm:px-6 lg:px-10 py-20 sm:py-28">
+      <div class="reveal max-w-[44rem]">
+        <div class="eyebrow eyebrow-muted mb-4 flex items-center gap-3">
+          <span class="h-px w-8 bg-gold-500/60"></span>
+          Where I've worked
+        </div>
+        <h2 class="h2 text-[clamp(2rem,4.4vw,3.4rem)] text-ink-50">
+          The roles that <span class="serif-it text-gold">made me.</span>
+        </h2>
+      </div>
+
+      <div class="mt-12 grid lg:grid-cols-2 gap-8">
+        <article class="reveal rd-1 glass">
+          <div class="role-eyebrow">
+            <span class="eyebrow">Current</span>
+            <span class="dates">May 2023 &mdash; Dec 2025</span>
+          </div>
+          <h4>Email Support Specialist <span class="co">&middot; Sunshine Sisters, LLC</span></h4>
+          <ul>
+            <li>Attended to customer concerns through email via Zendesk.</li>
+            <li>Tracked order and shipping status across the Shopify storefront.</li>
+            <li>Met response-time targets while keeping a calm, accuracy-first tone.</li>
+          </ul>
+        </article>
+        <article class="reveal rd-2 glass">
+          <div class="role-eyebrow">
+            <span class="eyebrow eyebrow-muted">Most recent prior</span>
+            <span class="dates">Aug 2022 &mdash; Mar 2023</span>
+          </div>
+          <h4>Help Desk Support Specialist <span class="co">&middot; WeWork (OSI Consulting, Makati)</span></h4>
+          <ul>
+            <li>Frontliner on bookings, billing, and member concerns via inbound calls &amp; email.</li>
+            <li>Operated on Salesforce + Slack as primary workflow tools.</li>
+            <li>Started project-based; engagement was extended an additional 6&nbsp;months.</li>
+          </ul>
+        </article>
+      </div>
+
+      <div class="reveal rd-3 mt-14">
+        <div class="eyebrow eyebrow-muted mb-5 flex items-center gap-3">
+          <span class="h-px w-8 bg-gold-500/45"></span>
+          Earlier roles
+        </div>
+        <div>
+          <div class="earlier-row"><span class="role">Customer Service Associate</span><span class="co">Diversify Offshoring Solutions</span><span class="yr">2021 &mdash; 2022</span></div>
+          <div class="earlier-row"><span class="role">SME / Advisor II</span><span class="co">Concentrix Ayala</span><span class="yr">2019 &mdash; 2021</span></div>
+          <div class="earlier-row"><span class="role">Customer Service Associate</span><span class="co">Convergys Ayala</span><span class="yr">2017 &mdash; 2019</span></div>
+          <div class="earlier-row"><span class="role">Technical Sales Representative</span><span class="co">IOPEX Technologies</span><span class="yr">2015 &mdash; 2016</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================== -->
+  <!-- PROJECT HIGHLIGHTS                              -->
+  <!-- ============================================== -->
+  <section class="relative overflow-hidden border-t border-gold-500/[0.06]">
+    <div class="max-w-[1400px] mx-auto px-5 sm:px-6 lg:px-10 py-20 sm:py-28">
+      <div class="reveal max-w-[44rem]">
+        <div class="eyebrow eyebrow-muted mb-4 flex items-center gap-3">
+          <span class="h-px w-8 bg-gold-500/60"></span>
+          What I'm shipping
+        </div>
+        <h2 class="h2 text-[clamp(2rem,4.4vw,3.4rem)] text-ink-50">
+          Project <span class="serif-it text-gold">highlights.</span>
+        </h2>
+        <p class="mt-5 max-w-[58ch] text-[1rem] text-ink-100/65 leading-[1.7]">
+          Pages built across recent learning sessions &mdash; landing sites, scroll experiences, and internal admin views. Each card is live; click into one.
+        </p>
+      </div>
+
+      <div class="reveal rd-1 mt-14">
+        <div class="eyebrow text-center mb-5">Project reel &middot; 7 pages &middot; autoplay</div>
+        <div class="reel-shell">
+          <video autoplay muted loop playsinline preload="metadata" poster="screenshots/index.png" aria-label="Project reel cycling through every page built for the Tester.io site">
+            <source src="reel.mp4" type="video/mp4" />
+          </video>
+        </div>
+      </div>
+
+      <div class="mt-16 grid sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-7 grid-stagger">
+        <a class="reveal project-card" href="./index.html">
+          <div class="img-wrap"><img src="screenshots/index.png" alt="Tester.io landing page screenshot" loading="lazy" /></div>
+          <div class="body">
+            <h4>Tester.io &mdash; Landing</h4>
+            <p>The main marketing site &mdash; the front door of Tester.io.</p>
+            <span class="view">View project <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
+          </div>
+        </a>
+        <a class="reveal project-card" href="./TesterTechGadgets.html">
+          <div class="img-wrap"><img src="screenshots/testertechgadgets.png" alt="Tester Tech Gadgets product showcase screenshot" loading="lazy" /></div>
+          <div class="body">
+            <h4>Tester Tech Gadgets</h4>
+            <p>Engineered for the everyday future. Product showcase with full storytelling.</p>
+            <span class="view">View project <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
+          </div>
+        </a>
+        <a class="reveal project-card" href="./product.html">
+          <div class="img-wrap"><img src="screenshots/product.png" alt="Smart Watch Pro product detail screenshot" loading="lazy" /></div>
+          <div class="body">
+            <h4>Smart Watch Pro</h4>
+            <p>Product detail page for the Tester Smart Watch Pro &mdash; precision on your wrist.</p>
+            <span class="view">View project <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
+          </div>
+        </a>
+        <a class="reveal project-card" href="./Sights.html">
+          <div class="img-wrap"><img src="screenshots/sights.png" alt="Sights landmark study screenshot" loading="lazy" /></div>
+          <div class="body">
+            <h4>Sights</h4>
+            <p>A landmark study. Visual exploration of testing milestones.</p>
+            <span class="view">View project <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
+          </div>
+        </a>
+        <a class="reveal project-card" href="./tester-2030.html">
+          <div class="img-wrap"><img src="screenshots/tester-2030.png" alt="Vision 2030 page screenshot" loading="lazy" /></div>
+          <div class="body">
+            <h4>Vision 2030</h4>
+            <p>A speculative vision for testing in 2030.</p>
+            <span class="view">View project <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
+          </div>
+        </a>
+        <a class="reveal project-card" href="./TesterTech.html">
+          <div class="img-wrap"><img src="screenshots/testertech.png" alt="Tester Tech field guide screenshot" loading="lazy" /></div>
+          <div class="body">
+            <h4>Tester Tech</h4>
+            <p>A field guide to the testing toolchain.</p>
+            <span class="view">View project <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
+          </div>
+        </a>
+        <a class="reveal project-card" href="./dashboard.html">
+          <div class="img-wrap"><img src="screenshots/dashboard.png" alt="Admin dashboard screenshot" loading="lazy" /></div>
+          <div class="body">
+            <h4>Admin Dashboard</h4>
+            <p>Internal admin view of the Tester.io platform.</p>
+            <span class="view">View project <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================== -->
+  <!-- CONTACT / CTA                                   -->
+  <!-- ============================================== -->
+  <section class="relative overflow-hidden border-t border-gold-500/[0.06]">
+    <div class="max-w-[1400px] mx-auto px-5 sm:px-6 lg:px-10 py-20 sm:py-28">
+      <div class="reveal contact-shell">
+        <div class="eyebrow inline-flex items-center gap-3 mb-5">
+          <span class="h-px w-8 bg-gold-500/60"></span>
+          Get in touch
+          <span class="h-px w-8 bg-gold-500/60"></span>
+        </div>
+        <h2>Say hi.</h2>
+        <p>Open to support specialist roles, virtual assistant work, and conversations about building with AI.</p>
+        <div class="mt-10 flex flex-wrap justify-center items-center gap-3">
+          <a href="mailto:heycristinecrisolo@gmail.com" class="btn btn-gold">
+            Email me
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><path d="m22 6-10 7L2 6"/></svg>
+          </a>
+          <a href="https://www.linkedin.com/in/cristinecrisolo/" target="_blank" rel="noopener" class="btn btn-ghost">
+            LinkedIn
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14zM8.34 18V9.99H5.67V18h2.67zM7 8.85a1.55 1.55 0 1 0 0-3.1 1.55 1.55 0 0 0 0 3.1zM18 18v-4.4c0-2.36-1.27-3.46-2.97-3.46-1.37 0-1.98.75-2.32 1.28V9.99H10.04c.04.75 0 8.01 0 8.01h2.67v-4.47c0-.24.02-.48.09-.65.19-.48.63-.97 1.37-.97.97 0 1.36.73 1.36 1.81V18H18z"/></svg>
+          </a>
+        </div>
+        <p class="mt-8 serif-it text-[1.05rem] text-ink-100/55">Let's connect.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================== -->
+  <!-- FOOTER                                          -->
+  <!-- ============================================== -->
+  <footer class="relative bg-black overflow-hidden border-t border-gold-500/[0.06]">
+    <div class="max-w-[1500px] mx-auto px-5 sm:px-6 lg:px-10 pt-16 sm:pt-24 pb-8 sm:pb-10">
+      <div class="grid md:grid-cols-3 gap-8 sm:gap-10 items-start">
+        <div>
+          <a href="./index.html" class="inline-flex items-center gap-2.5">
+            <img src="brand_assets/tester-logo.png" alt="Tester.io home" class="h-10 w-10 object-contain" />
+            <span class="wordmark text-[1.4rem] text-ink-50">Tester<span class="dot">.</span>io</span>
+            <span class="ml-2 px-2 py-0.5 rounded-full border border-gold-500/35 text-[10px] font-mono tracking-[0.22em] uppercase text-gold-300">About</span>
+          </a>
+          <p class="mt-5 text-[0.92rem] text-ink-100/55 leading-[1.7] max-w-[34ch]">A portfolio &mdash; built by Cristine Crisolo while learning to ship with AI.</p>
+        </div>
+        <div class="md:text-center">
+          <div class="eyebrow eyebrow-muted mb-4">Adjacent</div>
+          <div class="flex md:justify-center items-center gap-4 text-[0.9rem]">
+            <a href="./services.html" class="text-ink-100/70 hover:text-gold-300 transition-colors">Services</a>
+            <a href="./tech.html" class="text-ink-100/70 hover:text-gold-300 transition-colors">Tech</a>
+            <a href="./work.html" class="text-ink-100/70 hover:text-gold-300 transition-colors">Work</a>
+          </div>
+        </div>
+        <div class="md:text-right">
+          <div class="eyebrow eyebrow-muted mb-4">Reach</div>
+          <a href="mailto:heycristinecrisolo@gmail.com" class="inline-flex items-center gap-2 text-[0.95rem] text-ink-50 hover:text-gold-300 transition-colors">heycristinecrisolo@gmail.com</a>
+        </div>
+      </div>
+      <div class="hairline-rule mt-12"></div>
+      <div class="py-7 flex flex-wrap items-center justify-between gap-4 text-[0.78rem] font-mono tracking-[0.16em] uppercase text-ink-100/45">
+        <span>&copy; 2026 Cristine Crisolo &middot; Built on Tester.io</span>
+        <span>Manila &middot; PH &middot; Remote</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      const nav = document.getElementById('nav');
+      if (nav) {
+        let s = false;
+        const onScroll = () => { const v = window.scrollY > 24; if (v !== s) { nav.classList.toggle('is-scrolled', v); s = v; } };
+        window.addEventListener('scroll', onScroll, { passive: true });
+        onScroll();
+      }
+      const t = document.getElementById('mobile-menu-toggle');
+      const m = document.getElementById('mobile-menu');
+      const setMenu = (o) => { if (!t||!m) return; m.classList.toggle('is-open', o); t.setAttribute('aria-expanded', String(o)); document.body.style.overflow = o ? 'hidden' : ''; };
+      if (t && m) {
+        t.addEventListener('click', () => setMenu(!m.classList.contains('is-open')));
+        m.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setMenu(false)));
+        document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && m.classList.contains('is-open')) setMenu(false); });
+        const mq = window.matchMedia('(min-width: 768px)');
+        const onMq = (e) => { if (e.matches) setMenu(false); };
+        (mq.addEventListener || mq.addListener).call(mq, 'change', onMq);
+      }
+      const els = document.querySelectorAll('.reveal');
+      if ('IntersectionObserver' in window) {
+        const io = new IntersectionObserver(entries => entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { threshold: 0.14, rootMargin: '0px 0px -6% 0px' });
+        els.forEach(el => io.observe(el));
+        requestAnimationFrame(() => els.forEach(el => { if (el.getBoundingClientRect().top < window.innerHeight * 0.92) el.classList.add('in'); }));
+      } else { els.forEach(el => el.classList.add('in')); }
+    })();
+  </script>
+</body>
+</html>

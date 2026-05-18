@@ -303,6 +303,64 @@
       .marquee-track { animation: none !important; }
       .reveal { opacity: 1 !important; transform: none !important; }
     }
+
+    /* ===== Contact form (editorial hairline-underline) ===== */
+    .contact-form { display: flex; flex-direction: column; gap: 1.8rem; }
+    .field { display: flex; flex-direction: column; gap: 0.55rem; }
+    .field-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem; letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(168, 133, 63, 0.75);
+    }
+    .field-input {
+      background: transparent;
+      border: 0;
+      border-bottom: 1px solid rgba(168, 133, 63, 0.25);
+      padding: 0.55rem 0;
+      font: inherit; font-size: 1.02rem;
+      color: #15110D;
+      outline: none;
+      transition: border-color .25s ease, background-color .25s ease;
+      width: 100%;
+    }
+    .field-input::placeholder { color: rgba(107, 98, 89, 0.45); }
+    .field-input:focus,
+    .field-input:focus-visible {
+      border-bottom-color: #C6A559;
+      background: rgba(245, 211, 138, 0.05);
+    }
+    .field-textarea { min-height: 5.5rem; resize: vertical; line-height: 1.6; }
+    /* :user-invalid only kicks in AFTER the user has interacted (not on initial load) */
+    .field-input:user-invalid { border-bottom-color: rgba(180, 60, 40, 0.6); }
+    .field-error {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.66rem; letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(180, 60, 40, 0.85);
+      min-height: 1em;
+      opacity: 0; transform: translateY(-2px);
+      transition: opacity .2s ease, transform .2s ease;
+    }
+    .field-error.visible { opacity: 1; transform: translateY(0); }
+
+    .form-bottom { display: flex; align-items: center; gap: 1.4rem; flex-wrap: wrap; margin-top: 0.5rem; }
+    /* Inline busy state — appends '…' to the existing button label */
+    .form-submit[aria-busy="true"] .btn-label::after { content: '…'; }
+    .form-submit[disabled] { opacity: 0.7; cursor: wait; }
+    .form-status {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem; letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(107, 98, 89, 0.75);
+    }
+    .form-status.error { color: rgba(180, 60, 40, 0.9); }
+    .form-success { padding: 0.5rem 0; }
+
+    @media (max-width: 767px) {
+      .contact-form { gap: 1.4rem; }
+      .form-bottom { gap: 1rem; }
+    }
   </style>
 </head>
 <body class="relative overflow-x-hidden">
@@ -326,9 +384,9 @@
         <span class="hidden md:inline text-ink-100/70">SOC&nbsp;2 · ISO&nbsp;27001 · GDPR</span>
       </div>
       <div class="flex items-center gap-5 text-ink-100/70">
-        <a href="#" class="inline-block py-1.5 hover:text-gold-300">Docs</a>
-        <a href="#" class="inline-block py-1.5 hover:text-gold-300">Status</a>
-        <a href="#" class="inline-block py-1.5 hover:text-gold-300 hidden md:inline">EN&nbsp;/&nbsp;US</a>
+        <a href="mailto:hello@tester.io?subject=Docs" class="inline-block py-1.5 hover:text-gold-300">Docs</a>
+        <a href="mailto:hello@tester.io?subject=Status" class="inline-block py-1.5 hover:text-gold-300">Status</a>
+        <a href="mailto:hello@tester.io?subject=Locale" class="inline-block py-1.5 hover:text-gold-300 hidden md:inline">EN&nbsp;/&nbsp;US</a>
         <a href="mailto:hello@tester.io" class="inline-block py-1.5 hover:text-gold-300 hidden md:inline">hello@tester.io</a>
       </div>
     </div>
@@ -339,25 +397,25 @@
   <!-- ============================================== -->
   <header id="nav" class="nav-bar sticky top-0 z-50 bg-transparent border-b border-transparent">
     <div class="max-w-[1400px] mx-auto px-6 lg:px-10 py-5 flex items-center justify-between">
-      <a href="#" class="flex items-center gap-2.5 group">
+      <a href="./index.html" class="flex items-center gap-2.5 group">
         <img src="brand_assets/tester-logo.png" alt="Tester.io home" class="h-9 w-9 object-contain drop-shadow-[0_4px_12px_rgba(198,165,89,0.35)]" />
         <span class="wordmark text-[1.35rem] text-ink-500">Tester<span class="dot">.</span>io</span>
       </a>
 
       <nav class="hidden md:flex items-center gap-9 text-[0.82rem] tracking-[0.04em] text-ink-400 font-medium">
-        <a href="#about" class="hover:text-ink-500 relative group">
+        <a href="./about.html" class="hover:text-ink-500 relative group">
           About
           <span class="absolute left-0 -bottom-1 h-px w-0 bg-gold-500 group-hover:w-full transition-[width] duration-500"></span>
         </a>
-        <a href="#services" class="hover:text-ink-500 relative group">
+        <a href="./services.html" class="hover:text-ink-500 relative group">
           Services
           <span class="absolute left-0 -bottom-1 h-px w-0 bg-gold-500 group-hover:w-full transition-[width] duration-500"></span>
         </a>
-        <a href="#tech" class="hover:text-ink-500 relative group">
+        <a href="./tech.html" class="hover:text-ink-500 relative group">
           Tech
           <span class="absolute left-0 -bottom-1 h-px w-0 bg-gold-500 group-hover:w-full transition-[width] duration-500"></span>
         </a>
-        <a href="#products" class="hover:text-ink-500 relative group">
+        <a href="./products.html" class="hover:text-ink-500 relative group">
           Products
           <span class="absolute left-0 -bottom-1 h-px w-0 bg-gold-500 group-hover:w-full transition-[width] duration-500"></span>
         </a>
@@ -369,19 +427,23 @@
           Sights
           <span class="absolute left-0 -bottom-1 h-px w-0 bg-gold-500 group-hover:w-full transition-[width] duration-500"></span>
         </a>
-        <a href="#work" class="hover:text-ink-500 relative group">
+        <a href="./trend-finder.html" class="hover:text-ink-500 relative group">
+          Trend Finder
+          <span class="absolute left-0 -bottom-1 h-px w-0 bg-gold-500 group-hover:w-full transition-[width] duration-500"></span>
+        </a>
+        <a href="./work.html" class="hover:text-ink-500 relative group">
           Work
           <span class="absolute left-0 -bottom-1 h-px w-0 bg-gold-500 group-hover:w-full transition-[width] duration-500"></span>
         </a>
-        <a href="#contact" class="hover:text-ink-500 relative group">
+        <a href="./contact.html" class="hover:text-ink-500 relative group">
           Contact
           <span class="absolute left-0 -bottom-1 h-px w-0 bg-gold-500 group-hover:w-full transition-[width] duration-500"></span>
         </a>
       </nav>
 
       <div class="flex items-center gap-3">
-        <a href="#" class="hidden md:inline text-[0.82rem] text-ink-400 hover:text-ink-500 font-medium">Sign in</a>
-        <a href="#contact" class="btn btn-gold text-[0.82rem] py-3 px-5">
+        <a href="mailto:hello@tester.io?subject=Sign%20in%20request" class="hidden md:inline text-[0.82rem] text-ink-400 hover:text-ink-500 font-medium">Sign in</a>
+        <a href="./contact.html" class="btn btn-gold text-[0.82rem] py-3 px-5">
           Get Started
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
         </a>
@@ -433,11 +495,11 @@
           </p>
 
           <div class="reveal reveal-d3 flex flex-col sm:flex-row gap-3 lg:justify-end">
-            <a href="#contact" class="btn btn-gold">
+            <a href="./contact.html" class="btn btn-gold">
               Start a free trial
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
             </a>
-            <a href="#services" class="btn btn-ghost-dark">
+            <a href="./services.html" class="btn btn-ghost-dark">
               See the platform
             </a>
           </div>
@@ -631,7 +693,7 @@
             </div>
           </div>
 
-          <a href="#contact" class="mt-10 inline-flex items-center gap-2.5 text-[0.92rem] font-semibold text-ink-500 group">
+          <a href="./about.html" class="mt-10 inline-flex items-center gap-2.5 text-[0.92rem] font-semibold text-ink-500 group">
             <span class="border-b border-gold-500 pb-1 group-hover:border-ink-500 transition-colors">Read our story</span>
             <svg class="group-hover:translate-x-1 transition-transform" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
           </a>
@@ -665,7 +727,7 @@
       </div>
 
       <!-- 3-card grid -->
-      <div id="work" class="grid md:grid-cols-3 gap-6 lg:gap-8">
+      <div class="grid md:grid-cols-3 gap-6 lg:gap-8">
 
         <!-- Card 1 -->
         <article class="svc-card relative bg-paper rounded-[24px] overflow-hidden border border-ink-500/[0.06]">
@@ -691,7 +753,7 @@
               <li class="flex items-center gap-2.5"><span class="w-1 h-1 rounded-full bg-gold-500"></span> Visual + accessibility coverage</li>
               <li class="flex items-center gap-2.5"><span class="w-1 h-1 rounded-full bg-gold-500"></span> Flake budget &lt; 0.5%</li>
             </ul>
-            <a href="#contact" class="mt-7 inline-flex items-center gap-2 text-[0.85rem] font-semibold text-ink-500">
+            <a href="./contact.html" class="mt-7 inline-flex items-center gap-2 text-[0.85rem] font-semibold text-ink-500">
               <span class="border-b border-gold-500 pb-0.5">Explore Automated</span>
               <svg class="svc-arrow" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
             </a>
@@ -722,7 +784,7 @@
               <li class="flex items-center gap-2.5"><span class="w-1 h-1 rounded-full bg-gold-500"></span> Scripted &amp; exploratory passes</li>
               <li class="flex items-center gap-2.5"><span class="w-1 h-1 rounded-full bg-gold-500"></span> Loom-first bug reports</li>
             </ul>
-            <a href="#contact" class="mt-7 inline-flex items-center gap-2 text-[0.85rem] font-semibold text-ink-500">
+            <a href="./contact.html" class="mt-7 inline-flex items-center gap-2 text-[0.85rem] font-semibold text-ink-500">
               <span class="border-b border-gold-500 pb-0.5">Explore Manual</span>
               <svg class="svc-arrow" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
             </a>
@@ -753,7 +815,7 @@
               <li class="flex items-center gap-2.5"><span class="w-1 h-1 rounded-full bg-gold-500"></span> k6 + custom load profiles</li>
               <li class="flex items-center gap-2.5"><span class="w-1 h-1 rounded-full bg-gold-500"></span> CWV regression alerts</li>
             </ul>
-            <a href="#contact" class="mt-7 inline-flex items-center gap-2 text-[0.85rem] font-semibold text-ink-500">
+            <a href="./contact.html" class="mt-7 inline-flex items-center gap-2 text-[0.85rem] font-semibold text-ink-500">
               <span class="border-b border-gold-500 pb-0.5">Explore Performance</span>
               <svg class="svc-arrow" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
             </a>
@@ -984,9 +1046,10 @@
   </section>
 
   <!-- ============================================== -->
-  <!-- PULL QUOTE — Editorial field note              -->
+  <!-- WORK / FIELD NOTE — testimonial + studio note  -->
+  <!-- (id="work" — the "Work" nav anchor lands here) -->
   <!-- ============================================== -->
-  <section class="relative bg-page overflow-hidden">
+  <section id="work" class="relative bg-page overflow-hidden">
     <div class="relative max-w-[1200px] mx-auto px-6 lg:px-10 py-24 lg:py-32">
       <div class="grid lg:grid-cols-12 gap-10 lg:gap-16 items-start">
 
@@ -1038,128 +1101,79 @@
   </section>
 
   <!-- ============================================== -->
-  <!-- CONTACT — dark CTA section                     -->
+  <!-- CONTACT FORM — Get in touch                    -->
+  <!-- (id="contact" — nav anchor lands here)         -->
   <!-- ============================================== -->
-  <section id="contact" class="relative cta-dark text-white overflow-hidden">
-    <img src="brand_assets/developer-laptop.jpg" alt="" aria-hidden="true" class="absolute inset-0 w-full h-full object-cover opacity-25 mix-blend-screen pointer-events-none" />
-    <div class="grain-light" aria-hidden="true"></div>
-
+  <section id="contact" class="relative bg-page overflow-hidden">
+    <div class="page-glow"></div>
     <div class="relative max-w-[1400px] mx-auto px-6 lg:px-10 py-24 lg:py-32">
-      <div class="grid lg:grid-cols-12 gap-12 lg:gap-20">
 
-        <!-- left copy -->
-        <div class="lg:col-span-6">
-          <div class="eyebrow eyebrow-on-dark mb-5 flex items-center gap-3">
-            <span class="h-px w-8 bg-gold-300/60"></span>
-            Engage with us
+      <div class="grid lg:grid-cols-12 gap-10 lg:gap-20 items-start">
+
+        <!-- LEFT: eyebrow + heading + intro -->
+        <div class="lg:col-span-5">
+          <div class="eyebrow mb-5 flex items-center gap-3">
+            <span class="h-px w-8 bg-gold-500/60"></span>
+            Get in touch
           </div>
-          <h2 class="display text-white text-[clamp(2.4rem,5vw,4.6rem)] leading-[1.02]">
-            Let's ship something
-            <span class="display-italic text-gold">solid.</span>
+          <h2 class="h2 text-[clamp(2.2rem,4.6vw,4rem)] text-ink-500">
+            Let's
+            <span class="display-italic text-gold">talk.</span>
           </h2>
-          <p class="mt-7 max-w-[42ch] text-ink-100/75 text-[1.02rem] leading-[1.75]">
-            Tell us what you're building and where it hurts. We'll write back within one business day
-            with a 30-minute plan — not a deck, not a discovery call.
+          <p class="mt-6 max-w-[42ch] text-ink-400 leading-[1.75] text-[1.02rem]">
+            Tell us about the project. We read every message and write back
+            within two working days.
           </p>
-
-          <!-- contact rows -->
-          <div class="mt-10 space-y-5 max-w-[26rem]">
-            <a href="mailto:hello@tester.io" class="flex items-center justify-between gap-4 py-4 border-b border-gold-300/15 group">
-              <span class="flex items-center gap-3">
-                <span class="ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><path d="m22 6-10 7L2 6"/></svg></span>
-                <span>
-                  <span class="block text-[11px] font-mono tracking-[0.22em] uppercase text-gold-300/80">Email</span>
-                  <span class="block text-[0.98rem] text-white">hello@tester.io</span>
-                </span>
-              </span>
-              <svg class="opacity-50 group-hover:opacity-100 group-hover:translate-x-1 transition" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg>
-            </a>
-            <a href="tel:+14155550142" class="flex items-center justify-between gap-4 py-4 border-b border-gold-300/15 group">
-              <span class="flex items-center gap-3">
-                <span class="ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span>
-                <span>
-                  <span class="block text-[11px] font-mono tracking-[0.22em] uppercase text-gold-300/80">Phone</span>
-                  <span class="block text-[0.98rem] text-white">+1 (415) 555 — 0142</span>
-                </span>
-              </span>
-              <svg class="opacity-50 group-hover:opacity-100 group-hover:translate-x-1 transition" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg>
-            </a>
-            <a href="https://www.google.com/maps/search/?api=1&amp;query=14+Prinzessinnenstra%C3%9Fe%2C+Berlin" target="_blank" rel="noopener noreferrer" class="flex items-center justify-between gap-4 py-4 border-b border-gold-300/15 group">
-              <span class="flex items-center gap-3">
-                <span class="ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></span>
-                <span>
-                  <span class="block text-[11px] font-mono tracking-[0.22em] uppercase text-gold-300/80">Studio</span>
-                  <span class="block text-[0.98rem] text-white">14 Prinzessinnenstraße, Berlin</span>
-                </span>
-              </span>
-              <svg class="opacity-50 group-hover:opacity-100 group-hover:translate-x-1 transition" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg>
-            </a>
-          </div>
+          <a href="mailto:hello@tester.io"
+             class="mt-8 inline-flex items-center gap-2 text-[0.82rem] font-mono tracking-[0.18em] uppercase text-ink-400 hover:text-ink-500 border-b border-gold-300/40 hover:border-gold-500 pb-1 transition-colors">
+            hello@tester.io
+          </a>
         </div>
 
-        <!-- right form -->
-        <div class="lg:col-span-6 relative">
-          <div class="relative rounded-[28px] p-8 lg:p-10" style="background: linear-gradient(180deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.015) 100%); border: 1px solid rgba(232,185,121,0.18); backdrop-filter: blur(8px);">
-            <div class="absolute -top-px left-10 right-10 h-px bg-gradient-to-r from-transparent via-gold-300/40 to-transparent"></div>
-
-            <form action="#" method="post" class="space-y-6">
-              <div class="grid sm:grid-cols-2 gap-5">
-                <div>
-                  <label class="field-label" for="name">Your name</label>
-                  <input id="name" name="name" type="text" placeholder="Iris Halloway" class="field" autocomplete="name" />
-                </div>
-                <div>
-                  <label class="field-label" for="company">Company</label>
-                  <input id="company" name="company" type="text" placeholder="Helix" class="field" autocomplete="organization" />
-                </div>
-              </div>
-
-              <div>
-                <label class="field-label" for="email">Work email</label>
-                <input id="email" name="email" type="email" placeholder="iris@helix.io" class="field" autocomplete="email" required />
-              </div>
-
-              <div>
-                <label class="field-label" for="interest">I'm interested in</label>
-                <select id="interest" name="interest" class="field appearance-none cursor-pointer" style="background-image: url(&quot;data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23E8B979' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='m6 9 6 6 6-6'/></svg>&quot;); background-repeat: no-repeat; background-position: right 1rem center;">
-                  <option style="color:#15110D">Automated Testing</option>
-                  <option style="color:#15110D">Manual QA</option>
-                  <option style="color:#15110D">Performance Audits</option>
-                  <option style="color:#15110D">A full QA partnership</option>
-                </select>
-              </div>
-
-              <div>
-                <label class="field-label" for="message">What hurts?</label>
-                <textarea id="message" name="message" rows="4" placeholder="A short paragraph is plenty." class="field resize-none"></textarea>
-              </div>
-
-              <div class="flex items-center justify-between gap-4 pt-2">
-                <span class="text-[0.76rem] font-mono tracking-[0.16em] uppercase text-ink-100/55">
-                  Reply within 1 business day.
-                </span>
-                <button type="submit" class="btn btn-gold">
-                  Send brief
-                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-                </button>
-              </div>
-            </form>
-          </div>
-
-          <!-- social row -->
-          <div class="mt-8 flex items-center justify-between gap-6 text-ink-100/65 text-[0.78rem] font-mono tracking-[0.18em] uppercase">
-            <span class="flex items-center gap-2">
-              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-              Available for new engagements — Q3 2026
-            </span>
-            <div class="flex items-center gap-2">
-              <a href="#" aria-label="LinkedIn" class="ico hover:bg-gold-300/20 transition-colors"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14zM8.34 18V9.99H5.67V18h2.67zM7 8.85a1.55 1.55 0 1 0 0-3.1 1.55 1.55 0 0 0 0 3.1zM18 18v-4.4c0-2.36-1.27-3.46-2.97-3.46-1.37 0-1.98.75-2.32 1.28V9.99H10.04c.04.75 0 8.01 0 8.01h2.67v-4.47c0-.24.02-.48.09-.65.19-.48.63-.97 1.37-.97.97 0 1.36.73 1.36 1.81V18H18z"/></svg></a>
-              <a href="#" aria-label="GitHub" class="ico hover:bg-gold-300/20 transition-colors"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.89 1.53 2.34 1.09 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.56-1.11-4.56-4.94 0-1.09.39-1.99 1.03-2.69-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.02a9.56 9.56 0 0 1 5 0c1.91-1.29 2.75-1.02 2.75-1.02.55 1.38.2 2.4.1 2.65.64.7 1.03 1.6 1.03 2.69 0 3.84-2.34 4.69-4.57 4.94.36.31.68.92.68 1.86v2.76c0 .27.18.58.69.48A10 10 0 0 0 12 2z"/></svg></a>
-              <a href="#" aria-label="X / Twitter" class="ico hover:bg-gold-300/20 transition-colors"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231L18.244 2.25zm-1.161 17.52h1.833L7.084 4.126H5.117l11.966 15.644z"/></svg></a>
+        <!-- RIGHT: the form -->
+        <div class="lg:col-span-7">
+          <form id="contact-form" class="contact-form" novalidate>
+            <div class="field">
+              <label class="field-label" for="cf-name">Your name</label>
+              <input class="field-input" id="cf-name" name="name"
+                     type="text" autocomplete="name" required maxlength="200" />
+              <span class="field-error" data-error-for="name"></span>
             </div>
-          </div>
 
+            <div class="field">
+              <label class="field-label" for="cf-email">Email</label>
+              <input class="field-input" id="cf-email" name="email"
+                     type="email" inputmode="email" autocomplete="email" required maxlength="200" />
+              <span class="field-error" data-error-for="email"></span>
+            </div>
+
+            <div class="field">
+              <label class="field-label" for="cf-message">Message</label>
+              <textarea class="field-input field-textarea" id="cf-message" name="message"
+                        rows="4" required maxlength="5000"></textarea>
+              <span class="field-error" data-error-for="message"></span>
+            </div>
+
+            <div class="form-bottom">
+              <button class="btn btn-gold form-submit" id="cf-submit" type="submit">
+                <span class="btn-label">Send message</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+              </button>
+              <span class="form-status" id="cf-status" aria-live="polite"></span>
+            </div>
+          </form>
+
+          <!-- Inline success — shown briefly before redirect to /thankyou.html -->
+          <div class="form-success" id="cf-success" hidden>
+            <p class="display-italic text-gold text-[clamp(1.6rem,3vw,2.4rem)] leading-tight">
+              Thank you. We'll be in touch.
+            </p>
+            <p class="mt-3 text-[0.78rem] font-mono tracking-[0.18em] uppercase text-ink-300">
+              Taking you to the confirmation page&hellip;
+            </p>
+          </div>
         </div>
+
       </div>
     </div>
   </section>
@@ -1173,50 +1187,50 @@
       <!-- top: 3-col link grid + newsletter -->
       <div class="grid lg:grid-cols-12 gap-12 pb-16">
         <div class="lg:col-span-4">
-          <a href="#" class="inline-flex items-center gap-2.5">
+          <a href="./index.html" class="inline-flex items-center gap-2.5">
             <img src="brand_assets/tester-logo.png" alt="Tester.io home" class="h-10 w-10 object-contain" />
             <span class="wordmark text-[1.6rem] text-ink-500">Tester<span class="dot">.</span>io</span>
           </a>
           <p class="mt-5 text-[0.92rem] text-ink-400 leading-[1.7] max-w-[34ch]">
             A premium quality engineering studio for teams who ship like they mean it.
           </p>
-          <form action="#" class="mt-7 flex items-center gap-2 max-w-[22rem]">
-            <input type="email" placeholder="Your work email" class="flex-1 px-4 py-3 rounded-full bg-paper border border-ink-500/10 text-[0.88rem] focus:outline-none focus:border-gold-500/60 focus:ring-4 focus:ring-gold-500/10 transition" />
+          <form id="newsletter-form" class="mt-7 flex items-center gap-2 max-w-[22rem]" novalidate>
+            <input id="newsletter-email" type="email" required placeholder="Your work email" class="flex-1 px-4 py-3 rounded-full bg-paper border border-ink-500/10 text-[0.88rem] focus:outline-none focus:border-gold-500/60 focus:ring-4 focus:ring-gold-500/10 transition" />
             <button class="btn btn-gold !py-3 !px-5 text-[0.82rem]" type="submit">Subscribe</button>
           </form>
-          <div class="mt-3 text-[0.74rem] font-mono tracking-[0.16em] uppercase text-ink-300">Monthly · No spam · 4,200 readers</div>
+          <div id="newsletter-status" class="mt-3 text-[0.74rem] font-mono tracking-[0.16em] uppercase text-ink-300" aria-live="polite">Monthly · No spam · 4,200 readers</div>
         </div>
 
         <div class="lg:col-span-2 lg:col-start-6">
           <div class="eyebrow mb-5">Product</div>
           <ul class="space-y-3 text-[0.92rem] text-ink-400">
-            <li><a href="#services" class="inline-block py-1.5 hover:text-ink-500">Automated</a></li>
-            <li><a href="#services" class="inline-block py-1.5 hover:text-ink-500">Manual QA</a></li>
-            <li><a href="#services" class="inline-block py-1.5 hover:text-ink-500">Performance</a></li>
-            <li><a href="#" class="inline-block py-1.5 hover:text-ink-500">Integrations</a></li>
-            <li><a href="#" class="inline-block py-1.5 hover:text-ink-500">Changelog</a></li>
+            <li><a href="./services.html" class="inline-block py-1.5 hover:text-ink-500">Automated</a></li>
+            <li><a href="./services.html" class="inline-block py-1.5 hover:text-ink-500">Manual QA</a></li>
+            <li><a href="./services.html" class="inline-block py-1.5 hover:text-ink-500">Performance</a></li>
+            <li><a href="mailto:hello@tester.io" class="inline-block py-1.5 hover:text-ink-500">Integrations</a></li>
+            <li><a href="mailto:hello@tester.io" class="inline-block py-1.5 hover:text-ink-500">Changelog</a></li>
           </ul>
         </div>
 
         <div class="lg:col-span-2">
           <div class="eyebrow mb-5">Company</div>
           <ul class="space-y-3 text-[0.92rem] text-ink-400">
-            <li><a href="#about" class="inline-block py-1.5 hover:text-ink-500">About</a></li>
-            <li><a href="#work" class="inline-block py-1.5 hover:text-ink-500">Case studies</a></li>
-            <li><a href="#" class="inline-block py-1.5 hover:text-ink-500">Manifesto</a></li>
-            <li><a href="#" class="inline-block py-1.5 hover:text-ink-500">Careers</a></li>
-            <li><a href="#" class="inline-block py-1.5 hover:text-ink-500">Press</a></li>
+            <li><a href="./about.html" class="inline-block py-1.5 hover:text-ink-500">About</a></li>
+            <li><a href="./work.html" class="inline-block py-1.5 hover:text-ink-500">Case studies</a></li>
+            <li><a href="mailto:hello@tester.io" class="inline-block py-1.5 hover:text-ink-500">Manifesto</a></li>
+            <li><a href="mailto:hello@tester.io" class="inline-block py-1.5 hover:text-ink-500">Careers</a></li>
+            <li><a href="mailto:hello@tester.io" class="inline-block py-1.5 hover:text-ink-500">Press</a></li>
           </ul>
         </div>
 
         <div class="lg:col-span-2">
           <div class="eyebrow mb-5">Legal</div>
           <ul class="space-y-3 text-[0.92rem] text-ink-400">
-            <li><a href="#" class="inline-block py-1.5 hover:text-ink-500">Privacy</a></li>
-            <li><a href="#" class="inline-block py-1.5 hover:text-ink-500">Terms</a></li>
-            <li><a href="#" class="inline-block py-1.5 hover:text-ink-500">Security</a></li>
-            <li><a href="#" class="inline-block py-1.5 hover:text-ink-500">Trust center</a></li>
-            <li><a href="#" class="inline-block py-1.5 hover:text-ink-500">DPA</a></li>
+            <li><a href="mailto:hello@tester.io" class="inline-block py-1.5 hover:text-ink-500">Privacy</a></li>
+            <li><a href="mailto:hello@tester.io" class="inline-block py-1.5 hover:text-ink-500">Terms</a></li>
+            <li><a href="mailto:hello@tester.io" class="inline-block py-1.5 hover:text-ink-500">Security</a></li>
+            <li><a href="mailto:hello@tester.io" class="inline-block py-1.5 hover:text-ink-500">Trust center</a></li>
+            <li><a href="mailto:hello@tester.io" class="inline-block py-1.5 hover:text-ink-500">DPA</a></li>
           </ul>
         </div>
       </div>
@@ -1271,6 +1285,136 @@
       };
       window.addEventListener('scroll', onScroll, { passive: true });
       onScroll();
+    })();
+
+    // ===== Contact form — POSTs to local Express on :3001 =====
+    (function () {
+      const form      = document.getElementById('contact-form');
+      const submitBtn = document.getElementById('cf-submit');
+      const statusEl  = document.getElementById('cf-status');
+      const successEl = document.getElementById('cf-success');
+      if (!form || !submitBtn || !statusEl) return;
+
+      const ENDPOINT = 'https://pdueskmoiagcyjafslxr.supabase.co/rest/v1/submissions';
+      const SUPABASE_KEY = 'sb_publishable_gYHMo3-dDKiHN5J9HX3sCQ_Zmj3FirY';
+
+      const FIELD_MSGS = {
+        name:    'Add your name',
+        email:   'Add a valid email',
+        message: 'Add a short message',
+      };
+
+      const setStatus = (text, isError) => {
+        statusEl.textContent = text;
+        statusEl.classList.toggle('error', !!isError);
+      };
+      const clearErrors = () => {
+        form.querySelectorAll('.field-error.visible').forEach(el => {
+          el.classList.remove('visible'); el.textContent = '';
+        });
+      };
+      const setFieldError = (field, msg) => {
+        const el = form.querySelector('[data-error-for="' + field + '"]');
+        if (el) { el.textContent = msg; el.classList.add('visible'); }
+      };
+
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        clearErrors();
+        setStatus('');
+
+        const data = {
+          name:    form.elements.name.value.trim(),
+          email:   form.elements.email.value.trim(),
+          message: form.elements.message.value.trim(),
+        };
+
+        submitBtn.setAttribute('disabled', 'disabled');
+        submitBtn.setAttribute('aria-busy', 'true');
+        setStatus('Sending');
+
+        try {
+          // Supabase REST insert. `apikey` + `Authorization` are required for
+          // every request (publishable/anon key is fine for inserts where RLS
+          // policies allow). `Prefer: return=representation` makes Supabase
+          // echo the inserted row back so we can confirm success. `replied`
+          // and `subscribed` columns default to false from the table schema,
+          // so they're intentionally omitted from the body.
+          const res = await fetch(ENDPOINT, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'apikey':        SUPABASE_KEY,
+              'Authorization': 'Bearer ' + SUPABASE_KEY,
+              'Prefer':        'return=representation',
+            },
+            body: JSON.stringify(data),
+          });
+
+          if (res.ok) {
+            // Hide the form, reveal inline success, then redirect to thankyou.html.
+            form.hidden = true;
+            successEl.hidden = false;
+            setStatus('');
+
+            // Fire-and-forget: trigger the Supabase Edge Function to send a
+            // confirmation email. Own try/catch so a failure here never blocks
+            // the user-facing thank-you flow; errors are logged to console only.
+            (async () => {
+              try {
+                const emailRes = await fetch('https://pdueskmoiagcyjafslxr.supabase.co/functions/v1/send-confirmation', {
+                  method: 'POST',
+                  headers: {
+                    'Content-Type':  'application/json',
+                    'Authorization': 'Bearer ' + SUPABASE_KEY,
+                  },
+                  body: JSON.stringify({ name: data.name, email: data.email }),
+                });
+                if (!emailRes.ok) {
+                  console.warn('[contact] confirmation email returned', emailRes.status);
+                }
+              } catch (err) {
+                console.warn('[contact] confirmation email failed:', err);
+              }
+            })();
+
+            setTimeout(() => { window.location.href = '/thankyou.html'; }, 1500);
+          } else {
+            setStatus('Something went wrong — try again or email hello@tester.io', true);
+          }
+        } catch (err) {
+          setStatus('Network error — try again or email hello@tester.io', true);
+        } finally {
+          submitBtn.removeAttribute('disabled');
+          submitBtn.removeAttribute('aria-busy');
+        }
+      });
+    })();
+
+    // ===== Footer newsletter form — client-side only =====
+    // Validates a non-empty email, then shows an inline success line.
+    // No real subscription endpoint wired up — this just gives the user
+    // immediate feedback so the form isn't visually broken.
+    (function () {
+      const f = document.getElementById('newsletter-form');
+      const e = document.getElementById('newsletter-email');
+      const s = document.getElementById('newsletter-status');
+      if (!f || !e || !s) return;
+      const okRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      f.addEventListener('submit', (ev) => {
+        ev.preventDefault();
+        const val = (e.value || '').trim();
+        if (!okRe.test(val)) {
+          s.textContent = 'Enter a valid email — required.';
+          s.style.color = '#b04a30';
+          e.focus();
+          return;
+        }
+        s.textContent = `Thanks — ${val} added to the list.`;
+        s.style.color = '';
+        e.value = '';
+        e.setAttribute('disabled', 'disabled');
+      });
     })();
   </script>
 </body>

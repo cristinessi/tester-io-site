@@ -1,0 +1,427 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Tester.io · Admin Dashboard</title>
+  <meta name="description" content="Internal admin — not public." />
+  <link rel="icon" href="brand_assets/tester-logo.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Fraunces:ital,wght@1,500;1,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:       #F5F2EB;
+      --panel:    #FBF9F3;
+      --ink:      #15110D;
+      --ink-soft: #3A332C;
+      --ink-mute: #6B6259;
+      --gold:     #C6A559;
+      --gold-deep:#A8853F;
+      --gold-soft:#E8B979;
+      --hairline: rgba(168,133,63,0.20);
+      --hairline-soft: rgba(168,133,63,0.10);
+      --dark:     #100D11;
+      --warm:     #F2EDE3;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    body {
+      background: var(--bg); color: var(--ink);
+      font-family: 'Montserrat', system-ui, sans-serif;
+      font-size: 15px; min-height: 100dvh;
+      -webkit-font-smoothing: antialiased;
+    }
+    .mono  { font-family: 'JetBrains Mono', monospace; }
+    .eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 0.66rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold-deep); }
+    button { font-family: inherit; cursor: pointer; }
+    input, textarea, button { font: inherit; color: inherit; }
+
+    /* ===== Password gate ===== */
+    /* NOTE: Demo-quality auth only — anyone can read `PASSWORD` in DevTools.
+       Don't ship this against real production data without a proper backend. */
+    .gate { position: fixed; inset: 0; z-index: 100; background: var(--dark); color: var(--warm); display: flex; align-items: center; justify-content: center; padding: 2rem; }
+    .gate-card { max-width: 400px; width: 100%; text-align: center; }
+    .gate h1 { font-family: 'Fraunces', serif; font-style: italic; font-weight: 500; color: var(--gold-soft); font-size: clamp(2.4rem, 6vw, 3.4rem); margin: 0 0 0.4rem; }
+    .gate p { color: rgba(242,237,227,0.55); font-size: 0.92rem; margin: 0 0 2rem; }
+    .gate input { width: 100%; background: transparent; border: 0; border-bottom: 1px solid rgba(232,185,121,0.30); padding: 0.85rem 0; color: var(--warm); font-size: 1.05rem; outline: none; text-align: center; letter-spacing: 0.1em; transition: border-color .25s; }
+    .gate input:focus { border-bottom-color: var(--gold-soft); }
+    .gate button { margin-top: 1.5rem; background: linear-gradient(135deg,#F5D38A 0%,#E8B979 50%,#C6A559 100%); color: #2A220F; border: 0; border-radius: 999px; padding: 0.85rem 2rem; font-weight: 600; font-size: 0.85rem; letter-spacing: 0.04em; transition: transform .2s, box-shadow .2s; }
+    .gate button:hover { transform: translateY(-1px); box-shadow: 0 8px 24px -6px rgba(232,185,121,0.4); }
+    .gate-err { color: #e08070; font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase; margin-top: 1rem; min-height: 1em; }
+
+    /* ===== Layout ===== */
+    .app { display: none; }
+    .app.ready { display: grid; grid-template-columns: 240px 1fr; min-height: 100dvh; }
+    @media (max-width: 900px) { .app.ready { grid-template-columns: 1fr; } }
+
+    /* ===== Sidebar ===== */
+    .sidebar { background: var(--dark); color: var(--warm); padding: 2rem 1rem; border-right: 1px solid var(--hairline); }
+    .sidebar .brand { display: flex; align-items: center; gap: 0.6rem; padding: 0 0.75rem 1.5rem; border-bottom: 1px solid rgba(232,185,121,0.10); }
+    .sidebar .brand .word { font-weight: 700; letter-spacing: -0.025em; font-size: 1.1rem; color: var(--warm); }
+    .sidebar .brand .word .dot { color: var(--gold); }
+    .sidebar .brand .tag { margin-left: auto; font-family: 'JetBrains Mono', monospace; font-size: 0.55rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold-soft); border: 1px solid rgba(232,185,121,0.30); padding: 2px 6px; border-radius: 999px; }
+    .sidebar nav { margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.15rem; }
+    .nav-btn { display: flex; align-items: center; gap: 0.7rem; background: transparent; border: 0; padding: 0.7rem 0.85rem; color: rgba(242,237,227,0.62); font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase; border-left: 2px solid transparent; text-align: left; transition: color .2s, background-color .2s, border-color .2s; border-radius: 0 6px 6px 0; }
+    .nav-btn:hover { color: var(--gold-soft); background: rgba(255,255,255,0.025); }
+    .nav-btn.active { color: var(--gold-soft); border-left-color: var(--gold-soft); background: rgba(232,185,121,0.06); }
+    .nav-btn .n { color: rgba(232,185,121,0.55); font-size: 0.6rem; }
+    .sidebar .foot { margin-top: 2.5rem; padding: 1rem 0.85rem 0; border-top: 1px solid rgba(232,185,121,0.08); }
+    .sidebar .foot button { background: transparent; border: 0; color: rgba(242,237,227,0.45); font-family: 'JetBrains Mono', monospace; font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase; padding: 0; }
+    .sidebar .foot button:hover { color: var(--gold-soft); }
+
+    /* ===== Main / sections ===== */
+    .main { padding: 2.4rem 2.6rem 4rem; max-width: 1300px; }
+    @media (max-width: 900px) { .main { padding: 2rem 1.25rem 3rem; } }
+    .section { display: none; }
+    .section.active { display: block; }
+    .section-head { margin: 0 0 2rem; }
+    .section-head .eyebrow { display: inline-flex; align-items: center; gap: 0.8rem; }
+    .section-head .eyebrow::before { content: ''; display: inline-block; width: 28px; height: 1px; background: var(--gold); }
+    .section-head h2 { font-family: 'Montserrat', system-ui, sans-serif; font-weight: 700; font-size: clamp(2rem, 4vw, 3rem); letter-spacing: -0.025em; margin: 0.6rem 0 0; line-height: 1.05; }
+    .section-head h2 em { font-family: 'Fraunces', serif; font-style: italic; font-weight: 500; color: var(--gold-deep); }
+    .section-head p { color: var(--ink-mute); margin: 0.6rem 0 0; max-width: 56ch; line-height: 1.6; }
+
+    /* ===== Stat tiles ===== */
+    .stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; margin-bottom: 2.5rem; }
+    .stat-tile { background: var(--panel); border: 1px solid var(--hairline); border-radius: 14px; padding: 1.5rem 1.4rem; }
+    .stat-tile .num { font-family: 'Fraunces', serif; font-style: italic; font-weight: 500; font-size: 3rem; line-height: 1; color: var(--gold-deep); letter-spacing: -0.02em; }
+    .stat-tile .lbl { font-family: 'JetBrains Mono', monospace; font-size: 0.62rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--ink-mute); margin-top: 0.55rem; }
+
+    /* ===== Panels / tables ===== */
+    .panel { background: var(--panel); border: 1px solid var(--hairline); border-radius: 14px; padding: 1.4rem; overflow-x: auto; }
+    .panel h3 { font-family: 'Fraunces', serif; font-style: italic; font-weight: 500; color: var(--gold-deep); margin: 0 0 1rem; font-size: 1.4rem; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+    th { text-align: left; padding: 0.65rem 0.6rem; border-bottom: 1px solid var(--hairline); font-family: 'JetBrains Mono', monospace; font-size: 0.62rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-mute); font-weight: 500; }
+    td { padding: 0.85rem 0.6rem; border-bottom: 1px solid var(--hairline-soft); vertical-align: top; color: var(--ink-soft); }
+    td.shrink { white-space: nowrap; color: var(--ink-mute); font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; }
+    tr:last-child td { border-bottom: 0; }
+    td .msg { max-width: 38ch; line-height: 1.5; color: var(--ink-soft); }
+
+    .tag { display: inline-flex; align-items: center; gap: 0.4rem; padding: 3px 9px; border-radius: 999px; font-family: 'JetBrains Mono', monospace; font-size: 0.6rem; letter-spacing: 0.16em; text-transform: uppercase; cursor: pointer; user-select: none; border: 1px solid var(--hairline); transition: background-color .2s, color .2s, border-color .2s; }
+    .tag.on  { background: rgba(198,165,89,0.15); color: var(--gold-deep); border-color: rgba(198,165,89,0.50); }
+    .tag.off { color: var(--ink-mute); background: transparent; }
+    .tag::before { content: ''; width: 6px; height: 6px; border-radius: 999px; background: currentColor; opacity: 0.6; }
+    .tag:hover { border-color: var(--gold-deep); }
+
+    .btn { display: inline-flex; align-items: center; gap: 0.4rem; background: transparent; border: 1px solid var(--hairline); padding: 0.45rem 0.85rem; border-radius: 999px; font-family: 'JetBrains Mono', monospace; font-size: 0.66rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-soft); transition: background-color .2s, color .2s, border-color .2s; }
+    .btn:hover { border-color: var(--gold-deep); color: var(--gold-deep); }
+    .btn.primary { background: var(--gold); color: #2A220F; border-color: var(--gold); }
+    .btn.primary:hover { background: var(--gold-deep); border-color: var(--gold-deep); color: #fff; }
+    .btn.danger:hover { color: #b04a30; border-color: #b04a30; }
+
+    /* ===== Newsletter editor ===== */
+    .editor-row { display: flex; gap: 1rem; align-items: flex-end; flex-wrap: wrap; margin-top: 0.5rem; }
+    textarea.editor { width: 100%; min-height: 240px; background: var(--panel); border: 1px solid var(--hairline); border-radius: 14px; padding: 1.1rem; font-family: 'Fraunces', serif; font-style: italic; font-weight: 500; font-size: 1.05rem; line-height: 1.65; color: var(--ink); outline: none; resize: vertical; transition: border-color .25s; }
+    textarea.editor:focus { border-color: var(--gold); }
+    .draft-list { display: grid; gap: 0.85rem; }
+    .draft-card { background: var(--panel); border: 1px solid var(--hairline); border-radius: 14px; padding: 1.1rem 1.2rem; }
+    .draft-card .meta { font-family: 'JetBrains Mono', monospace; font-size: 0.62rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-mute); margin-bottom: 0.55rem; }
+    .draft-card .body { color: var(--ink-soft); white-space: pre-wrap; line-height: 1.6; max-height: 8em; overflow: hidden; }
+    .draft-card .actions { margin-top: 0.85rem; display: flex; gap: 0.5rem; }
+    .empty { color: var(--ink-mute); font-style: italic; padding: 1rem 0; }
+    .err-banner { background: rgba(176,74,48,0.08); border: 1px solid rgba(176,74,48,0.30); color: #b04a30; padding: 0.85rem 1rem; border-radius: 10px; font-size: 0.85rem; margin-bottom: 1.2rem; display: none; }
+    .err-banner.visible { display: block; }
+  </style>
+</head>
+<body>
+
+  <!-- ===== Password gate ===== -->
+  <div class="gate" id="gate">
+    <form class="gate-card" id="gate-form">
+      <h1>Admin.</h1>
+      <p>Tester.io · internal dashboard</p>
+      <input type="password" id="gate-pw" placeholder="Password" autocomplete="current-password" autofocus />
+      <button type="submit">Enter</button>
+      <div class="gate-err" id="gate-err"></div>
+    </form>
+  </div>
+
+  <!-- ===== App ===== -->
+  <div class="app" id="app">
+    <aside class="sidebar">
+      <div class="brand">
+        <img src="brand_assets/tester-logo.png" alt="" style="width:28px;height:28px;object-fit:contain" />
+        <span class="word">Tester<span class="dot">.</span>io</span>
+        <span class="tag">Admin</span>
+      </div>
+      <nav>
+        <button class="nav-btn active" data-view="overview"><span class="n">01</span> Overview</button>
+        <button class="nav-btn"        data-view="submissions"><span class="n">02</span> Submissions</button>
+        <button class="nav-btn"        data-view="subscribers"><span class="n">03</span> Subscribers</button>
+        <button class="nav-btn"        data-view="emails"><span class="n">04</span> Email Log</button>
+        <button class="nav-btn"        data-view="compose"><span class="n">05</span> New Newsletter</button>
+        <button class="nav-btn"        data-view="saved"><span class="n">06</span> Saved</button>
+      </nav>
+      <div class="foot">
+        <button id="reload-btn" title="Re-fetch submissions">↻ Refresh data</button><br>
+        <button id="logout-btn" style="margin-top:0.6rem">Sign out</button>
+      </div>
+    </aside>
+
+    <main class="main">
+      <div class="err-banner" id="err-banner"></div>
+
+      <!-- 01 Overview -->
+      <section class="section active" id="view-overview">
+        <header class="section-head">
+          <div class="eyebrow">01 · Overview</div>
+          <h2>What we know <em>so far.</em></h2>
+          <p>Live counts from the submissions table. Click into any section in the sidebar for details.</p>
+        </header>
+        <div class="stat-grid" id="stat-grid"></div>
+        <div class="panel"><h3>Recent activity</h3><div id="recent-list"></div></div>
+      </section>
+
+      <!-- 02 Submissions -->
+      <section class="section" id="view-submissions">
+        <header class="section-head">
+          <div class="eyebrow">02 · Form submissions</div>
+          <h2>Every <em>note</em> we've received.</h2>
+          <p>Toggle <em>Replied</em> after you respond, and <em>Subscribed</em> for newsletter opt-ins. Changes save immediately.</p>
+        </header>
+        <div class="panel"><div id="submissions-table"></div></div>
+      </section>
+
+      <!-- 03 Subscribers -->
+      <section class="section" id="view-subscribers">
+        <header class="section-head">
+          <div class="eyebrow">03 · Subscribers</div>
+          <h2>People who said <em>yes.</em></h2>
+          <p>Anyone who's opted in. Click <em>Unsubscribe</em> to flip the flag.</p>
+        </header>
+        <div class="panel"><div id="subscribers-table"></div></div>
+      </section>
+
+      <!-- 04 Email Log -->
+      <section class="section" id="view-emails">
+        <header class="section-head">
+          <div class="eyebrow">04 · Email log</div>
+          <h2>What we've <em>sent.</em></h2>
+          <p>Synthesized from submission history — one confirmation per signup, one follow-up per reply.</p>
+        </header>
+        <div class="panel"><div id="emails-table"></div></div>
+      </section>
+
+      <!-- 05 New Newsletter -->
+      <section class="section" id="view-compose">
+        <header class="section-head">
+          <div class="eyebrow">05 · New newsletter</div>
+          <h2>Write something <em>worth opening.</em></h2>
+          <p>Drafts save to this browser only (sessionStorage). Refresh-safe within the tab.</p>
+        </header>
+        <textarea class="editor" id="draft-editor" placeholder="Subject line on the first line; body follows. Plain text only for now."></textarea>
+        <div class="editor-row">
+          <button class="btn primary" id="save-draft">Save draft</button>
+          <button class="btn" id="clear-draft">Clear</button>
+          <span class="mono" style="font-size:0.66rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--ink-mute)" id="draft-status"></span>
+        </div>
+      </section>
+
+      <!-- 06 Saved Newsletters -->
+      <section class="section" id="view-saved">
+        <header class="section-head">
+          <div class="eyebrow">06 · Saved newsletters</div>
+          <h2>Drafts in <em>the drawer.</em></h2>
+          <p>Browser-local for the lesson. Replace with a real backend before sending anything.</p>
+        </header>
+        <div id="saved-list" class="draft-list"></div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    // ============================================================
+    // CONFIG — same publishable key pattern as index.html (public-safe).
+    // PASSWORD is demo-quality auth; viewable in DevTools. Don't use
+    // this pattern against real production data.
+    // ============================================================
+    const SUPABASE_URL = 'https://pdueskmoiagcyjafslxr.supabase.co';
+    const SUPABASE_KEY = 'sb_publishable_gYHMo3-dDKiHN5J9HX3sCQ_Zmj3FirY';
+    const PASSWORD     = 'tester2026';
+
+    const $  = (sel, root=document) => root.querySelector(sel);
+    const $$ = (sel, root=document) => Array.from(root.querySelectorAll(sel));
+    const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+    // ===== State =====
+    const state = { rows: [], drafts: [], editingId: null };
+
+    // ===== Password gate =====
+    function showApp() { $('#gate').style.display = 'none'; $('#app').classList.add('ready'); loadAll(); }
+    if (sessionStorage.getItem('admin-auth') === 'ok') showApp();
+
+    $('#gate-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      if ($('#gate-pw').value === PASSWORD) {
+        sessionStorage.setItem('admin-auth', 'ok');
+        $('#gate-err').textContent = '';
+        showApp();
+      } else {
+        $('#gate-err').textContent = 'Wrong password — try again.';
+        $('#gate-pw').value = '';
+      }
+    });
+    $('#logout-btn').addEventListener('click', () => { sessionStorage.removeItem('admin-auth'); location.reload(); });
+
+    // ===== Supabase helpers =====
+    const SB_HEADERS = { apikey: SUPABASE_KEY, Authorization: 'Bearer ' + SUPABASE_KEY };
+    async function fetchRows() {
+      const res = await fetch(`${SUPABASE_URL}/rest/v1/submissions?select=*&order=created_at.desc`, { headers: SB_HEADERS });
+      if (!res.ok) throw new Error('Supabase GET failed: ' + res.status);
+      return res.json();
+    }
+    async function patchRow(id, patch) {
+      const res = await fetch(`${SUPABASE_URL}/rest/v1/submissions?id=eq.${id}`, {
+        method: 'PATCH',
+        headers: { ...SB_HEADERS, 'Content-Type': 'application/json', Prefer: 'return=minimal' },
+        body: JSON.stringify(patch),
+      });
+      if (!res.ok) throw new Error('Supabase PATCH failed: ' + res.status);
+    }
+    function showErr(msg) {
+      const b = $('#err-banner');
+      b.textContent = msg; b.classList.add('visible');
+      setTimeout(() => b.classList.remove('visible'), 4500);
+    }
+
+    // ===== Drafts (sessionStorage) =====
+    function loadDrafts() { try { state.drafts = JSON.parse(sessionStorage.getItem('admin-drafts') || '[]'); } catch { state.drafts = []; } }
+    function saveDrafts() { sessionStorage.setItem('admin-drafts', JSON.stringify(state.drafts)); }
+
+    const fmtDate = (iso) => { try { const d = new Date(iso); return d.toLocaleString('en-GB', { day:'2-digit', month:'short', hour:'2-digit', minute:'2-digit' }); } catch { return iso || ''; } };
+
+    // ===== Renderers =====
+    function renderOverview() {
+      const r = state.rows;
+      const total = r.length, subs = r.filter(x => x.subscribed).length, reps = r.filter(x => x.replied).length;
+      $('#stat-grid').innerHTML = [['Form fills', total], ['Subscribers', subs], ['Replied', reps], ['Unsubscribes', 0]]
+        .map(([lbl, n]) => `<div class="stat-tile"><div class="num">${n}</div><div class="lbl">${lbl}</div></div>`).join('');
+      const recent = r.slice(0, 5);
+      if (!recent.length) { $('#recent-list').innerHTML = '<div class="empty">No submissions yet.</div>'; return; }
+      $('#recent-list').innerHTML = `<table><thead><tr><th>When</th><th>Name</th><th>Email</th><th>Message</th></tr></thead><tbody>${
+        recent.map(x => `<tr><td class="shrink">${fmtDate(x.created_at)}</td><td>${esc(x.name)}</td><td class="shrink">${esc(x.email)}</td><td><div class="msg">${esc(x.message)}</div></td></tr>`).join('')
+      }</tbody></table>`;
+    }
+    function renderSubmissions() {
+      const r = state.rows;
+      if (!r.length) { $('#submissions-table').innerHTML = '<div class="empty">No submissions to show.</div>'; return; }
+      $('#submissions-table').innerHTML = `<table><thead><tr><th>When</th><th>Name</th><th>Email</th><th>Message</th><th>Replied</th><th>Subscribed</th></tr></thead><tbody>${
+        r.map(x => `<tr data-id="${x.id}"><td class="shrink">${fmtDate(x.created_at)}</td><td>${esc(x.name)}</td><td class="shrink">${esc(x.email)}</td><td><div class="msg">${esc(x.message)}</div></td><td><button class="tag ${x.replied?'on':'off'}" data-toggle="replied">${x.replied?'yes':'no'}</button></td><td><button class="tag ${x.subscribed?'on':'off'}" data-toggle="subscribed">${x.subscribed?'yes':'no'}</button></td></tr>`).join('')
+      }</tbody></table>`;
+    }
+    function renderSubscribers() {
+      const subs = state.rows.filter(x => x.subscribed);
+      if (!subs.length) { $('#subscribers-table').innerHTML = '<div class="empty">No subscribers yet.</div>'; return; }
+      $('#subscribers-table').innerHTML = `<table><thead><tr><th>Signed up</th><th>Name</th><th>Email</th><th></th></tr></thead><tbody>${
+        subs.map(x => `<tr data-id="${x.id}"><td class="shrink">${fmtDate(x.created_at)}</td><td>${esc(x.name)}</td><td class="shrink">${esc(x.email)}</td><td><button class="btn danger" data-unsubscribe="${x.id}">Unsubscribe</button></td></tr>`).join('')
+      }</tbody></table>`;
+    }
+    function renderEmails() {
+      const log = [];
+      for (const x of state.rows) {
+        log.push({ ts: x.created_at, to: x.email, subject: 'Welcome to Tester.io', type: 'confirmation' });
+        if (x.replied) {
+          const ts = new Date(new Date(x.created_at).getTime() + 86400000).toISOString();
+          log.push({ ts, to: x.email, subject: 'Following up on your message', type: 'follow-up' });
+        }
+      }
+      log.sort((a, b) => (b.ts || '').localeCompare(a.ts || ''));
+      if (!log.length) { $('#emails-table').innerHTML = '<div class="empty">No emails yet.</div>'; return; }
+      $('#emails-table').innerHTML = `<table><thead><tr><th>Sent</th><th>Recipient</th><th>Subject</th><th>Type</th></tr></thead><tbody>${
+        log.map(e => `<tr><td class="shrink">${fmtDate(e.ts)}</td><td class="shrink">${esc(e.to)}</td><td>${esc(e.subject)}</td><td><span class="tag ${e.type==='follow-up'?'on':'off'}">${e.type}</span></td></tr>`).join('')
+      }</tbody></table>`;
+    }
+    function renderSaved() {
+      if (!state.drafts.length) { $('#saved-list').innerHTML = '<div class="empty">No saved drafts yet. Compose one in section 05.</div>'; return; }
+      $('#saved-list').innerHTML = state.drafts.map(d => `<div class="draft-card" data-id="${d.id}"><div class="meta">${fmtDate(d.savedAt)} · ${d.body.length} chars</div><div class="body">${esc(d.body)}</div><div class="actions"><button class="btn" data-edit="${d.id}">Edit</button><button class="btn danger" data-delete="${d.id}">Delete</button></div></div>`).join('');
+    }
+    function render() { renderOverview(); renderSubmissions(); renderSubscribers(); renderEmails(); renderSaved(); }
+
+    async function loadAll() {
+      loadDrafts();
+      try { state.rows = await fetchRows(); }
+      catch (err) { state.rows = []; showErr('Could not load submissions: ' + err.message); }
+      render();
+    }
+
+    // ===== Nav switching =====
+    $$('.nav-btn').forEach(btn => btn.addEventListener('click', () => {
+      $$('.nav-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      $$('.section').forEach(s => s.classList.remove('active'));
+      $('#view-' + btn.dataset.view).classList.add('active');
+    }));
+
+    // ===== Delegated clicks: toggles, unsubscribe, edit/delete drafts =====
+    document.addEventListener('click', async (e) => {
+      const toggleBtn = e.target.closest('button[data-toggle]');
+      if (toggleBtn) {
+        const tr = toggleBtn.closest('tr'); const id = +tr.dataset.id;
+        const field = toggleBtn.dataset.toggle;
+        const row = state.rows.find(r => r.id === id); if (!row) return;
+        const next = !row[field];
+        toggleBtn.classList.toggle('on', next); toggleBtn.classList.toggle('off', !next);
+        toggleBtn.textContent = next ? 'yes' : 'no';
+        try { await patchRow(id, { [field]: next }); row[field] = next; render(); }
+        catch (err) {
+          showErr('Update failed: ' + err.message);
+          toggleBtn.classList.toggle('on', !next); toggleBtn.classList.toggle('off', next);
+          toggleBtn.textContent = !next ? 'yes' : 'no';
+        }
+        return;
+      }
+      const unsubBtn = e.target.closest('button[data-unsubscribe]');
+      if (unsubBtn) {
+        const id = +unsubBtn.dataset.unsubscribe;
+        try {
+          await patchRow(id, { subscribed: false });
+          const row = state.rows.find(r => r.id === id); if (row) row.subscribed = false;
+          render();
+        } catch (err) { showErr('Unsubscribe failed: ' + err.message); }
+        return;
+      }
+      const editBtn = e.target.closest('button[data-edit]');
+      if (editBtn) {
+        const id = +editBtn.dataset.edit;
+        const d = state.drafts.find(x => x.id === id); if (!d) return;
+        state.editingId = id;
+        $('#draft-editor').value = d.body;
+        $('#draft-status').textContent = 'Editing draft from ' + fmtDate(d.savedAt);
+        $$('.nav-btn').forEach(b => b.classList.remove('active'));
+        $('.nav-btn[data-view="compose"]').classList.add('active');
+        $$('.section').forEach(s => s.classList.remove('active'));
+        $('#view-compose').classList.add('active');
+        $('#draft-editor').focus();
+        return;
+      }
+      const delBtn = e.target.closest('button[data-delete]');
+      if (delBtn) {
+        const id = +delBtn.dataset.delete;
+        state.drafts = state.drafts.filter(x => x.id !== id);
+        saveDrafts(); renderSaved();
+      }
+    });
+
+    // ===== Draft editor =====
+    $('#save-draft').addEventListener('click', () => {
+      const body = $('#draft-editor').value.trim();
+      if (!body) { $('#draft-status').textContent = 'Nothing to save.'; return; }
+      if (state.editingId) {
+        const d = state.drafts.find(x => x.id === state.editingId);
+        if (d) { d.body = body; d.savedAt = new Date().toISOString(); }
+        state.editingId = null;
+      } else {
+        state.drafts.unshift({ id: Date.now(), body, savedAt: new Date().toISOString() });
+      }
+      $('#draft-status').textContent = 'Saved.';
+      saveDrafts(); renderSaved();
+    });
+    $('#clear-draft').addEventListener('click', () => {
+      $('#draft-editor').value = ''; state.editingId = null; $('#draft-status').textContent = '';
+    });
+
+    $('#reload-btn').addEventListener('click', loadAll);
+  </script>
+</body>
+</html>

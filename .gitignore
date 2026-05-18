@@ -13,3 +13,24 @@ node_modules/
 # OS-generated files
 .DS_Store
 Thumbs.db
+# Python (Trend Finder backend)
+__pycache__/
+*.py[cod]
+*.pyo
+.venv/
+venv/
+
+# Trend Finder debug artifacts (CAPTCHA dumps, scraped HTML)
+trend-finder-backend/bing_response.html
+trend-finder-backend/debug_fetch.py
+
+# Personal files I keep local but never push
+resume.pdf
+
+# Editor
+.vscode/
+.idea/
+
+# Logs and temp
+*.log
+*.tmp

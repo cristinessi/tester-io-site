@@ -1,0 +1,1683 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Tester Tech — Engineered for the everyday future · Tester.io</title>
+  <meta name="description" content="Tester Tech is the hardware line from Tester.io — smart watches, glasses, voice assistants, and connected-home devices, engineered with the same testing rigor that powers our software studio." />
+  <link rel="icon" href="brand_assets/tester-logo.png" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Fraunces:ital,wght@1,500;1,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Montserrat', 'system-ui', 'sans-serif'],
+            mono: ['JetBrains Mono', 'ui-monospace', 'monospace'],
+          },
+          colors: {
+            page: '#F5F2EB',
+            pagealt: '#EFEBE0',
+            paper: '#FBF9F3',
+            ink: {
+              900: '#08070A', 800: '#100D11', 700: '#1B1722',
+              500: '#15110D', 400: '#3A332C', 300: '#6B6259',
+              200: '#A29A8E', 100: '#D8D1C4',
+            },
+            gold: {
+              50:  '#FBF4DE', 100: '#F5E5B8', 200: '#EFD491',
+              300: '#E8B979', 400: '#D6A765', 500: '#C6A559',
+              600: '#A8853F', 700: '#7A6029', 800: '#4E3E1B',
+            },
+          },
+        },
+      },
+    }
+  </script>
+
+  <style>
+    html { color-scheme: light; scroll-behavior: smooth; }
+    body { background: #F5F2EB; color: #15110D; font-family: 'Montserrat', system-ui, sans-serif; -webkit-font-smoothing: antialiased; font-weight: 500; }
+    ::selection { background: rgba(232,185,121,0.45); color: #15110D; }
+
+    /* ===== Gold treatments ===== */
+    .text-gold { background: linear-gradient(135deg, #F5D38A 0%, #E8B979 35%, #C6A559 70%, #A8853F 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .text-gold-soft { background: linear-gradient(135deg, #F5E5B8 0%, #E8B979 50%, #C6A559 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .bg-gold-grad { background: linear-gradient(135deg, #F5D38A 0%, #E8B979 35%, #D6A765 60%, #C6A559 100%); }
+
+    /* ===== Buttons ===== */
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 0.55rem; padding: 0.95rem 1.7rem; border-radius: 999px; font-weight: 600; letter-spacing: 0.005em; font-size: 0.88rem; transition: transform .35s cubic-bezier(.2,.8,.2,1), box-shadow .35s cubic-bezier(.2,.8,.2,1), opacity .25s, background-color .25s, color .25s, border-color .25s; will-change: transform; }
+    .btn-gold { background: linear-gradient(135deg, #F5D38A 0%, #E8B979 35%, #D6A765 60%, #C6A559 100%); color: #2A220F; box-shadow: 0 14px 36px -10px rgba(198, 165, 89, 0.55), 0 2px 0 rgba(255,232,184,0.6) inset, 0 -1px 0 rgba(122,96,41,0.35) inset; position: relative; overflow: hidden; }
+    .btn-gold::after { content: ''; position: absolute; inset: 0; border-radius: inherit; background: linear-gradient(120deg, transparent 30%, rgba(255,255,255,0.55) 50%, transparent 70%); transform: translateX(-120%); transition: transform .9s cubic-bezier(.2,.8,.2,1); pointer-events: none; }
+    .btn-gold:hover { transform: translateY(-2px); box-shadow: 0 20px 44px -10px rgba(232, 185, 121, 0.7), 0 2px 0 rgba(255,232,184,0.7) inset, 0 -1px 0 rgba(122,96,41,0.35) inset; }
+    .btn-gold:hover::after { transform: translateX(120%); }
+    .btn-gold:active { transform: translateY(0); }
+    .btn-ghost-dark { background: rgba(255, 255, 255, 0.04); color: #F2EDE3; border: 1px solid rgba(232, 185, 121, 0.35); backdrop-filter: blur(6px); }
+    .btn-ghost-dark:hover { background: rgba(232, 185, 121, 0.10); border-color: rgba(232,185,121,0.55); transform: translateY(-2px); }
+    .btn-ghost-light { background: transparent; color: #15110D; border: 1px solid rgba(21, 17, 13, 0.18); }
+    .btn-ghost-light:hover { background: rgba(21,17,13,0.04); border-color: rgba(21,17,13,0.35); transform: translateY(-2px); }
+    .btn-ink { background: #15110D; color: #FBF4DE; }
+    .btn-ink:hover { background: #08070A; transform: translateY(-2px); box-shadow: 0 14px 30px -10px rgba(21,17,13,0.45); }
+
+    /* ===== Editorial display type ===== */
+    .display { font-family: 'Montserrat', system-ui, sans-serif; font-weight: 800; letter-spacing: -0.035em; line-height: 1.02; }
+    .display-italic { font-family: 'Fraunces', 'Montserrat', system-ui, serif; font-style: italic; font-weight: 600; letter-spacing: -0.015em; }
+    .h2 { font-family: 'Montserrat', system-ui, sans-serif; font-weight: 700; letter-spacing: -0.028em; line-height: 1.06; }
+
+    /* ===== Eyebrow ===== */
+    .eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; letter-spacing: 0.22em; text-transform: uppercase; color: #A8853F; font-weight: 500; }
+    .eyebrow-on-dark { color: #E8B979; }
+
+    /* ===== Wordmark ===== */
+    .wordmark { font-weight: 700; letter-spacing: -0.025em; }
+    .wordmark .dot { color: #C6A559; }
+
+    /* ===== Grain overlay ===== */
+    .grain { position: fixed; inset: 0; pointer-events: none; z-index: 60;
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.5 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.45'/></svg>");
+      opacity: 0.06; mix-blend-mode: multiply;
+    }
+    .grain-light { position: absolute; inset: 0; pointer-events: none;
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.5 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/></svg>");
+      opacity: 0.10; mix-blend-mode: overlay;
+    }
+
+    /* ===== Hairline ===== */
+    .hairline { border-top: 1px solid rgba(21,17,13,0.10); }
+    .hairline-dark { border-top: 1px solid rgba(232,185,121,0.14); }
+
+    /* ===== Hero atmosphere ===== */
+    .hero-bg {
+      background:
+        radial-gradient(1100px 700px at 22% 18%, rgba(232,185,121,0.20), transparent 65%),
+        radial-gradient(900px 700px at 90% 80%, rgba(168,133,63,0.20), transparent 60%),
+        radial-gradient(700px 500px at 50% 100%, rgba(40,28,12,0.85), transparent 70%),
+        linear-gradient(180deg, #0A0807 0%, #14100B 55%, #0A0807 100%);
+    }
+    .hero-bg::after { content: ''; position: absolute; inset: 0; pointer-events: none;
+      background:
+        repeating-linear-gradient(180deg, rgba(255,255,255,0.012) 0px, rgba(255,255,255,0.012) 1px, transparent 1px, transparent 3px),
+        radial-gradient(1400px 500px at 50% 0%, rgba(0,0,0,0.55) 0%, transparent 70%),
+        radial-gradient(1200px 400px at 50% 100%, rgba(0,0,0,0.65) 0%, transparent 70%);
+    }
+    .cta-dark {
+      background:
+        radial-gradient(900px 600px at 12% 110%, rgba(214, 167, 101, 0.30), transparent 60%),
+        radial-gradient(700px 500px at 92% 0%, rgba(232, 185, 121, 0.16), transparent 60%),
+        radial-gradient(500px 400px at 60% 50%, rgba(74, 41, 14, 0.4), transparent 60%),
+        linear-gradient(180deg, #0E0A07 0%, #08070A 100%);
+    }
+
+    /* ===== Number plates ===== */
+    .num-plate { font-family: 'Montserrat', system-ui, sans-serif; font-weight: 200; font-style: italic; letter-spacing: -0.02em; line-height: 1; }
+
+    /* ===== Megamark footer ===== */
+    .megamark { font-weight: 800; letter-spacing: -0.07em; line-height: 0.82;
+      background: linear-gradient(180deg, #2A220F 0%, #15110D 60%, #0A0807 100%);
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+    }
+    .megamark-gold { background: linear-gradient(180deg, #E8B979 0%, #C6A559 50%, #7A6029 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+
+    /* ===== Nav scroll state ===== */
+    .nav-bar { transition: background-color .4s ease, backdrop-filter .4s ease, border-color .4s ease, box-shadow .4s ease, color .4s ease; }
+    .nav-bar.is-scrolled { background-color: rgba(245, 242, 235, 0.85); backdrop-filter: blur(14px); border-bottom-color: rgba(21,17,13,0.08); box-shadow: 0 8px 30px -20px rgba(21,17,13,0.25); }
+
+    /* ===== Form ===== */
+    .field {
+      width: 100%; padding: 0.95rem 1rem;
+      background: rgba(255,255,255,0.04); border: 1px solid rgba(232,185,121,0.20);
+      border-radius: 14px; color: #F2EDE3; font-size: 0.9rem; font-family: inherit;
+      transition: border-color .25s, background-color .25s, box-shadow .25s;
+    }
+    .field::placeholder { color: rgba(232,222,205,0.45); }
+    .field:hover { border-color: rgba(232,185,121,0.32); background: rgba(255,255,255,0.06); }
+    .field:focus { outline: none; border-color: rgba(232,185,121,0.65); background: rgba(255,255,255,0.08); box-shadow: 0 0 0 4px rgba(232,185,121,0.10); }
+    .field-label {
+      display: block; font-family: 'JetBrains Mono', monospace; font-size: 0.68rem;
+      letter-spacing: 0.22em; text-transform: uppercase; color: rgba(232,185,121,0.85);
+      margin-bottom: 0.5rem;
+    }
+
+    /* ===== Ico ===== */
+    .ico { width: 40px; height: 40px; border-radius: 12px; display: inline-flex; align-items: center; justify-content: center;
+      background: rgba(232,185,121,0.10); border: 1px solid rgba(232,185,121,0.28); color: #E8B979; }
+    .ico-light { background: rgba(21,17,13,0.04); border: 1px solid rgba(21,17,13,0.10); color: #15110D; }
+
+    a:focus-visible, button:focus-visible, .field:focus-visible {
+      outline: 2px solid #C6A559; outline-offset: 3px; border-radius: 6px;
+    }
+
+    /* ===== Reveal-on-scroll ===== */
+    .reveal { opacity: 0; transform: translateY(18px); transition: opacity 1s cubic-bezier(.2,.8,.2,1), transform 1s cubic-bezier(.2,.8,.2,1); }
+    .reveal.in { opacity: 1; transform: translateY(0); }
+    .reveal-d1 { transition-delay: .1s; }
+    .reveal-d2 { transition-delay: .2s; }
+    .reveal-d3 { transition-delay: .35s; }
+    .reveal-d4 { transition-delay: .5s; }
+    .reveal-d5 { transition-delay: .65s; }
+
+    /* ===== Marquee ===== */
+    @keyframes scroll-x { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+    .marquee-track { animation: scroll-x 40s linear infinite; }
+    .marquee-track:hover { animation-play-state: paused; }
+
+    /* ===== Star ===== */
+    .star { width: 14px; height: 14px; display: inline-block; background: linear-gradient(135deg, #F5D38A, #C6A559); clip-path: polygon(50% 0, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%); }
+    .star-muted { background: linear-gradient(135deg, #D8D1C4, #A29A8E); }
+
+    /* ===== Page glow ===== */
+    .page-glow { position: absolute; inset: 0; pointer-events: none; z-index: 0;
+      background:
+        radial-gradient(900px 700px at 0% 10%, rgba(232,185,121,0.10), transparent 60%),
+        radial-gradient(900px 700px at 100% 90%, rgba(168,133,63,0.06), transparent 65%);
+    }
+
+    /* ============================================================
+       NEW: Tester Tech page-specific components
+       ============================================================ */
+
+    /* Image placeholder (light) */
+    .img-ph {
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: 0.55rem; padding: 1rem; text-align: center;
+      background: linear-gradient(135deg, #EFEBE0 0%, #E0DAC9 100%);
+      color: #6B6259;
+    }
+    .img-ph svg.frame { opacity: 0.40; }
+    .img-ph .label { font-family: 'JetBrains Mono', monospace; font-size: 0.74rem; letter-spacing: 0.18em; text-transform: uppercase; color: #3A332C; }
+    .img-ph .hint  { font-family: 'JetBrains Mono', monospace; font-size: 0.62rem; letter-spacing: 0.18em; text-transform: uppercase; color: #A29A8E; }
+    .img-ph--dark { background: linear-gradient(135deg, #1B1722 0%, #08070A 100%); }
+    .img-ph--dark .label { color: #E8B979; }
+    .img-ph--dark .hint  { color: rgba(232,185,121,0.55); }
+    .img-ph--dark svg.frame { color: #E8B979; opacity: 0.40; }
+
+    /* Product card (paper bg, gold hover) */
+    .product-card {
+      position: relative;
+      background: #FBF9F3;
+      border: 1px solid rgba(21,17,13,0.08);
+      border-radius: 24px;
+      overflow: hidden;
+      transition: transform .5s cubic-bezier(.2,.8,.2,1), box-shadow .5s cubic-bezier(.2,.8,.2,1), border-color .35s;
+    }
+    .product-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 50px 100px -50px rgba(21,17,13,0.30), 0 10px 24px -14px rgba(198,165,89,0.30);
+      border-color: rgba(198,165,89,0.35);
+    }
+    .product-img-wrap {
+      position: relative; aspect-ratio: 1/1;
+      background: radial-gradient(80% 60% at 50% 35%, rgba(232,185,121,0.10), transparent 70%), linear-gradient(180deg, #EFEBE0 0%, #E5DFCE 100%);
+      overflow: hidden;
+    }
+    .product-card .img-ph { transition: opacity .6s ease, transform .9s cubic-bezier(.2,.8,.2,1); }
+    .product-card:hover .img-ph { opacity: 0.78; transform: scale(1.03); }
+    .product-card .pname { position: relative; display: inline-block; }
+    .product-card .pname::after {
+      content: ''; position: absolute; left: 0; right: 0; bottom: -3px; height: 1.5px;
+      background: linear-gradient(135deg, #F5D38A 0%, #C6A559 100%);
+      transform: scaleX(0); transform-origin: left;
+      transition: transform .5s cubic-bezier(.2,.8,.2,1);
+    }
+    .product-card:hover .pname::after { transform: scaleX(1); }
+
+    /* Category card */
+    .cat-card {
+      position: relative; display: block;
+      background: #FBF9F3; border: 1px solid rgba(21,17,13,0.08);
+      border-radius: 22px; padding: 1.5rem;
+      transition: transform .5s cubic-bezier(.2,.8,.2,1), box-shadow .5s cubic-bezier(.2,.8,.2,1), border-color .35s;
+    }
+    .cat-card:hover { transform: translateY(-4px); border-color: rgba(198,165,89,0.35); box-shadow: 0 40px 80px -50px rgba(21,17,13,0.25), 0 8px 22px -14px rgba(198,165,89,0.25); }
+    .cat-card .img-ph { transition: transform .6s cubic-bezier(.2,.8,.2,1); }
+    .cat-card:hover .img-ph { transform: scale(1.03); }
+
+    /* Wishlist heart button */
+    .wishlist-btn {
+      position: absolute; top: 0.85rem; right: 0.85rem; z-index: 10;
+      width: 38px; height: 38px; display: inline-flex; align-items: center; justify-content: center;
+      background: rgba(251,249,243,0.85); border: 1px solid rgba(21,17,13,0.08);
+      border-radius: 999px; color: #6B6259;
+      backdrop-filter: blur(8px);
+      transition: transform .25s cubic-bezier(.2,.8,.2,1), background-color .25s, color .25s, border-color .25s;
+      cursor: pointer;
+    }
+    .wishlist-btn:hover { background: #FBF9F3; color: #C6A559; border-color: rgba(198,165,89,0.35); transform: scale(1.06); }
+    .wishlist-btn svg.heart-fill { display: none; }
+    .wishlist-btn[aria-pressed="true"] { color: #C6A559; border-color: rgba(198,165,89,0.45); background: rgba(245,229,184,0.55); }
+    .wishlist-btn[aria-pressed="true"] svg.heart { display: none; }
+    .wishlist-btn[aria-pressed="true"] svg.heart-fill { display: block; }
+    @keyframes heart-pop { 0% { transform: scale(0.85); } 50% { transform: scale(1.18); } 100% { transform: scale(1); } }
+    .wishlist-btn[aria-pressed="true"] { animation: heart-pop .35s ease; }
+
+    /* Tag pill */
+    .pill {
+      display: inline-flex; align-items: center; gap: 0.45rem;
+      padding: 0.35rem 0.75rem;
+      border-radius: 999px;
+      background: rgba(21,17,13,0.04);
+      border: 1px solid rgba(21,17,13,0.08);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      color: #15110D;
+      letter-spacing: 0.04em;
+    }
+    .pill-gold {
+      background: rgba(232,185,121,0.14);
+      border-color: rgba(198,165,89,0.40);
+      color: #7A6029;
+    }
+    .pill-ink {
+      background: #15110D; color: #F5E5B8; border-color: #15110D;
+    }
+    .pill .dot { width: 6px; height: 6px; border-radius: 999px; background: currentColor; opacity: 0.85; }
+
+    /* Filter chips */
+    .filter-chip {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 0.55rem 1.1rem; border-radius: 999px;
+      background: transparent;
+      border: 1px solid rgba(21,17,13,0.18);
+      color: #3A332C;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background-color .25s, color .25s, border-color .25s, transform .25s, box-shadow .25s;
+    }
+    .filter-chip:hover { transform: translateY(-1px); border-color: rgba(198,165,89,0.55); color: #15110D; }
+    .filter-chip .count { color: #A29A8E; font-size: 0.66rem; }
+    .filter-chip.is-active {
+      background: #15110D; color: #F5E5B8; border-color: #15110D;
+      box-shadow: 0 14px 28px -16px rgba(21,17,13,0.55);
+    }
+    .filter-chip.is-active .count { color: rgba(232,185,121,0.55); }
+
+    /* Comparison table */
+    .compare-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr 1fr 1fr;
+      background: #FBF9F3;
+      border: 1px solid rgba(21,17,13,0.08);
+      border-radius: 22px;
+      overflow: hidden;
+    }
+    .compare-grid .cell {
+      padding: 1.1rem 1.25rem;
+      border-bottom: 1px solid rgba(21,17,13,0.06);
+      border-right: 1px solid rgba(21,17,13,0.06);
+      display: flex; flex-direction: column; gap: 0.2rem;
+      font-size: 0.92rem; color: #3A332C;
+    }
+    .compare-grid .cell:nth-child(4n) { border-right: none; }
+    .compare-grid .row-h { background: rgba(21,17,13,0.025); color: #6B6259; font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase; }
+    .compare-grid .head {
+      background: #15110D; color: #F5E5B8; padding: 1.5rem 1.25rem; border-right: 1px solid rgba(232,185,121,0.12); border-bottom: none;
+    }
+    .compare-grid .head:nth-child(4n) { border-right: none; }
+    .compare-grid .head .price { font-family: 'Montserrat'; font-weight: 700; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
+    .compare-grid .head.recommended { background: linear-gradient(160deg, #2A220F 0%, #15110D 60%, #0A0807 100%); position: relative; }
+    .compare-grid .head.recommended::before { content: 'Recommended'; position: absolute; top: 12px; right: 12px; font-family: 'JetBrains Mono', monospace; font-size: 0.62rem; letter-spacing: 0.16em; text-transform: uppercase; color: #2A220F; background: linear-gradient(135deg, #F5D38A, #C6A559); padding: 0.2rem 0.5rem; border-radius: 999px; }
+    .compare-grid .col-recommended {
+      background: rgba(232,185,121,0.10);
+      border-right: 1px solid rgba(198,165,89,0.20);
+    }
+    @media (max-width: 900px) {
+      .compare-grid { grid-template-columns: 1fr 1fr; }
+      .compare-grid .row-h { display: none; }
+      .compare-grid .cell { font-size: 0.85rem; }
+      .compare-grid .cell-label { color: #A29A8E; font-family: 'JetBrains Mono', monospace; font-size: 0.62rem; letter-spacing: 0.18em; text-transform: uppercase; }
+    }
+    @media (min-width: 901px) { .cell-label { display: none; } }
+
+    /* Pricing tiers */
+    .tier-card {
+      position: relative;
+      background: #FBF9F3;
+      border: 1px solid rgba(21,17,13,0.08);
+      border-radius: 26px;
+      padding: 2rem;
+      display: flex; flex-direction: column;
+      transition: transform .45s cubic-bezier(.2,.8,.2,1), box-shadow .45s, border-color .35s;
+    }
+    .tier-card:hover { transform: translateY(-4px); box-shadow: 0 50px 100px -50px rgba(21,17,13,0.25); border-color: rgba(198,165,89,0.30); }
+    .tier-card.is-featured {
+      background: linear-gradient(160deg, #2A220F 0%, #15110D 60%, #0A0807 100%);
+      border-color: rgba(198,165,89,0.45);
+      color: #F5E5B8;
+      box-shadow: 0 50px 100px -50px rgba(21,17,13,0.55), 0 12px 30px -16px rgba(198,165,89,0.35);
+    }
+    .tier-card.is-featured .tier-name,
+    .tier-card.is-featured .tier-desc,
+    .tier-card.is-featured .tier-feat li { color: #E8DECD; }
+    .tier-card.is-featured .tier-price { color: #FFFFFF; }
+    .tier-card .tier-feat { list-style: none; padding: 0; margin: 0; }
+    .tier-card .tier-feat li { display: flex; gap: 0.6rem; align-items: flex-start; padding: 0.45rem 0; font-size: 0.92rem; color: #3A332C; }
+    .tier-card .check { flex-shrink: 0; margin-top: 4px; color: #A8853F; }
+    .tier-card.is-featured .check { color: #E8B979; }
+    .tier-card .tier-badge {
+      position: absolute; top: -12px; left: 50%; transform: translateX(-50%);
+      background: linear-gradient(135deg, #F5D38A 0%, #C6A559 100%);
+      color: #2A220F;
+      font-family: 'JetBrains Mono', monospace; font-size: 0.62rem; letter-spacing: 0.18em; text-transform: uppercase;
+      padding: 0.3rem 0.75rem; border-radius: 999px;
+      box-shadow: 0 8px 20px -8px rgba(198,165,89,0.55);
+    }
+
+    /* Review card */
+    .review-card {
+      background: #FBF9F3; border: 1px solid rgba(21,17,13,0.08);
+      border-radius: 22px; padding: 1.75rem;
+      display: flex; flex-direction: column; gap: 1rem;
+      transition: transform .4s cubic-bezier(.2,.8,.2,1), box-shadow .4s, border-color .35s;
+    }
+    .review-card:hover { transform: translateY(-3px); border-color: rgba(198,165,89,0.30); box-shadow: 0 30px 60px -40px rgba(21,17,13,0.20); }
+    .avatar { width: 42px; height: 42px; border-radius: 999px; display: inline-flex; align-items: center; justify-content: center; font-family: 'JetBrains Mono', monospace; font-weight: 500; font-size: 0.78rem; letter-spacing: 0.05em; color: #2A220F; }
+    .avatar-1 { background: linear-gradient(135deg, #F5D38A, #D6A765); }
+    .avatar-2 { background: linear-gradient(135deg, #E8B979, #A8853F); }
+    .avatar-3 { background: linear-gradient(135deg, #D8D1C4, #A29A8E); color: #15110D; }
+    .avatar-4 { background: linear-gradient(135deg, #F5E5B8, #E8B979); }
+
+    /* Stat strip on hero */
+    .stat-card {
+      border: 1px solid rgba(232,185,121,0.20);
+      background: rgba(255,255,255,0.03);
+      backdrop-filter: blur(6px);
+      border-radius: 18px;
+      padding: 1.1rem 1.2rem;
+    }
+
+    /* Spec list */
+    .speclist { list-style: none; padding: 0; margin: 0; }
+    .speclist li { display: grid; grid-template-columns: 11rem 1fr; gap: 1rem; padding: 0.85rem 0; border-bottom: 1px solid rgba(21,17,13,0.08); align-items: baseline; }
+    .speclist li:last-child { border-bottom: none; }
+    .speclist .key { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase; color: #6B6259; }
+    .speclist .val { color: #15110D; font-size: 0.96rem; font-weight: 500; }
+    .speclist .val em { font-family: 'Fraunces', serif; font-style: italic; font-weight: 600; color: #A8853F; }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        animation-delay: 0ms !important;
+        transition-duration: 0.01ms !important;
+        transition-delay: 0ms !important;
+      }
+      .marquee-track { animation: none !important; }
+      .reveal { opacity: 1 !important; transform: none !important; }
+    }
+  </style>
+</head>
+<body class="relative overflow-x-hidden">
+
+  <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[100] focus:px-4 focus:py-2 focus:rounded-md focus:bg-ink-900 focus:text-gold-300 focus:text-sm focus:font-semibold focus:outline focus:outline-2 focus:outline-gold-500">Skip to content</a>
+
+  <div class="grain" aria-hidden="true"></div>
+
+  <!-- ============================================== -->
+  <!-- TOP UTILITY STRIP                              -->
+  <!-- ============================================== -->
+  <div class="relative z-40 bg-ink-900 text-ink-200">
+    <div class="max-w-[1400px] mx-auto px-6 lg:px-10 py-2.5 flex items-center justify-between text-[11px] font-mono tracking-[0.18em] uppercase">
+      <div class="flex items-center gap-6">
+        <span class="hidden md:inline-flex items-center gap-2 text-gold-300">
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 inline-block animate-pulse"></span>
+          All systems normal
+        </span>
+        <span class="hidden md:inline text-ink-100/70">SOC&nbsp;2 · ISO&nbsp;27001 · GDPR</span>
+      </div>
+      <div class="flex items-center gap-5 text-ink-100/70">
+        <a href="#" class="inline-block py-1.5 hover:text-gold-300">Docs</a>
+        <a href="#" class="inline-block py-1.5 hover:text-gold-300">Status</a>
+        <a href="#" class="inline-block py-1.5 hover:text-gold-300 hidden md:inline">EN&nbsp;/&nbsp;US</a>
+        <a href="mailto:hello@tester.io" class="inline-block py-1.5 hover:text-gold-300 hidden md:inline">hello@tester.io</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================== -->
+  <!-- NAV (Tech is current page)                     -->
+  <!-- ============================================== -->
+  <header id="nav" class="nav-bar sticky top-0 z-50 bg-transparent border-b border-transparent">
+    <div class="max-w-[1400px] mx-auto px-6 lg:px-10 py-5 flex items-center justify-between">
+      <a href="./index.html" class="flex items-center gap-2.5 group">
+        <img src="brand_assets/tester-logo.png" alt="Tester.io home" class="h-9 w-9 object-contain drop-shadow-[0_4px_12px_rgba(198,165,89,0.35)]" />
+        <span class="wordmark text-[1.35rem] text-ink-500">Tester<span class="dot">.</span>io</span>
+        <span class="hidden lg:inline ml-2 px-2 py-0.5 rounded-full border border-gold-500/35 text-[10px] font-mono tracking-[0.22em] uppercase text-gold-600">Tech</span>
+      </a>
+
+      <nav class="hidden md:flex items-center gap-9 text-[0.82rem] tracking-[0.04em] text-ink-400 font-medium">
+        <a href="./about.html" class="hover:text-ink-500 relative group">
+          About
+          <span class="absolute left-0 -bottom-1 h-px w-0 bg-gold-500 group-hover:w-full transition-[width] duration-500"></span>
+        </a>
+        <a href="./services.html" class="hover:text-ink-500 relative group">
+          Services
+          <span class="absolute left-0 -bottom-1 h-px w-0 bg-gold-500 group-hover:w-full transition-[width] duration-500"></span>
+        </a>
+        <a href="./tech.html" class="text-ink-500 relative group" aria-current="page">
+          Tech
+          <span class="absolute left-0 -bottom-1 h-px w-full bg-gold-500"></span>
+        </a>
+        <a href="./tester-2030.html" class="hover:text-ink-500 relative group">
+          Vision
+          <span class="absolute left-0 -bottom-1 h-px w-0 bg-gold-500 group-hover:w-full transition-[width] duration-500"></span>
+        </a>
+        <a href="./Sights.html" class="hover:text-ink-500 relative group">
+          Sights
+          <span class="absolute left-0 -bottom-1 h-px w-0 bg-gold-500 group-hover:w-full transition-[width] duration-500"></span>
+        </a>
+        <a href="./trend-finder.html" class="hover:text-ink-500 relative group">
+          Trend Finder
+          <span class="absolute left-0 -bottom-1 h-px w-0 bg-gold-500 group-hover:w-full transition-[width] duration-500"></span>
+        </a>
+        <a href="./work.html" class="hover:text-ink-500 relative group">
+          Work
+          <span class="absolute left-0 -bottom-1 h-px w-0 bg-gold-500 group-hover:w-full transition-[width] duration-500"></span>
+        </a>
+        <a href="./contact.html" class="hover:text-ink-500 relative group">
+          Contact
+          <span class="absolute left-0 -bottom-1 h-px w-0 bg-gold-500 group-hover:w-full transition-[width] duration-500"></span>
+        </a>
+      </nav>
+
+      <div class="flex items-center gap-3">
+        <a href="#" class="hidden md:inline text-[0.82rem] text-ink-400 hover:text-ink-500 font-medium">Sign in</a>
+        <a href="#lineup" class="btn btn-gold text-[0.82rem] py-3 px-5">
+          Shop the lineup
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ============================================== -->
+  <!-- HERO                                           -->
+  <!-- ============================================== -->
+  <section id="main" class="relative isolate text-white -mt-[73px] pt-[73px]">
+    <div class="hero-bg absolute inset-0 z-0" aria-hidden="true"></div>
+    <div class="grain-light z-10" aria-hidden="true"></div>
+
+    <div class="relative z-20 max-w-[1400px] mx-auto px-6 lg:px-10 pt-20 lg:pt-28 pb-20 lg:pb-28">
+      <div class="grid lg:grid-cols-12 gap-10 lg:gap-12 items-center">
+
+        <!-- copy -->
+        <div class="lg:col-span-7">
+          <div class="reveal flex items-center gap-3 mb-7">
+            <span class="h-px w-8 bg-gold-300/50"></span>
+            <span class="eyebrow eyebrow-on-dark">Tester · Tech · Hardware Studio</span>
+          </div>
+
+          <h1 class="reveal reveal-d1 display text-[clamp(2.8rem,7.2vw,6.4rem)] text-white">
+            Engineered for
+            <span class="display-italic text-gold block lg:inline">the everyday</span>
+            <span class="block">future.</span>
+          </h1>
+
+          <p class="reveal reveal-d2 mt-7 max-w-[58ch] text-[1.05rem] lg:text-[1.12rem] text-ink-100/80 leading-[1.65]">
+            Tester Tech is the hardware arm of Tester.io — smart watches, glasses, voice assistants,
+            and connected-home devices built with the same engineering rigor that powers our software
+            studio. We don't ship until it's measured, run hard, and broken on purpose.
+          </p>
+
+          <div class="reveal reveal-d3 mt-9 flex flex-wrap items-center gap-3">
+            <a href="#lineup" class="btn btn-gold">
+              Explore the lineup
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </a>
+            <a href="#brand" class="btn btn-ghost-dark">Our story</a>
+          </div>
+        </div>
+
+        <!-- hero stat strip + image -->
+        <div class="lg:col-span-5">
+          <div class="reveal reveal-d2 relative">
+            <!-- floating product image placeholder -->
+            <div class="relative img-card aspect-[4/5] rounded-3xl overflow-hidden border border-gold-300/15">
+              <img src="gadget_assets/hero-watch.png" alt="Tester Tech Watch Ø3 — flagship smartwatch hero" class="absolute inset-0 w-full h-full object-cover" loading="lazy" />
+
+              <!-- floating callout -->
+              <div class="absolute top-5 left-5 backdrop-blur-md bg-ink-900/70 border border-gold-300/20 rounded-2xl px-3.5 py-2.5">
+                <div class="eyebrow eyebrow-on-dark">Battery</div>
+                <div class="display text-[1.15rem] text-white leading-none mt-1">7 days</div>
+              </div>
+
+              <div class="absolute bottom-5 right-5 backdrop-blur-md bg-ink-900/85 border border-gold-300/20 rounded-2xl px-4 py-3 text-white">
+                <div class="flex items-center gap-3">
+                  <div>
+                    <div class="eyebrow eyebrow-on-dark">Watch Ø3</div>
+                    <div class="display text-[1.05rem] leading-none mt-1 font-variant-numeric: tabular-nums">$ 349</div>
+                  </div>
+                  <span class="inline-flex w-9 h-9 items-center justify-center rounded-full bg-gold-grad text-ink-900">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- stat strip -->
+      <div class="reveal reveal-d4 mt-14 lg:mt-20 grid grid-cols-2 md:grid-cols-4 gap-3 lg:gap-5">
+        <div class="stat-card">
+          <div class="num-plate text-gold text-[2.4rem]">22</div>
+          <div class="eyebrow eyebrow-on-dark mt-1">Products shipped</div>
+        </div>
+        <div class="stat-card">
+          <div class="num-plate text-gold text-[2.4rem]">4.9★</div>
+          <div class="eyebrow eyebrow-on-dark mt-1">Avg. review</div>
+        </div>
+        <div class="stat-card">
+          <div class="num-plate text-gold text-[2.4rem]">42</div>
+          <div class="eyebrow eyebrow-on-dark mt-1">Countries</div>
+        </div>
+        <div class="stat-card">
+          <div class="num-plate text-gold text-[2.4rem]">‘22</div>
+          <div class="eyebrow eyebrow-on-dark mt-1">Line est.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- press marquee -->
+    <div class="relative z-20">
+      <div class="hairline-dark"></div>
+      <div class="py-7 overflow-hidden">
+        <div class="flex gap-14 marquee-track items-center text-ink-100/60 whitespace-nowrap text-[0.8rem] font-mono tracking-[0.20em] uppercase">
+          <span>The Verge — &ldquo;Quietly excellent.&rdquo;</span><span>·</span>
+          <span>Wired — &ldquo;Hardware with restraint.&rdquo;</span><span>·</span>
+          <span>Engadget — &ldquo;Editor's Choice.&rdquo;</span><span>·</span>
+          <span>Fast Company — &ldquo;Most Innovative.&rdquo;</span><span>·</span>
+          <span>Wallpaper* — &ldquo;Object of desire.&rdquo;</span><span>·</span>
+          <span>The Verge — &ldquo;Quietly excellent.&rdquo;</span><span>·</span>
+          <span>Wired — &ldquo;Hardware with restraint.&rdquo;</span><span>·</span>
+          <span>Engadget — &ldquo;Editor's Choice.&rdquo;</span><span>·</span>
+          <span>Fast Company — &ldquo;Most Innovative.&rdquo;</span><span>·</span>
+          <span>Wallpaper* — &ldquo;Object of desire.&rdquo;</span><span>·</span>
+        </div>
+      </div>
+      <div class="hairline-dark"></div>
+    </div>
+  </section>
+
+  <!-- ============================================== -->
+  <!-- BRAND STORY                                    -->
+  <!-- ============================================== -->
+  <section id="brand" class="relative bg-page py-24 lg:py-32">
+    <div class="page-glow"></div>
+    <div class="relative max-w-[1400px] mx-auto px-6 lg:px-10">
+
+      <div class="grid lg:grid-cols-12 gap-10 lg:gap-16 mb-14 lg:mb-20">
+        <div class="lg:col-span-5">
+          <div class="eyebrow mb-5 flex items-center gap-3">
+            <span class="h-px w-8 bg-gold-500/60"></span>
+            Field Note Nº 03
+          </div>
+          <h2 class="h2 text-[clamp(2.2rem,4.8vw,4rem)] text-ink-500">
+            Why Tester
+            <span class="display-italic text-gold">Tech.</span>
+          </h2>
+        </div>
+        <div class="lg:col-span-6 lg:col-start-7 text-[1.02rem] text-ink-400 leading-[1.75] space-y-5">
+          <p>
+            For twelve years we built tools that broke other people's software before their users
+            did. Test harnesses, performance grids, audit pipelines. Somewhere along the way we
+            started asking the obvious question: what would it look like if hardware was held to
+            the same standard?
+          </p>
+          <p>
+            Tester Tech is the answer. Each device passes through the same drop rigs, climate
+            chambers, and synthetic-load loops we use for our QA work — only now it's our own
+            silicon, our own firmware, our own promise on the line.
+          </p>
+        </div>
+      </div>
+
+      <!-- values triptych -->
+      <div class="grid md:grid-cols-3 gap-6 lg:gap-8">
+
+        <article class="reveal">
+          <div class="relative img-card aspect-[4/3] rounded-2xl overflow-hidden mb-7">
+            <img src="gadget_assets/brand-rigor.png" alt="Smartwatch undergoing engineering testing on a precision rig" class="absolute inset-0 w-full h-full object-cover" loading="lazy" />
+          </div>
+          <div class="num-plate text-gold text-[2.4rem] mb-2">01</div>
+          <h3 class="h2 text-[1.45rem] text-ink-500">Engineering rigor</h3>
+          <p class="mt-3 text-[0.95rem] text-ink-400 leading-[1.7]">
+            500-hour soak tests. Drop rigs that mimic two years of pocket life in a week. Every
+            firmware build runs against the same automated suite as our enterprise software.
+          </p>
+        </article>
+
+        <article class="reveal reveal-d1">
+          <div class="relative img-card aspect-[4/3] rounded-2xl overflow-hidden mb-7">
+            <img src="gadget_assets/brand-materials.png" alt="Premium raw materials: titanium, sapphire, bio-acetate, recycled aluminium" class="absolute inset-0 w-full h-full object-cover" loading="lazy" />
+          </div>
+          <div class="num-plate text-gold text-[2.4rem] mb-2">02</div>
+          <h3 class="h2 text-[1.45rem] text-ink-500">Materials honesty</h3>
+          <p class="mt-3 text-[0.95rem] text-ink-400 leading-[1.7]">
+            Grade-5 titanium. Sapphire crystal. Recycled aluminium. Bio-acetate frames. We publish
+            our bill of materials and our repair scores. The product is the proof, not the page.
+          </p>
+        </article>
+
+        <article class="reveal reveal-d2">
+          <div class="relative img-card aspect-[4/3] rounded-2xl overflow-hidden mb-7">
+            <img src="gadget_assets/brand-testing.png" alt="Public test report charts alongside a brushed-titanium smartwatch" class="absolute inset-0 w-full h-full object-cover" loading="lazy" />
+          </div>
+          <div class="num-plate text-gold text-[2.4rem] mb-2">03</div>
+          <h3 class="h2 text-[1.45rem] text-ink-500">Tested in public</h3>
+          <p class="mt-3 text-[0.95rem] text-ink-400 leading-[1.7]">
+            Every device ships with a public test report — battery curves, water-resistance results,
+            radio-emission logs. If we say a watch lasts seven days, the chart is on the product
+            page.
+          </p>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================== -->
+  <!-- FEATURED PRODUCT SPOTLIGHT (light, flagship)   -->
+  <!-- ============================================== -->
+  <section id="flagship" class="relative bg-pagealt py-24 lg:py-32">
+    <div class="relative max-w-[1400px] mx-auto px-6 lg:px-10">
+
+      <div class="flex items-end justify-between gap-8 flex-wrap mb-10 lg:mb-14">
+        <div class="max-w-[40rem]">
+          <div class="eyebrow mb-5 flex items-center gap-3">
+            <span class="h-px w-8 bg-gold-500/60"></span>
+            Flagship
+          </div>
+          <h2 class="h2 text-[clamp(2.2rem,4.6vw,4rem)] text-ink-500">
+            Meet the
+            <span class="display-italic text-gold">Watch Ø3.</span>
+          </h2>
+        </div>
+      </div>
+
+      <div class="grid lg:grid-cols-12 gap-10 lg:gap-14 items-center">
+
+        <!-- image side -->
+        <div class="lg:col-span-7">
+          <div class="relative img-card aspect-[16/12] rounded-3xl overflow-hidden">
+            <img src="gadget_assets/flagship.png" alt="Tester Tech Watch Ø3 flagship product shot" class="absolute inset-0 w-full h-full object-cover" loading="lazy" />
+            <span class="absolute top-5 left-5 pill pill-gold"><span class="dot"></span>New · 2026</span>
+          </div>
+
+          <!-- thumb strip -->
+          <div class="mt-4 grid grid-cols-4 gap-4">
+            <div class="relative aspect-square img-card rounded-xl overflow-hidden ring-1 ring-gold-500/40">
+              <img src="gadget_assets/flagship-thumb-front.png" alt="Watch Ø3 front view" class="absolute inset-0 w-full h-full object-cover" loading="lazy" />
+            </div>
+            <div class="relative aspect-square img-card rounded-xl overflow-hidden">
+              <img src="gadget_assets/flagship-thumb-three-quarter.png" alt="Watch Ø3 three-quarter view" class="absolute inset-0 w-full h-full object-cover" loading="lazy" />
+            </div>
+            <div class="relative aspect-square img-card rounded-xl overflow-hidden">
+              <img src="gadget_assets/flagship-thumb-side.png" alt="Watch Ø3 side profile" class="absolute inset-0 w-full h-full object-cover" loading="lazy" />
+            </div>
+            <div class="relative aspect-square img-card rounded-xl overflow-hidden">
+              <img src="gadget_assets/flagship-thumb-lifestyle.png" alt="Watch Ø3 lifestyle wrist shot" class="absolute inset-0 w-full h-full object-cover" loading="lazy" />
+            </div>
+          </div>
+        </div>
+
+        <!-- spec side -->
+        <div class="lg:col-span-5">
+          <div class="eyebrow mb-3">Smartwatch · 01</div>
+          <h3 class="display text-[clamp(2rem,3.6vw,2.8rem)] text-ink-500 leading-[1.05]">
+            Watch <span class="display-italic text-gold">Ø3</span>
+          </h3>
+          <p class="mt-4 text-[1rem] text-ink-400 leading-[1.7] max-w-[42ch]">
+            Titanium case, sapphire display, and a battery curve we publish. Seven days of regular
+            wear, three of heavy training, twenty-eight on the watch face you actually keep using.
+          </p>
+
+          <ul class="speclist mt-7">
+            <li><span class="key">Case</span><span class="val">Grade-5 titanium · <em>brushed</em></span></li>
+            <li><span class="key">Display</span><span class="val">1.8&quot; AMOLED · sapphire crystal</span></li>
+            <li><span class="key">Battery</span><span class="val"><em>7 days</em> regular · 3 heavy</span></li>
+            <li><span class="key">Water</span><span class="val">10 ATM · MIL-STD-810H</span></li>
+            <li><span class="key">Sensors</span><span class="val">ECG · SpO₂ · HRV · skin temp</span></li>
+            <li><span class="key">Weight</span><span class="val">42 g (case only)</span></li>
+          </ul>
+
+          <div class="mt-8 flex items-end justify-between flex-wrap gap-4">
+            <div>
+              <div class="display text-[2rem] text-ink-500 leading-none" style="font-variant-numeric: tabular-nums">$ 349</div>
+              <div class="text-[0.78rem] font-mono tracking-[0.16em] uppercase text-ink-300 mt-1">or $29/mo · ships in 3 days</div>
+            </div>
+          </div>
+
+          <div class="mt-7 flex flex-wrap items-center gap-3">
+            <a href="#" class="btn btn-gold">
+              Add to cart
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </a>
+            <button type="button" class="btn btn-ghost-light flex items-center gap-2 wishlist-btn-inline" aria-pressed="false">
+              <svg width="16" height="16" viewBox="0 0 24 24" class="heart" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+              <svg width="16" height="16" viewBox="0 0 24 24" class="heart-fill" fill="currentColor" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+              <span class="wishlist-label">Wishlist</span>
+            </button>
+          </div>
+          <div class="mt-5 flex items-center gap-3 text-[0.74rem] font-mono tracking-[0.18em] uppercase text-ink-300">
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+            Carbon-neutral shipping · 90-day trial · 2-year warranty
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================== -->
+  <!-- LINEUP — filter chips + categories + products  -->
+  <!-- ============================================== -->
+  <section id="lineup" class="relative bg-page py-24 lg:py-32">
+    <div class="relative max-w-[1400px] mx-auto px-6 lg:px-10">
+
+      <div class="flex items-end justify-between gap-8 flex-wrap mb-10 lg:mb-12">
+        <div class="max-w-[40rem]">
+          <div class="eyebrow mb-5 flex items-center gap-3">
+            <span class="h-px w-8 bg-gold-500/60"></span>
+            The lineup
+          </div>
+          <h2 class="h2 text-[clamp(2.2rem,4.6vw,4rem)] text-ink-500">
+            Pick a category. <span class="display-italic text-gold">Or all of them.</span>
+          </h2>
+        </div>
+        <p class="max-w-[26rem] text-ink-400 leading-[1.75] text-[1rem]">
+          Twenty-two products across four disciplines. They share a design language, a charging
+          standard, and a single setup flow.
+        </p>
+      </div>
+
+      <!-- filter chips -->
+      <div class="reveal flex flex-wrap gap-2.5 mb-10 lg:mb-12">
+        <button type="button" class="filter-chip is-active" data-filter="all" aria-pressed="true">All <span class="count">22</span></button>
+        <button type="button" class="filter-chip" data-filter="watches" aria-pressed="false">Watches <span class="count">06</span></button>
+        <button type="button" class="filter-chip" data-filter="glasses" aria-pressed="false">Glasses <span class="count">03</span></button>
+        <button type="button" class="filter-chip" data-filter="assistants" aria-pressed="false">Assistants <span class="count">04</span></button>
+        <button type="button" class="filter-chip" data-filter="home" aria-pressed="false">Connected home <span class="count">07</span></button>
+        <button type="button" class="filter-chip" data-filter="rings" aria-pressed="false">Rings <span class="count">02</span></button>
+      </div>
+
+      <!-- categories grid (existing 4) -->
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-16 lg:mb-20">
+        <a href="#watches" class="cat-card group reveal" data-category="watches">
+          <div class="relative aspect-[5/4] rounded-2xl overflow-hidden mb-5">
+            <img src="gadget_assets/cat-watches.png" alt="Smartwatches category" class="absolute inset-0 w-full h-full object-cover" loading="lazy" />
+          </div>
+          <div class="flex items-center justify-between">
+            <div>
+              <div class="eyebrow mb-1">01</div>
+              <h3 class="h2 text-[1.25rem] text-ink-500">Watches</h3>
+              <p class="text-[0.85rem] text-ink-300 mt-1">6 models · from $249</p>
+            </div>
+            <span class="w-9 h-9 grid place-items-center rounded-full bg-pagealt group-hover:bg-gold-grad group-hover:text-ink-900 transition-colors">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </span>
+          </div>
+        </a>
+
+        <a href="#glasses" class="cat-card group reveal reveal-d1" data-category="glasses">
+          <div class="relative aspect-[5/4] rounded-2xl overflow-hidden mb-5">
+            <img src="gadget_assets/cat-glasses.png" alt="Smart glasses category" class="absolute inset-0 w-full h-full object-cover" loading="lazy" />
+          </div>
+          <div class="flex items-center justify-between">
+            <div>
+              <div class="eyebrow mb-1">02</div>
+              <h3 class="h2 text-[1.25rem] text-ink-500">Glasses</h3>
+              <p class="text-[0.85rem] text-ink-300 mt-1">3 models · from $399</p>
+            </div>
+            <span class="w-9 h-9 grid place-items-center rounded-full bg-pagealt group-hover:bg-gold-grad group-hover:text-ink-900 transition-colors">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </span>
+          </div>
+        </a>
+
+        <a href="#assistants" class="cat-card group reveal reveal-d2" data-category="assistants">
+          <div class="relative aspect-[5/4] rounded-2xl overflow-hidden mb-5">
+            <img src="gadget_assets/cat-assistants.png" alt="Voice assistants category" class="absolute inset-0 w-full h-full object-cover" loading="lazy" />
+          </div>
+          <div class="flex items-center justify-between">
+            <div>
+              <div class="eyebrow mb-1">03</div>
+              <h3 class="h2 text-[1.25rem] text-ink-500">Assistants</h3>
+              <p class="text-[0.85rem] text-ink-300 mt-1">4 models · from $129</p>
+            </div>
+            <span class="w-9 h-9 grid place-items-center rounded-full bg-pagealt group-hover:bg-gold-grad group-hover:text-ink-900 transition-colors">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </span>
+          </div>
+        </a>
+
+        <a href="#home" class="cat-card group reveal reveal-d3" data-category="home">
+          <div class="relative aspect-[5/4] rounded-2xl overflow-hidden mb-5">
+            <img src="gadget_assets/cat-home.png" alt="Connected home devices category" class="absolute inset-0 w-full h-full object-cover" loading="lazy" />
+          </div>
+          <div class="flex items-center justify-between">
+            <div>
+              <div class="eyebrow mb-1">04</div>
+              <h3 class="h2 text-[1.25rem] text-ink-500">Connected home</h3>
+              <p class="text-[0.85rem] text-ink-300 mt-1">7 devices · from $79</p>
+            </div>
+            <span class="w-9 h-9 grid place-items-center rounded-full bg-pagealt group-hover:bg-gold-grad group-hover:text-ink-900 transition-colors">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </span>
+          </div>
+        </a>
+      </div>
+
+      <!-- product grid (6 cards) -->
+      <div class="hairline pt-12">
+        <div class="flex items-end justify-between gap-6 flex-wrap mb-10">
+          <div>
+            <div class="eyebrow mb-3">Featured this season</div>
+            <h3 class="h2 text-[clamp(1.6rem,3vw,2.4rem)] text-ink-500">New &amp; popular</h3>
+          </div>
+          <a href="#" class="btn btn-ghost-light text-[0.82rem]">
+            Browse all 22
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </a>
+        </div>
+
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+
+          <article id="watches" class="product-card reveal" data-category="watches">
+            <button type="button" class="wishlist-btn" aria-pressed="false" aria-label="Save Watch Ø3 to wishlist">
+              <svg width="17" height="17" viewBox="0 0 24 24" class="heart" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+              <svg width="17" height="17" viewBox="0 0 24 24" class="heart-fill" fill="currentColor"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+            </button>
+            <div class="product-img-wrap">
+              <img src="gadget_assets/product-watch.png" alt="Tester Tech Watch Ø3 smartwatch" class="absolute inset-0 w-full h-full object-cover" loading="lazy" />
+              <span class="absolute top-4 left-4 pill pill-gold z-10"><span class="dot"></span>New</span>
+            </div>
+            <div class="p-6">
+              <div class="flex items-start justify-between gap-3">
+                <div>
+                  <div class="eyebrow mb-1">Smartwatch</div>
+                  <h3 class="display text-[1.3rem] text-ink-500 leading-tight"><span class="pname">Watch Ø3</span></h3>
+                </div>
+                <div class="text-right">
+                  <div class="display text-[1.15rem] text-ink-500" style="font-variant-numeric: tabular-nums">$349</div>
+                  <div class="text-[0.66rem] font-mono uppercase tracking-[0.18em] text-ink-300 mt-0.5">$29/mo</div>
+                </div>
+              </div>
+              <p class="mt-3 text-[0.92rem] text-ink-400 leading-[1.6]">Titanium case, 7-day battery, sapphire display.</p>
+              <div class="mt-5 flex flex-wrap gap-1.5">
+                <span class="pill">Titanium</span><span class="pill">AMOLED</span><span class="pill">10ATM</span>
+              </div>
+              <a href="#" class="mt-6 btn btn-ink w-full">
+                Add to cart
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+              </a>
+            </div>
+          </article>
+
+          <article id="glasses" class="product-card reveal reveal-d1" data-category="glasses">
+            <button type="button" class="wishlist-btn" aria-pressed="false" aria-label="Save Lens Pro to wishlist">
+              <svg width="17" height="17" viewBox="0 0 24 24" class="heart" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+              <svg width="17" height="17" viewBox="0 0 24 24" class="heart-fill" fill="currentColor"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+            </button>
+            <div class="product-img-wrap">
+              <img src="gadget_assets/product-glasses.png" alt="Tester Tech Lens Pro smart glasses" class="absolute inset-0 w-full h-full object-cover" loading="lazy" />
+              <span class="absolute top-4 left-4 pill pill-ink z-10"><span class="dot"></span>Pre-order</span>
+            </div>
+            <div class="p-6">
+              <div class="flex items-start justify-between gap-3">
+                <div>
+                  <div class="eyebrow mb-1">Smart glasses</div>
+                  <h3 class="display text-[1.3rem] text-ink-500 leading-tight"><span class="pname">Lens Pro</span></h3>
+                </div>
+                <div class="text-right">
+                  <div class="display text-[1.15rem] text-ink-500" style="font-variant-numeric: tabular-nums">$499</div>
+                  <div class="text-[0.66rem] font-mono uppercase tracking-[0.18em] text-ink-300 mt-0.5">ships Q4</div>
+                </div>
+              </div>
+              <p class="mt-3 text-[0.92rem] text-ink-400 leading-[1.6]">Real-time translation, turn-by-turn nav, in a frame.</p>
+              <div class="mt-5 flex flex-wrap gap-1.5">
+                <span class="pill">Acetate</span><span class="pill">Micro-LED</span><span class="pill">12&nbsp;hr</span>
+              </div>
+              <a href="#" class="mt-6 btn btn-ink w-full">
+                Reserve yours
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+              </a>
+            </div>
+          </article>
+
+          <article id="assistants" class="product-card reveal reveal-d2" data-category="assistants">
+            <button type="button" class="wishlist-btn" aria-pressed="false" aria-label="Save Voice Mini to wishlist">
+              <svg width="17" height="17" viewBox="0 0 24 24" class="heart" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+              <svg width="17" height="17" viewBox="0 0 24 24" class="heart-fill" fill="currentColor"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+            </button>
+            <div class="product-img-wrap">
+              <img src="gadget_assets/product-voice.png" alt="Tester Tech Voice Mini smart speaker" class="absolute inset-0 w-full h-full object-cover" loading="lazy" />
+            </div>
+            <div class="p-6">
+              <div class="flex items-start justify-between gap-3">
+                <div>
+                  <div class="eyebrow mb-1">Assistant</div>
+                  <h3 class="display text-[1.3rem] text-ink-500 leading-tight"><span class="pname">Voice Mini</span></h3>
+                </div>
+                <div class="text-right">
+                  <div class="display text-[1.15rem] text-ink-500" style="font-variant-numeric: tabular-nums">$129</div>
+                  <div class="text-[0.66rem] font-mono uppercase tracking-[0.18em] text-ink-300 mt-0.5">in stock</div>
+                </div>
+              </div>
+              <p class="mt-3 text-[0.92rem] text-ink-400 leading-[1.6]">Listens locally first. Cloud is opt-in, never default.</p>
+              <div class="mt-5 flex flex-wrap gap-1.5">
+                <span class="pill">On-device</span><span class="pill">Hi-Fi</span><span class="pill">Matter</span>
+              </div>
+              <a href="#" class="mt-6 btn btn-ink w-full">
+                Add to cart
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+              </a>
+            </div>
+          </article>
+
+          <article class="product-card reveal" data-category="rings">
+            <button type="button" class="wishlist-btn" aria-pressed="false" aria-label="Save Ring 01 to wishlist">
+              <svg width="17" height="17" viewBox="0 0 24 24" class="heart" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+              <svg width="17" height="17" viewBox="0 0 24 24" class="heart-fill" fill="currentColor"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+            </button>
+            <div class="product-img-wrap">
+              <img src="gadget_assets/product-ring.png" alt="Tester Tech Ring 01 titanium smart ring" class="absolute inset-0 w-full h-full object-cover" loading="lazy" />
+              <span class="absolute top-4 left-4 pill pill-gold z-10"><span class="dot"></span>Limited</span>
+            </div>
+            <div class="p-6">
+              <div class="flex items-start justify-between gap-3">
+                <div>
+                  <div class="eyebrow mb-1">Smart ring</div>
+                  <h3 class="display text-[1.3rem] text-ink-500 leading-tight"><span class="pname">Ring 01</span></h3>
+                </div>
+                <div class="text-right">
+                  <div class="display text-[1.15rem] text-ink-500" style="font-variant-numeric: tabular-nums">$279</div>
+                  <div class="text-[0.66rem] font-mono uppercase tracking-[0.18em] text-ink-300 mt-0.5">8 sizes</div>
+                </div>
+              </div>
+              <p class="mt-3 text-[0.92rem] text-ink-400 leading-[1.6]">Sleep, recovery, quiet wake. Worn 24/7 without thinking.</p>
+              <div class="mt-5 flex flex-wrap gap-1.5">
+                <span class="pill">Titanium</span><span class="pill">HRV</span><span class="pill">7-day</span>
+              </div>
+              <a href="#" class="mt-6 btn btn-ink w-full">
+                Add to cart
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+              </a>
+            </div>
+          </article>
+
+          <article id="home" class="product-card reveal reveal-d1" data-category="home">
+            <button type="button" class="wishlist-btn" aria-pressed="false" aria-label="Save Hub to wishlist">
+              <svg width="17" height="17" viewBox="0 0 24 24" class="heart" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+              <svg width="17" height="17" viewBox="0 0 24 24" class="heart-fill" fill="currentColor"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+            </button>
+            <div class="product-img-wrap">
+              <img src="gadget_assets/product-hub.png" alt="Tester Tech Hub connected-home control panel" class="absolute inset-0 w-full h-full object-cover" loading="lazy" />
+            </div>
+            <div class="p-6">
+              <div class="flex items-start justify-between gap-3">
+                <div>
+                  <div class="eyebrow mb-1">Connected home</div>
+                  <h3 class="display text-[1.3rem] text-ink-500 leading-tight"><span class="pname">Hub</span></h3>
+                </div>
+                <div class="text-right">
+                  <div class="display text-[1.15rem] text-ink-500" style="font-variant-numeric: tabular-nums">$229</div>
+                  <div class="text-[0.66rem] font-mono uppercase tracking-[0.18em] text-ink-300 mt-0.5">wall-mount</div>
+                </div>
+              </div>
+              <p class="mt-3 text-[0.92rem] text-ink-400 leading-[1.6]">One panel. Every protocol. Matter, Thread, Zigbee.</p>
+              <div class="mt-5 flex flex-wrap gap-1.5">
+                <span class="pill">7&quot; LCD</span><span class="pill">Matter</span><span class="pill">PoE</span>
+              </div>
+              <a href="#" class="mt-6 btn btn-ink w-full">
+                Add to cart
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+              </a>
+            </div>
+          </article>
+
+          <article class="product-card reveal reveal-d2" data-category="watches">
+            <button type="button" class="wishlist-btn" aria-pressed="false" aria-label="Save Starter Kit to wishlist">
+              <svg width="17" height="17" viewBox="0 0 24 24" class="heart" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+              <svg width="17" height="17" viewBox="0 0 24 24" class="heart-fill" fill="currentColor"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+            </button>
+            <div class="product-img-wrap">
+              <img src="gadget_assets/product-kit.png" alt="Tester Tech Starter Kit bundle" class="absolute inset-0 w-full h-full object-cover" loading="lazy" />
+              <span class="absolute top-4 left-4 pill pill-ink z-10"><span class="dot"></span>Save&nbsp;$78</span>
+            </div>
+            <div class="p-6">
+              <div class="flex items-start justify-between gap-3">
+                <div>
+                  <div class="eyebrow mb-1">Bundle</div>
+                  <h3 class="display text-[1.3rem] text-ink-500 leading-tight"><span class="pname">Starter Kit</span></h3>
+                </div>
+                <div class="text-right">
+                  <div class="display text-[1.15rem] text-ink-500" style="font-variant-numeric: tabular-nums">$550</div>
+                  <div class="text-[0.66rem] font-mono uppercase tracking-[0.18em] text-ink-300 mt-0.5 line-through">$628</div>
+                </div>
+              </div>
+              <p class="mt-3 text-[0.92rem] text-ink-400 leading-[1.6]">Watch + Ring + Voice Mini. Week one with Tester Tech.</p>
+              <div class="mt-5 flex flex-wrap gap-1.5">
+                <span class="pill">3-piece</span><span class="pill">Free&nbsp;ship</span><span class="pill">90-day</span>
+              </div>
+              <a href="#" class="mt-6 btn btn-gold w-full">
+                Get the kit
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+              </a>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================== -->
+  <!-- COMPARISON TABLE                               -->
+  <!-- ============================================== -->
+  <section id="compare" class="relative bg-pagealt py-24 lg:py-32">
+    <div class="max-w-[1400px] mx-auto px-6 lg:px-10">
+
+      <div class="grid lg:grid-cols-12 gap-10 mb-12 lg:mb-16">
+        <div class="lg:col-span-5">
+          <div class="eyebrow mb-5 flex items-center gap-3">
+            <span class="h-px w-8 bg-gold-500/60"></span>
+            Compare watches
+          </div>
+          <h2 class="h2 text-[clamp(2rem,4.4vw,3.4rem)] text-ink-500">
+            Three watches. <span class="display-italic text-gold">One choice.</span>
+          </h2>
+        </div>
+        <p class="lg:col-span-6 lg:col-start-7 text-[1rem] text-ink-400 leading-[1.7] max-w-[52ch]">
+          The Lite for daily life. The Sport when you train. The Pro when you want the lab on your
+          wrist. Same charging puck, same software, same two-year warranty.
+        </p>
+      </div>
+
+      <div class="compare-grid reveal" role="table" aria-label="Compare smartwatches">
+        <!-- Header row -->
+        <div class="head" role="columnheader">
+          <div class="eyebrow eyebrow-on-dark mb-2">Model</div>
+          <div class="display text-[1.1rem]">Specification</div>
+        </div>
+        <div class="head" role="columnheader">
+          <div class="eyebrow eyebrow-on-dark mb-2">Watch Ø1 · Lite</div>
+          <div class="display text-[1.4rem] price">$249</div>
+        </div>
+        <div class="head" role="columnheader">
+          <div class="eyebrow eyebrow-on-dark mb-2">Watch Ø2 · Sport</div>
+          <div class="display text-[1.4rem] price">$299</div>
+        </div>
+        <div class="head recommended" role="columnheader">
+          <div class="eyebrow eyebrow-on-dark mb-2">Watch Ø3 · Pro</div>
+          <div class="display text-[1.4rem] price text-gold">$349</div>
+        </div>
+
+        <!-- Row: Case -->
+        <div class="cell row-h"><span>Case material</span></div>
+        <div class="cell"><span class="cell-label">Case</span><span>Recycled aluminium</span></div>
+        <div class="cell"><span class="cell-label">Case</span><span>Stainless steel</span></div>
+        <div class="cell col-recommended"><span class="cell-label">Case</span><span class="text-ink-500 font-medium">Grade-5 titanium</span></div>
+
+        <!-- Row: Display -->
+        <div class="cell row-h"><span>Display</span></div>
+        <div class="cell"><span class="cell-label">Display</span><span>1.4&quot; OLED · Gorilla Glass</span></div>
+        <div class="cell"><span class="cell-label">Display</span><span>1.6&quot; AMOLED · Gorilla Glass</span></div>
+        <div class="cell col-recommended"><span class="cell-label">Display</span><span class="text-ink-500 font-medium">1.8&quot; AMOLED · sapphire</span></div>
+
+        <!-- Row: Battery -->
+        <div class="cell row-h"><span>Battery life</span></div>
+        <div class="cell"><span class="cell-label">Battery</span><span>5 days regular</span></div>
+        <div class="cell"><span class="cell-label">Battery</span><span>6 days regular</span></div>
+        <div class="cell col-recommended"><span class="cell-label">Battery</span><span class="text-ink-500 font-medium">7 days regular · 3 heavy</span></div>
+
+        <!-- Row: Water -->
+        <div class="cell row-h"><span>Water resistance</span></div>
+        <div class="cell"><span class="cell-label">Water</span><span>3 ATM</span></div>
+        <div class="cell"><span class="cell-label">Water</span><span>5 ATM</span></div>
+        <div class="cell col-recommended"><span class="cell-label">Water</span><span class="text-ink-500 font-medium">10 ATM · MIL-STD-810H</span></div>
+
+        <!-- Row: Sensors -->
+        <div class="cell row-h"><span>Sensors</span></div>
+        <div class="cell"><span class="cell-label">Sensors</span><span>HR · accelerometer</span></div>
+        <div class="cell"><span class="cell-label">Sensors</span><span>HR · SpO₂ · barometer</span></div>
+        <div class="cell col-recommended"><span class="cell-label">Sensors</span><span class="text-ink-500 font-medium">ECG · SpO₂ · HRV · skin temp</span></div>
+
+        <!-- Row: CTA -->
+        <div class="cell row-h" style="border-bottom:none"><span>Action</span></div>
+        <div class="cell" style="border-bottom:none">
+          <a href="#" class="btn btn-ghost-light !py-2.5 !px-4 text-[0.78rem] mt-1">Choose Lite</a>
+        </div>
+        <div class="cell" style="border-bottom:none">
+          <a href="#" class="btn btn-ghost-light !py-2.5 !px-4 text-[0.78rem] mt-1">Choose Sport</a>
+        </div>
+        <div class="cell col-recommended" style="border-bottom:none">
+          <a href="#" class="btn btn-gold !py-2.5 !px-4 text-[0.78rem] mt-1">Choose Pro</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================== -->
+  <!-- PRICING TIERS — Assistants                     -->
+  <!-- ============================================== -->
+  <section id="tiers" class="relative bg-page py-24 lg:py-32">
+    <div class="max-w-[1400px] mx-auto px-6 lg:px-10">
+
+      <div class="grid lg:grid-cols-12 gap-10 mb-12 lg:mb-16">
+        <div class="lg:col-span-5">
+          <div class="eyebrow mb-5 flex items-center gap-3">
+            <span class="h-px w-8 bg-gold-500/60"></span>
+            Assistants
+          </div>
+          <h2 class="h2 text-[clamp(2rem,4.4vw,3.4rem)] text-ink-500">
+            Three sizes of <span class="display-italic text-gold">quiet.</span>
+          </h2>
+        </div>
+        <p class="lg:col-span-6 lg:col-start-7 text-[1rem] text-ink-400 leading-[1.7] max-w-[52ch]">
+          Voice Mini, Voice, and Voice Pro share the same on-device language model. Differences are
+          mics, speakers, and how much room they fill — not whether they listen well.
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-6 lg:gap-8 pt-4">
+
+        <article class="tier-card reveal">
+          <div class="eyebrow mb-3">Tier 01</div>
+          <h3 class="display text-[1.85rem] text-ink-500 tier-name">Voice Mini</h3>
+          <p class="text-[0.92rem] text-ink-400 mt-2 tier-desc">For a desk, a kitchen, a bedside table.</p>
+          <div class="mt-5 flex items-baseline gap-2">
+            <span class="display text-[2.4rem] text-ink-500 tier-price" style="font-variant-numeric: tabular-nums">$129</span>
+            <span class="text-[0.78rem] font-mono tracking-[0.16em] uppercase text-ink-300">one-time</span>
+          </div>
+          <ul class="tier-feat mt-6 mb-7">
+            <li><svg class="check" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> 360° room-filling audio</li>
+            <li><svg class="check" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Wake-word on device</li>
+            <li><svg class="check" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Wi-Fi 6 · Matter · Thread</li>
+            <li><svg class="check" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> 2 far-field mics</li>
+            <li><svg class="check" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Physical mute switch</li>
+          </ul>
+          <a href="#" class="btn btn-ghost-light mt-auto w-full">Choose Mini</a>
+        </article>
+
+        <article class="tier-card is-featured reveal reveal-d1">
+          <div class="tier-badge">Most popular</div>
+          <div class="eyebrow eyebrow-on-dark mb-3">Tier 02</div>
+          <h3 class="display text-[1.85rem] tier-name">Voice</h3>
+          <p class="text-[0.92rem] mt-2 tier-desc">A speaker with a brain and a small display.</p>
+          <div class="mt-5 flex items-baseline gap-2">
+            <span class="display text-[2.4rem] tier-price" style="font-variant-numeric: tabular-nums">$199</span>
+            <span class="text-[0.78rem] font-mono tracking-[0.16em] uppercase text-gold-300">one-time</span>
+          </div>
+          <ul class="tier-feat mt-6 mb-7">
+            <li><svg class="check" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Everything in Mini</li>
+            <li><svg class="check" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> 4.3&quot; visual display</li>
+            <li><svg class="check" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> 4 far-field mics · voice ID</li>
+            <li><svg class="check" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Touch controls</li>
+            <li><svg class="check" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Streaming subscription bundle</li>
+            <li><svg class="check" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Stereo pair-able</li>
+          </ul>
+          <a href="#" class="btn btn-gold mt-auto w-full">Choose Voice</a>
+        </article>
+
+        <article class="tier-card reveal reveal-d2">
+          <div class="eyebrow mb-3">Tier 03</div>
+          <h3 class="display text-[1.85rem] text-ink-500 tier-name">Voice Pro</h3>
+          <p class="text-[0.92rem] text-ink-400 mt-2 tier-desc">For a living room. Or a small studio.</p>
+          <div class="mt-5 flex items-baseline gap-2">
+            <span class="display text-[2.4rem] text-ink-500 tier-price" style="font-variant-numeric: tabular-nums">$279</span>
+            <span class="text-[0.78rem] font-mono tracking-[0.16em] uppercase text-ink-300">one-time</span>
+          </div>
+          <ul class="tier-feat mt-6 mb-7">
+            <li><svg class="check" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Everything in Voice</li>
+            <li><svg class="check" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Lossless Hi-Fi codec</li>
+            <li><svg class="check" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> 8 mic array · beam-forming</li>
+            <li><svg class="check" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Multi-room sync</li>
+            <li><svg class="check" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Smart-home dashboard</li>
+            <li><svg class="check" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Local NPU for vision tasks</li>
+          </ul>
+          <a href="#" class="btn btn-ghost-light mt-auto w-full">Choose Pro</a>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================== -->
+  <!-- DARK EDITORIAL SPOTLIGHT (existing Lens Pro)   -->
+  <!-- ============================================== -->
+  <section class="relative py-24 lg:py-32 bg-page">
+    <div class="max-w-[1400px] mx-auto px-6 lg:px-10">
+
+      <div class="relative cta-dark rounded-[36px] overflow-hidden p-8 lg:p-14 grid lg:grid-cols-12 gap-0 lg:gap-10 text-white">
+        <div class="grain-light z-0" aria-hidden="true"></div>
+
+        <div class="relative z-10 lg:col-span-6 flex flex-col justify-between min-h-[460px]">
+          <div>
+            <div class="flex items-center gap-3 mb-7">
+              <span class="pill pill-ink"><span class="dot"></span>Spotlight</span>
+              <span class="eyebrow eyebrow-on-dark">Lens Pro</span>
+            </div>
+            <h2 class="display text-[clamp(2.2rem,5vw,4rem)] text-white max-w-[16ch]">
+              Glance — and<br>everything's <span class="display-italic text-gold">there.</span>
+            </h2>
+            <p class="mt-6 max-w-[44ch] text-[1rem] text-ink-100/80 leading-[1.7]">
+              A micro-LED projection so subtle the person across the table can't see it.
+              Translation, directions, notifications — in your line of sight, none in their way.
+            </p>
+          </div>
+
+          <div class="mt-10 flex flex-wrap items-center gap-3">
+            <a href="#" class="btn btn-gold">
+              Pre-order $499
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </a>
+            <a href="#" class="btn btn-ghost-dark">Read the specs</a>
+          </div>
+
+          <div class="mt-10 grid grid-cols-3 gap-6 hairline-dark pt-6">
+            <div>
+              <div class="display text-[1.4rem] text-white" style="font-variant-numeric: tabular-nums">12<span class="text-ink-100/55 text-[0.9rem]">&nbsp;hr</span></div>
+              <div class="eyebrow eyebrow-on-dark mt-1">Battery</div>
+            </div>
+            <div>
+              <div class="display text-[1.4rem] text-white" style="font-variant-numeric: tabular-nums">38<span class="text-ink-100/55 text-[0.9rem]">&nbsp;g</span></div>
+              <div class="eyebrow eyebrow-on-dark mt-1">Weight</div>
+            </div>
+            <div>
+              <div class="display text-[1.4rem] text-white" style="font-variant-numeric: tabular-nums">28<span class="text-ink-100/55 text-[0.9rem]">&nbsp;langs</span></div>
+              <div class="eyebrow eyebrow-on-dark mt-1">Live translate</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="relative z-10 lg:col-span-6 mt-10 lg:mt-0">
+          <div class="relative aspect-[5/6] rounded-3xl overflow-hidden">
+            <img src="gadget_assets/spotlight-glasses.png" alt="Lens Pro editorial spotlight" class="absolute inset-0 w-full h-full object-cover" loading="lazy" />
+            <div class="absolute bottom-5 left-5 right-5 flex items-end justify-between text-white z-10">
+              <div>
+                <div class="eyebrow eyebrow-on-dark">Editor's Pick</div>
+                <div class="display text-[1.15rem] mt-1">"Glasses, finally done right."</div>
+                <div class="text-[0.78rem] text-ink-100/75 mt-1">— Wired, 2026</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================== -->
+  <!-- WHY TESTER TECH — feature strip                -->
+  <!-- ============================================== -->
+  <section class="relative bg-pagealt py-24 lg:py-32">
+    <div class="max-w-[1400px] mx-auto px-6 lg:px-10">
+
+      <div class="max-w-[44rem] mb-14">
+        <div class="eyebrow mb-5 flex items-center gap-3">
+          <span class="h-px w-8 bg-gold-500/60"></span>
+          Why Tester Tech
+        </div>
+        <h2 class="h2 text-[clamp(2rem,4.4vw,3.4rem)] text-ink-500">
+          Hardware with <span class="display-italic text-gold">restraint.</span>
+        </h2>
+        <p class="mt-5 text-[1rem] text-ink-400 leading-[1.7] max-w-[52ch]">
+          We design for the moment after the moment — when a notification fades, a device sleeps,
+          a room goes back to being a room. The same instinct that makes good QA: do the work
+          quietly.
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-5">
+
+        <div class="rounded-2xl border border-ink-500/8 bg-paper p-7 reveal">
+          <span class="ico ico-light mb-5">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="14" rx="2"/><path d="M22 11h-3a2 2 0 0 0-2 2v2a2 2 0 0 0 2 2h3z"/></svg>
+          </span>
+          <h3 class="h2 text-[1.15rem] text-ink-500">7-day batteries</h3>
+          <p class="mt-2 text-[0.92rem] text-ink-400 leading-[1.65]">
+            Custom silicon paired with display tuning. You charge less. You worry less.
+          </p>
+        </div>
+
+        <div class="rounded-2xl border border-ink-500/8 bg-paper p-7 reveal reveal-d1">
+          <span class="ico ico-light mb-5">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 5v6c0 5 3.5 9 8 11 4.5-2 8-6 8-11V5l-8-3z"/><path d="m9 12 2 2 4-4"/></svg>
+          </span>
+          <h3 class="h2 text-[1.15rem] text-ink-500">On-device AI</h3>
+          <p class="mt-2 text-[0.92rem] text-ink-400 leading-[1.65]">
+            Voice and vision run locally first. The cloud is opt-in — not the default.
+          </p>
+        </div>
+
+        <div class="rounded-2xl border border-ink-500/8 bg-paper p-7 reveal reveal-d2">
+          <span class="ico ico-light mb-5">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3"/><path d="M12 19v3"/><path d="m4.93 4.93 2.12 2.12"/><path d="m16.95 16.95 2.12 2.12"/><path d="M2 12h3"/><path d="M19 12h3"/></svg>
+          </span>
+          <h3 class="h2 text-[1.15rem] text-ink-500">Matter native</h3>
+          <p class="mt-2 text-[0.92rem] text-ink-400 leading-[1.65]">
+            Every device speaks Matter, Thread, and Zigbee. No ecosystem lock-in, ever.
+          </p>
+        </div>
+
+        <div class="rounded-2xl border border-ink-500/8 bg-paper p-7 reveal reveal-d3">
+          <span class="ico ico-light mb-5">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m7 15 4-4 3 3 5-6"/></svg>
+          </span>
+          <h3 class="h2 text-[1.15rem] text-ink-500">Designed to last</h3>
+          <p class="mt-2 text-[0.92rem] text-ink-400 leading-[1.65]">
+            5 years of free OS updates. Replaceable batteries. Public repair scores.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================== -->
+  <!-- STAT BAR + REVIEWS                             -->
+  <!-- ============================================== -->
+  <section id="reviews" class="relative bg-page py-24 lg:py-32">
+    <div class="max-w-[1400px] mx-auto px-6 lg:px-10">
+
+      <!-- stat bar -->
+      <div class="reveal mb-14 lg:mb-16 grid grid-cols-1 md:grid-cols-3 gap-6 hairline pt-10">
+        <div class="flex items-center gap-4">
+          <div class="num-plate text-gold text-[3rem]">50k+</div>
+          <div>
+            <div class="eyebrow mb-1">Customers</div>
+            <div class="text-[0.92rem] text-ink-400">In 42 countries &amp; counting</div>
+          </div>
+        </div>
+        <div class="flex items-center gap-4">
+          <div class="flex flex-col">
+            <div class="num-plate text-gold text-[3rem] leading-none">4.9</div>
+            <div class="flex gap-0.5 mt-1.5">
+              <span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span>
+            </div>
+          </div>
+          <div>
+            <div class="eyebrow mb-1">Average review</div>
+            <div class="text-[0.92rem] text-ink-400">Across 12,400 verified buyers</div>
+          </div>
+        </div>
+        <div class="flex items-center gap-4">
+          <div class="num-plate text-gold text-[3rem]">2-yr</div>
+          <div>
+            <div class="eyebrow mb-1">Standard warranty</div>
+            <div class="text-[0.92rem] text-ink-400">Ships worldwide · free returns</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex items-end justify-between gap-8 flex-wrap mb-10 lg:mb-12">
+        <div class="max-w-[40rem]">
+          <div class="eyebrow mb-5 flex items-center gap-3">
+            <span class="h-px w-8 bg-gold-500/60"></span>
+            What people say
+          </div>
+          <h2 class="h2 text-[clamp(2rem,4.4vw,3.4rem)] text-ink-500">
+            Quietly, <span class="display-italic text-gold">loud reviews.</span>
+          </h2>
+        </div>
+        <a href="#" class="btn btn-ghost-light text-[0.82rem]">Read all 12,400 reviews</a>
+      </div>
+
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+
+        <article class="review-card reveal">
+          <div class="flex gap-0.5">
+            <span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span>
+          </div>
+          <p class="display-italic text-ink-500 text-[1.05rem] leading-[1.45]">
+            "It's the first watch that doesn't make me think about charging."
+          </p>
+          <div class="hairline pt-4 flex items-center gap-3 mt-auto">
+            <span class="avatar avatar-1">SK</span>
+            <div>
+              <div class="text-[0.88rem] font-semibold text-ink-500">Sarah K.</div>
+              <div class="text-[0.7rem] font-mono tracking-[0.16em] uppercase text-ink-300">Watch Ø3 · Verified buyer</div>
+            </div>
+          </div>
+        </article>
+
+        <article class="review-card reveal reveal-d1">
+          <div class="flex gap-0.5">
+            <span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span>
+          </div>
+          <p class="display-italic text-ink-500 text-[1.05rem] leading-[1.45]">
+            "Five days in and I've stopped reaching for my phone in meetings."
+          </p>
+          <div class="hairline pt-4 flex items-center gap-3 mt-auto">
+            <span class="avatar avatar-2">MT</span>
+            <div>
+              <div class="text-[0.88rem] font-semibold text-ink-500">Marcus T.</div>
+              <div class="text-[0.7rem] font-mono tracking-[0.16em] uppercase text-ink-300">Lens Pro · Verified buyer</div>
+            </div>
+          </div>
+        </article>
+
+        <article class="review-card reveal reveal-d2">
+          <div class="flex gap-0.5">
+            <span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span>
+          </div>
+          <p class="display-italic text-ink-500 text-[1.05rem] leading-[1.45]">
+            "On-device voice processing is what sold me. Goodbye cloud assistants."
+          </p>
+          <div class="hairline pt-4 flex items-center gap-3 mt-auto">
+            <span class="avatar avatar-3">PR</span>
+            <div>
+              <div class="text-[0.88rem] font-semibold text-ink-500">Priya R.</div>
+              <div class="text-[0.7rem] font-mono tracking-[0.16em] uppercase text-ink-300">Voice Pro · Verified buyer</div>
+            </div>
+          </div>
+        </article>
+
+        <article class="review-card reveal reveal-d3">
+          <div class="flex gap-0.5">
+            <span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span><span class="star star-muted"></span>
+          </div>
+          <p class="display-italic text-ink-500 text-[1.05rem] leading-[1.45]">
+            "One panel replaced four apps. My partner finally uses our smart home."
+          </p>
+          <div class="hairline pt-4 flex items-center gap-3 mt-auto">
+            <span class="avatar avatar-4">DL</span>
+            <div>
+              <div class="text-[0.88rem] font-semibold text-ink-500">Daniel L.</div>
+              <div class="text-[0.7rem] font-mono tracking-[0.16em] uppercase text-ink-300">Hub · Verified buyer</div>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================== -->
+  <!-- NEWSLETTER — dark CTA                          -->
+  <!-- ============================================== -->
+  <section id="newsletter" class="relative cta-dark text-white overflow-hidden">
+    <img src="brand_assets/developer-laptop.jpg" alt="" aria-hidden="true" class="absolute inset-0 w-full h-full object-cover opacity-15 mix-blend-screen pointer-events-none" />
+    <div class="grain-light z-10" aria-hidden="true"></div>
+
+    <div class="relative z-20 max-w-[1400px] mx-auto px-6 lg:px-10 py-24 lg:py-32">
+      <div class="grid lg:grid-cols-12 gap-10 items-end">
+        <div class="lg:col-span-7">
+          <div class="eyebrow eyebrow-on-dark mb-6 flex items-center gap-3">
+            <span class="h-px w-8 bg-gold-300/60"></span>
+            Stay in the loop
+          </div>
+          <h2 class="display text-[clamp(2.4rem,5.6vw,5rem)] text-white">
+            Be first to know<br>when <span class="display-italic text-gold">Ø3</span> ships.
+          </h2>
+          <p class="mt-6 max-w-[52ch] text-[1.05rem] text-ink-100/75 leading-[1.65]">
+            One email when a new product drops. Zero marketing fluff. Unsubscribe in one click,
+            no hard feelings.
+          </p>
+        </div>
+
+        <div class="lg:col-span-5">
+          <form action="#" class="space-y-4">
+            <div>
+              <label for="email" class="field-label">Email address</label>
+              <input id="email" type="email" required placeholder="you@yours.com" class="field" />
+            </div>
+            <button type="submit" class="btn btn-gold w-full">
+              Notify me when Ø3 ships
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </button>
+            <div class="flex items-center gap-2 text-[0.74rem] font-mono tracking-[0.18em] uppercase text-ink-100/55">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 inline-block"></span>
+              No spam · 38,200 subscribers
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================== -->
+  <!-- FOOTER                                         -->
+  <!-- ============================================== -->
+  <footer class="relative bg-page overflow-hidden">
+    <div class="max-w-[1400px] mx-auto px-6 lg:px-10 pt-20 pb-10">
+
+      <div class="grid lg:grid-cols-12 gap-12 pb-16">
+        <div class="lg:col-span-4">
+          <a href="./index.html" class="inline-flex items-center gap-2.5">
+            <img src="brand_assets/tester-logo.png" alt="Tester.io home" class="h-10 w-10 object-contain" />
+            <span class="wordmark text-[1.6rem] text-ink-500">Tester<span class="dot">.</span>io</span>
+            <span class="ml-2 px-2 py-0.5 rounded-full border border-gold-500/30 text-[10px] font-mono tracking-[0.22em] uppercase text-gold-600">Tech</span>
+          </a>
+          <p class="mt-5 text-[0.92rem] text-ink-400 leading-[1.7] max-w-[34ch]">
+            The hardware arm of Tester.io. Tested, refined, made to outlast the trend.
+          </p>
+          <form action="#" class="mt-7 flex items-center gap-2 max-w-[22rem]">
+            <input type="email" placeholder="Your work email" class="flex-1 px-4 py-3 rounded-full bg-paper border border-ink-500/10 text-[0.88rem] focus:outline-none focus:border-gold-500/60 focus:ring-4 focus:ring-gold-500/10 transition" />
+            <button class="btn btn-gold !py-3 !px-5 text-[0.82rem]" type="submit">Subscribe</button>
+          </form>
+        </div>
+
+        <div class="lg:col-span-2 lg:col-start-6">
+          <div class="eyebrow mb-5">Tester Tech</div>
+          <ul class="space-y-3 text-[0.92rem] text-ink-400">
+            <li><a href="#watches" class="inline-block py-1.5 hover:text-ink-500">Watches</a></li>
+            <li><a href="#glasses" class="inline-block py-1.5 hover:text-ink-500">Glasses</a></li>
+            <li><a href="#assistants" class="inline-block py-1.5 hover:text-ink-500">Assistants</a></li>
+            <li><a href="#home" class="inline-block py-1.5 hover:text-ink-500">Connected home</a></li>
+            <li><a href="#compare" class="inline-block py-1.5 hover:text-ink-500">Compare</a></li>
+          </ul>
+        </div>
+
+        <div class="lg:col-span-2">
+          <div class="eyebrow mb-5">Tester.io</div>
+          <ul class="space-y-3 text-[0.92rem] text-ink-400">
+            <li><a href="./about.html" class="inline-block py-1.5 hover:text-ink-500">About</a></li>
+            <li><a href="./services.html" class="inline-block py-1.5 hover:text-ink-500">Services</a></li>
+            <li><a href="./work.html" class="inline-block py-1.5 hover:text-ink-500">Work</a></li>
+            <li><a href="./contact.html" class="inline-block py-1.5 hover:text-ink-500">Contact</a></li>
+            <li><a href="#" class="inline-block py-1.5 hover:text-ink-500">Press</a></li>
+          </ul>
+        </div>
+
+        <div class="lg:col-span-2">
+          <div class="eyebrow mb-5">Support</div>
+          <ul class="space-y-3 text-[0.92rem] text-ink-400">
+            <li><a href="#" class="inline-block py-1.5 hover:text-ink-500">Help center</a></li>
+            <li><a href="#" class="inline-block py-1.5 hover:text-ink-500">Returns</a></li>
+            <li><a href="#" class="inline-block py-1.5 hover:text-ink-500">Warranty</a></li>
+            <li><a href="#" class="inline-block py-1.5 hover:text-ink-500">Repair scores</a></li>
+            <li><a href="#" class="inline-block py-1.5 hover:text-ink-500">Status</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="hairline"></div>
+
+      <div class="py-7 flex flex-wrap items-center justify-between gap-4 text-[0.78rem] font-mono tracking-[0.16em] uppercase text-ink-300">
+        <span>© 2026 Tester.io GmbH · Tester Tech is a hardware line of Tester.io</span>
+        <span>Crafted in Berlin · Shipped from Frankfurt</span>
+      </div>
+
+      <div class="relative pt-2 pb-2 select-none">
+        <h2 class="megamark text-[clamp(5rem,17vw,16rem)]">
+          Tester<span class="megamark-gold">.io</span>
+        </h2>
+      </div>
+    </div>
+
+    <div class="absolute inset-x-0 bottom-0 h-32 pointer-events-none" style="background: radial-gradient(800px 200px at 50% 100%, rgba(198,165,89,0.10), transparent 70%);"></div>
+  </footer>
+
+  <script>
+    // Reveal on scroll
+    (function () {
+      const els = document.querySelectorAll('.reveal');
+      requestAnimationFrame(() => { els.forEach(el => el.classList.add('in')); });
+      const io = new IntersectionObserver(entries => {
+        entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
+      }, { threshold: 0.10 });
+      els.forEach(el => io.observe(el));
+    })();
+
+    // Nav scroll state
+    (function () {
+      const nav = document.getElementById('nav');
+      let last = false;
+      const onScroll = () => {
+        const scrolled = window.scrollY > 24;
+        if (scrolled !== last) {
+          nav.classList.toggle('is-scrolled', scrolled);
+          last = scrolled;
+        }
+      };
+      window.addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
+    })();
+
+    // Filter chips — visual state + simple filtering
+    (function () {
+      const chips = document.querySelectorAll('.filter-chip');
+      const items = document.querySelectorAll('[data-category]');
+      chips.forEach(chip => {
+        chip.addEventListener('click', () => {
+          chips.forEach(c => { c.classList.remove('is-active'); c.setAttribute('aria-pressed', 'false'); });
+          chip.classList.add('is-active');
+          chip.setAttribute('aria-pressed', 'true');
+          const filter = chip.dataset.filter;
+          items.forEach(item => {
+            const cat = item.dataset.category;
+            const match = (filter === 'all' || cat === filter);
+            item.style.display = match ? '' : 'none';
+          });
+        });
+      });
+    })();
+
+    // Wishlist heart toggle
+    (function () {
+      const buttons = document.querySelectorAll('.wishlist-btn, .wishlist-btn-inline');
+      buttons.forEach(btn => {
+        btn.addEventListener('click', e => {
+          e.preventDefault();
+          const pressed = btn.getAttribute('aria-pressed') === 'true';
+          btn.setAttribute('aria-pressed', String(!pressed));
+          // Update label on inline wishlist button if present
+          const label = btn.querySelector('.wishlist-label');
+          if (label) label.textContent = pressed ? 'Wishlist' : 'Saved';
+        });
+      });
+    })();
+  </script>
+</body>
+</html>

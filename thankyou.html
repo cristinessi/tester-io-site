@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="refresh" content="5; url=/" />
+  <title>Thank you · Tester.io</title>
+  <meta name="description" content="Message received. Returning you home." />
+  <link rel="icon" href="brand_assets/tester-logo.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@1,500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root { --gold: #E8B979; --warm: #F2EDE3; }
+    html, body { margin: 0; min-height: 100%; background: #000; color: var(--warm); }
+    body {
+      font-family: system-ui, sans-serif;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      min-height: 100dvh; padding: 2rem 1.5rem; gap: 1.4rem; text-align: center;
+    }
+    .display-it {
+      font-family: 'Fraunces', serif; font-style: italic; font-weight: 500;
+      font-size: clamp(3.5rem, 11vw, 8rem); letter-spacing: -0.025em; line-height: 1.05;
+      margin: 0; padding-bottom: 0.12em;
+      background: linear-gradient(135deg, #F5D38A 0%, #E8B979 35%, #C6A559 70%, #A8853F 100%);
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+    }
+    p { max-width: 44ch; margin: 0; font-size: 1.05rem; line-height: 1.7; color: rgba(242, 237, 227, 0.7); }
+    .meta {
+      margin-top: 1rem; display: inline-flex; align-items: center; gap: 0.85rem;
+      font-family: 'JetBrains Mono', monospace; font-size: 0.7rem;
+      letter-spacing: 0.22em; text-transform: uppercase;
+      color: rgba(232, 185, 121, 0.6);
+    }
+    .meta a { color: var(--gold); text-decoration: none; border-bottom: 1px solid currentColor; padding-bottom: 2px; transition: opacity .2s; }
+    .meta a:hover, .meta a:focus-visible { opacity: 0.75; outline: none; }
+    .dot { width: 4px; height: 4px; border-radius: 999px; background: var(--gold); opacity: 0.4; }
+    @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+  </style>
+</head>
+<body>
+  <h1 class="display-it">Thank you.</h1>
+  <p>Your message has reached the team. We read every note and write back within two working days.</p>
+  <div class="meta">
+    <span>Returning home in 5s</span>
+    <span class="dot" aria-hidden="true"></span>
+    <a href="/">Go now</a>
+  </div>
+</body>
+</html>
