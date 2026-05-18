@@ -217,7 +217,7 @@
       </form>
 
       <p class="reveal rd-4 mt-4 text-[0.78rem] font-mono tracking-[0.16em] uppercase text-ink-100/45">
-        Backend: <span class="text-gold-300">localhost:5000/api/trends</span>
+        Backend: <span id="backend-label" class="text-gold-300"></span>
       </p>
     </div>
   </section>
@@ -316,7 +316,24 @@
 
     // ================== Trend Finder logic ==================
     (function () {
-      const API = 'http://localhost:5000/api/trends';
+      const API = (() => {
+        const host = window.location.hostname;
+        const isLocal = host === 'localhost' || host === '127.0.0.1' || host === '' || host.endsWith('.local');
+        return isLocal
+          ? 'http://localhost:5000/api/trends'
+          : 'https://tester-io-trend-finder-api.onrender.com/api/trends';
+      })();
+
+      // Reflect the active backend in the hero status line.
+      const backendLabel = document.getElementById('backend-label');
+      if (backendLabel) {
+        try {
+          const u = new URL(API);
+          backendLabel.textContent = u.host + u.pathname.replace(/\/api\/trends\/?$/, '');
+        } catch (_) {
+          backendLabel.textContent = API.replace(/^https?:\/\//, '').replace(/\/api\/trends\/?$/, '');
+        }
+      }
 
       const form      = document.getElementById('search-form');
       const input     = document.getElementById('topic');
