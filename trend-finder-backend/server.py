@@ -10,13 +10,20 @@ Runs at http://localhost:5000 (Flask default). CORS open for local dev so the
 static HTML pages can hit the API from file:// or Live Server.
 """
 
+import os
+
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 
 import scraper
 
 app = Flask(__name__)
-CORS(app, resources={r"/api/*": {"origins": "*"}})
+
+# CORS — comma-separated allowlist from env var CORS_ORIGINS (production),
+# falling back to wildcard for local dev so file:// and Live Server still work.
+_cors_env = os.environ.get("CORS_ORIGINS", "").strip()
+_cors_origins = [o.strip() for o in _cors_env.split(",") if o.strip()] if _cors_env else "*"
+CORS(app, resources={r"/api/*": {"origins": _cors_origins}})
 
 
 @app.route("/api/trends", methods=["POST"])
@@ -50,5 +57,7 @@ def health():
 
 
 if __name__ == "__main__":
-    # Flask default port 5000, listen on all interfaces so it works in WSL/containers too.
-    app.run(host="0.0.0.0", port=5000, debug=True)
+    # PORT comes from the platform in production (Render injects it). Local dev
+    # falls back to 5000. Listen on all interfaces so it works in WSL/containers too.
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port, debug=True)
