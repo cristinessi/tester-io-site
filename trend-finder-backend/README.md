@@ -1,67 +1,97 @@
 # Trend Finder — Backend
 
-Python + Flask backend for the **Trend Finder** page on the Tester.io site. Scrapes
-DuckDuckGo's HTML SERP with `requests` + `BeautifulSoup` and returns the top 5
-trending results for any topic.
+Python + Flask backend for the **Trend Finder** page on the Tester.io site.
+Multi-source trend aggregator (Google News + Reddit + Hacker News) plus a
+Gemini-powered article extractor that turns a long ranked-list article into a
+structured list of ideas.
 
 ```
 trend-finder-backend/
-├── server.py         Flask app + /api/trends endpoint
-├── scraper.py        DuckDuckGo scraper (calls into requests + bs4)
-├── requirements.txt  Python deps (flask, flask-cors, requests, beautifulsoup4, lxml)
+├── server.py         Flask app + /api/trending, /api/extract, /api/health
+├── scraper.py        Multi-source aggregator (Google News RSS + Reddit JSON + HN Algolia)
+├── extractor.py      Article fetch + clean + Gemini Flash → ranked list
+├── requirements.txt  Python deps
+├── Procfile          Render start command (gunicorn server:app)
+├── debug_fetch.py    Diagnostic tool (legacy, kept for reference)
 └── README.md         This file
 ```
 
 ---
 
-## Run it (Windows / PowerShell)
+## What changed in this upgrade
+
+- **Single-source → multi-source.** The scraper now hits Google News RSS, the
+  Reddit search JSON endpoint, and the Hacker News Algolia API in sequence,
+  merges with a round-robin interleave, de-duplicates by URL, and returns
+  the top 5.
+- **Better data model.** Each result is now
+  `{ title, url, source, thumbnail, published }` (was `name / image`).
+- **New `/api/extract` endpoint** powered by **Gemini Flash**. Given a URL,
+  fetches the article, strips chrome (`<script>`, `<nav>`, `<aside>`, etc.),
+  sends the cleaned body to Gemini, and returns a structured list of the
+  ranked items the article was actually recommending.
+- **Google News redirect awareness.** The Google News RSS feed's `<link>`
+  values are `news.google.com/rss/articles/...` redirects that don't serve
+  article HTML directly. `/api/extract` detects this and returns HTTP 422
+  with `code: "google_news_redirect"` so the frontend can ask the user to
+  paste the final URL.
+- **`.env` loading.** Local dev reads `trend-finder-backend/.env` via
+  `python-dotenv`; production reads real env vars. `GEMINI_API_KEY` is
+  required for `/api/extract`.
+- **Default port: 5001** (was 5000). `PORT` env var still wins so Render
+  works unchanged.
+
+---
+
+## Setup
+
+### 1. Install dependencies
 
 From the project root `C:\Users\crist\ArcaPH`:
 
 ```powershell
-# 1. (Optional but recommended) create a venv inside the backend folder
+# Optional venv
 python -m venv trend-finder-backend\.venv
 trend-finder-backend\.venv\Scripts\Activate.ps1
 
-# 2. Install dependencies
+# Install
 pip install -r trend-finder-backend\requirements.txt
-
-# 3. Start the server (runs on http://localhost:5000)
-python trend-finder-backend\server.py
 ```
 
-You should see Flask boot output ending with `Running on http://0.0.0.0:5000`.
-Leave that terminal open while you use the frontend.
+### 2. Add your Gemini key
 
-### Without a venv (one-liner)
+Create `trend-finder-backend/.env` (gitignored) with:
+
+```
+GEMINI_API_KEY=your-gemini-api-key-here
+```
+
+Without this, `/api/trending` still works fully, but `/api/extract` returns
+HTTP 503 with `"Gemini API key not configured on the server."`
+
+### 3. Run the server
 
 ```powershell
-pip install -r trend-finder-backend\requirements.txt
 python trend-finder-backend\server.py
 ```
 
----
+Output should end with `Running on http://0.0.0.0:5001` and one of:
+- `Gemini: configured`
+- `Gemini: missing (set GEMINI_API_KEY in trend-finder-backend/.env)`
 
-## Use it
-
-While `server.py` is running, open **`trend-finder.html`** in your browser
-(either as `file://…/trend-finder.html` or via VS Code Live Server). Type a
-topic into the search box and hit **Search**. The page POSTs to
-`http://localhost:5000/api/trends` and renders the top 5 cards.
-
-> **The Flask server must be running for the page to return results.** If you
-> see *"Backend not reachable — start it with `python trend-finder-backend/server.py`"*
-> on the page, the server is down — start it from the command above.
+The frontend (`trend-finder.html`) talks to `http://localhost:5001/api/...`
+when opened locally. Keep this terminal open while you use it.
 
 ---
 
 ## API
 
-### `POST /api/trends`
+### `GET /api/trending?q=<query>`
 
-Request body:
-```json
-{ "topic": "smart watches" }
+Aggregates trending results across Google News, Reddit, and Hacker News.
+
+```bash
+curl "http://localhost:5001/api/trending?q=smart+watches"
 ```
 
 Success (HTTP 200):
@@ -69,42 +99,91 @@ Success (HTTP 200):
 {
   "results": [
     {
-      "name":   "The best smart watches of 2026",
-      "url":    "https://example.com/best-smart-watches",
-      "source": "example.com",
-      "image":  "https://example.com/og-image.jpg"
+      "title":     "The best smart watches of 2026",
+      "url":       "https://example.com/best-smart-watches",
+      "source":    "Google News",
+      "thumbnail": "https://example.com/og.jpg",
+      "published": "2026-05-12T14:00:00+00:00"
+    },
+    {
+      "title":     "Why I switched from Apple Watch to Garmin",
+      "url":       "https://www.reddit.com/r/smartwatch/comments/abc/...",
+      "source":    "Reddit · r/smartwatch",
+      "thumbnail": null,
+      "published": "2026-05-15T09:33:12+00:00"
     }
   ]
 }
 ```
-`results` contains up to 5 items. `image` is `null` when the result page has no
-OpenGraph image.
 
-Failure (non-200, JSON body):
-```json
-{ "error": "No trending results found for 'xyz'." }
+| Status | Cause                                                       |
+|-------:|-------------------------------------------------------------|
+| 400    | Missing or invalid `q`                                      |
+| 404    | All sources succeeded but combined results were empty       |
+| 502    | All sources blocked / unparseable                           |
+| 504    | All sources timed out                                       |
+
+Partial success (one or two sources fail) still returns 200 with whatever
+the surviving source(s) gave us.
+
+### `GET /api/extract?url=<article_url>`
+
+Fetches the article, cleans it, and asks Gemini Flash to extract the ranked
+list of items the article is recommending.
+
+```bash
+curl "http://localhost:5001/api/extract?url=https://example.com/best-watches"
 ```
 
-| Status | Cause                                                    |
-|-------:|----------------------------------------------------------|
-| 400    | Missing or invalid `topic`                               |
-| 404    | Scrape succeeded but returned zero parsable results      |
-| 502    | DuckDuckGo blocked us, or markup unparseable             |
-| 504    | Timeout reaching DuckDuckGo                              |
+Success (HTTP 200):
+```json
+{
+  "title": "The best smart watches of 2026",
+  "url":   "https://example.com/best-watches",
+  "items": [
+    {"rank": 1, "idea": "Apple Watch Ultra 3"},
+    {"rank": 2, "idea": "Garmin Fenix 9"},
+    {"rank": 3, "idea": "Samsung Galaxy Watch 8"}
+  ]
+}
+```
+
+| Status | Cause                                                                                  |
+|-------:|----------------------------------------------------------------------------------------|
+| 400    | Missing / malformed `url`                                                              |
+| 422    | URL is a Google News redirect — frontend should ask user to paste the real URL        |
+| 502    | Article host blocked, or Gemini returned malformed output                             |
+| 503    | `GEMINI_API_KEY` not configured on the server                                          |
+| 504    | Article fetch timed out                                                                |
+
+The 422 response also includes `"code": "google_news_redirect"` so the
+frontend can distinguish it from other 422s if any are added later.
 
 ### `GET /api/health`
 
-Cheap liveness check — returns `{ "ok": true, "service": "trend-finder" }`.
+```json
+{ "ok": true, "service": "trend-finder", "gemini_configured": true }
+```
 
 ---
 
 ## Notes
 
-- **Source: Google News RSS** (`https://news.google.com/rss/search`). The path here had a couple of detours: we started on DuckDuckGo's HTML SERP, then pivoted to Bing on 2026-05-18 when DDG stopped parsing — but in 2026 both major engines serve a CAPTCHA / bot-challenge page to plain `requests` traffic instead of organic results (we confirmed with `debug_fetch.py` that Bing returns "One last step — please solve the challenge below"). RSS is purpose-built for machines: structured XML, no JavaScript, no bot walls, still parsed by BeautifulSoup (`xml` parser), so it stays squarely inside the lesson's stack while actually returning live data.
-- Most/all results will come back with `image: null` because Google News wraps result links in a `news.google.com/rss/articles/...` redirect that doesn't expose an `og:image` meta tag. That's expected — the frontend renders a "No image" placeholder for those cards.
-- The OpenGraph image fetch is best-effort: it has a short timeout and any
-  failure simply returns `image: null` for that item (the frontend renders a
-  "No image" placeholder).
-- CORS is wide-open (`*`) for `/api/*` so the static HTML pages can call the
-  API from `file://` or Live Server. Lock this down before shipping anywhere
-  real.
+- **Source: multi-feed.** RSS for Google News, JSON for Reddit + HN. The path
+  here had detours — we started on DuckDuckGo HTML, pivoted to Bing on
+  2026-05-18 when DDG stopped parsing, but in 2026 both major engines serve a
+  CAPTCHA / bot-challenge page to plain `requests` traffic instead of organic
+  results. Structured feeds (RSS / JSON) bypass that entirely and stay
+  squarely inside the lesson's stack (Flask + requests + BeautifulSoup +
+  feedparser).
+- **Gemini model.** `gemini-2.0-flash` — fast, cheap, structured-output
+  reliable enough for ranked lists with a strict prompt.
+- **Fallback.** If Gemini errors or returns an empty list, `extractor.py`
+  scans the cleaned soup for `<ol><li>` and numbered `<h2>` / `<h3>` patterns
+  and returns those when ≥3 are found. Otherwise the response's `items` is
+  `[]` — the frontend should render that as "no ranked list detected."
+- **Secrets.** `GEMINI_API_KEY` lives only in `trend-finder-backend/.env`
+  (gitignored) for local dev, or as a real env var on Render. The key is
+  never logged and never returned to the client.
+- CORS is wide-open (`*`) for `/api/*` by default. Lock it down on Render via
+  the `CORS_ORIGINS` env var (e.g. `https://tester-io-site.vercel.app`).

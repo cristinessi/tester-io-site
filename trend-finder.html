@@ -91,30 +91,152 @@
     .status.is-error .dot { background: var(--danger); box-shadow: 0 0 12px rgba(224,122,106,0.55); }
     @keyframes pulse { 0%,100% { transform: scale(1); opacity: 0.9; } 50% { transform: scale(1.5); opacity: 0.4; } }
 
-    /* Result cards */
-    .result-grid { display: grid; gap: 1rem 1.1rem; grid-template-columns: 1fr; }
-    @media (min-width: 720px)  { .result-grid { grid-template-columns: repeat(2, 1fr); } }
-    @media (min-width: 1080px) { .result-grid { grid-template-columns: repeat(3, 1fr); } }
+    /* ===== Two-column layout (results + idea panel) ===== */
+    .tf-grid { display: grid; gap: 1.5rem; grid-template-columns: 1fr; align-items: start; }
+    @media (min-width: 1024px) {
+      .tf-grid { grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); gap: 2.25rem; }
+    }
+    .tf-left { display: flex; flex-direction: column; gap: 1.1rem; min-width: 0; }
 
-    .result-card { display: flex; flex-direction: column; background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.015)); border: 1px solid rgba(232,185,121,0.10); border-radius: 18px; overflow: hidden; transition: transform .35s var(--ease), border-color .35s, box-shadow .35s var(--ease); }
+    /* ===== Result cards (rebuilt for action buttons) ===== */
+    .result-grid { display: grid; gap: 1rem; grid-template-columns: 1fr; }
+    @media (min-width: 720px) { .result-grid { grid-template-columns: repeat(2, 1fr); } }
+
+    .result-card { position: relative; display: flex; flex-direction: column; background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.015)); border: 1px solid rgba(232,185,121,0.10); border-radius: 18px; overflow: hidden; transition: transform .35s var(--ease), border-color .35s, box-shadow .35s var(--ease); }
     .result-card:hover { transform: translateY(-3px); border-color: rgba(232,185,121,0.30); box-shadow: 0 30px 60px -25px rgba(0,0,0,0.6); }
 
-    .result-card .body { padding: 1.1rem 1.2rem 1.3rem; display: flex; flex-direction: column; gap: 0.6rem; flex: 1; }
+    .result-card .body { padding: 1.1rem 1.2rem 1.3rem; display: flex; flex-direction: column; gap: 0.65rem; flex: 1; }
+    .result-card .card-head { display: flex; align-items: center; gap: 0.7rem; }
+    .result-card .rank-badge { display: inline-flex; align-items: center; justify-content: center; width: 1.85rem; height: 1.85rem; flex-shrink: 0; border-radius: 999px; background: linear-gradient(135deg, rgba(232,185,121,0.18), rgba(168,133,63,0.10)); border: 1px solid rgba(232,185,121,0.30); color: var(--gold-soft); font-family: 'JetBrains Mono', monospace; font-size: 0.74rem; font-weight: 600; letter-spacing: 0; }
+    .result-card .source { font-family: 'JetBrains Mono', monospace; font-size: 0.62rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); display: inline-flex; align-items: center; gap: 0.45rem; min-width: 0; flex: 1; word-break: break-word; }
+    .result-card .source .src-dot { width: 4px; height: 4px; border-radius: 999px; background: var(--gold); flex-shrink: 0; }
     .result-card h3 { font-family: 'Fraunces', serif; font-style: italic; font-weight: 500; font-size: 1.18rem; color: var(--warm); margin: 0; letter-spacing: -0.015em; line-height: 1.3; }
-    .result-card .source { font-family: 'JetBrains Mono', monospace; font-size: 0.62rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); display: inline-flex; align-items: center; gap: 0.45rem; }
-    .result-card .source .src-dot { width: 4px; height: 4px; border-radius: 999px; background: var(--gold); }
-    .result-card .view-btn { margin-top: auto; align-self: flex-start; display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.55rem 1rem; border-radius: 999px; background: rgba(232,185,121,0.08); border: 1px solid rgba(232,185,121,0.20); color: var(--gold-soft); font-family: 'JetBrains Mono', monospace; font-size: 0.66rem; letter-spacing: 0.22em; text-transform: uppercase; text-decoration: none; transition: background-color .25s, border-color .25s, color .25s, transform .25s var(--ease); }
-    .result-card .view-btn:hover { background: rgba(232,185,121,0.18); border-color: rgba(232,185,121,0.45); color: var(--gold); transform: translateY(-1px); }
+    .result-card .published { font-family: 'JetBrains Mono', monospace; font-size: 0.66rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--warm-faint); }
+
+    .result-card .card-actions { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.3rem; }
+    .btn-card { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.55rem 1rem; border-radius: 999px; font-weight: 600; font-size: 0.76rem; transition: transform .25s var(--ease), background-color .25s, border-color .25s, color .25s, box-shadow .25s, opacity .2s; border: 1px solid transparent; cursor: pointer; font-family: inherit; }
+    .btn-card-primary { background: linear-gradient(135deg, #F5D38A 0%, #E8B979 35%, #D6A765 60%, #C6A559 100%); color: #2A220F; box-shadow: 0 8px 18px -8px rgba(198,165,89,0.4), inset 0 1px 0 rgba(255,232,184,0.55); }
+    .btn-card-primary:hover:not(:disabled) { transform: translateY(-1px); box-shadow: 0 14px 28px -10px rgba(232,185,121,0.5); }
+    .btn-card-primary:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+    .btn-card-ghost { background: rgba(255,255,255,0.025); border-color: var(--hairline); color: var(--warm); }
+    .btn-card-ghost:hover:not(:disabled) { border-color: var(--peach); color: var(--peach); transform: translateY(-1px); }
+    .btn-card-ghost:disabled { opacity: 0.55; cursor: not-allowed; transform: none; }
+
+    .result-card .view-link { align-self: flex-start; margin-top: 0.1rem; font-family: 'JetBrains Mono', monospace; font-size: 0.62rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--warm-faint); text-decoration: none; padding: 0.15rem 0; transition: color .2s; }
+    .result-card .view-link:hover { color: var(--gold); }
+
+    /* Inline card messages */
+    .card-msg { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; padding: 0.55rem 0.8rem; border-radius: 8px; }
+    .card-msg.is-error { color: var(--danger); border: 1px solid rgba(224,122,106,0.30); background: rgba(224,122,106,0.08); }
+    .card-msg.is-success { color: #9BD9A2; border: 1px solid rgba(155,217,162,0.30); background: rgba(155,217,162,0.07); }
+
+    /* Inline Google News paste-back band */
+    .paste-back { padding: 0.85rem 0.95rem; border-radius: 12px; background: linear-gradient(180deg, rgba(232,167,138,0.10), rgba(232,167,138,0.04)); border: 1px solid rgba(232,167,138,0.35); display: flex; flex-direction: column; gap: 0.6rem; }
+    .paste-msg { margin: 0; color: var(--warm); font-size: 0.82rem; line-height: 1.5; }
+    .paste-open { font-family: 'JetBrains Mono', monospace; font-size: 0.64rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--peach); text-decoration: none; align-self: flex-start; padding: 0.15rem 0; border-bottom: 1px solid rgba(232,167,138,0.40); transition: color .2s, border-color .2s; }
+    .paste-open:hover { color: var(--gold); border-bottom-color: var(--gold); }
+    .paste-form { display: flex; flex-direction: column; gap: 0.5rem; }
+    @media (min-width: 480px) { .paste-form { flex-direction: row; align-items: stretch; } }
+    .paste-form input { flex: 1; min-width: 0; background: rgba(8,7,10,0.45); border: 1px solid rgba(232,167,138,0.35); border-radius: 8px; padding: 0.55rem 0.85rem; color: var(--warm); font: inherit; font-size: 0.85rem; }
+    .paste-form input::placeholder { color: var(--warm-faint); }
+    .paste-form input:focus { outline: none; border-color: var(--peach); box-shadow: 0 0 0 3px rgba(232,167,138,0.18); }
+    .paste-submit { background: var(--peach); color: #2A220F; border: 0; border-radius: 8px; padding: 0.55rem 1rem; font-weight: 600; font-size: 0.76rem; cursor: pointer; transition: transform .2s, box-shadow .2s, opacity .2s; font-family: inherit; }
+    .paste-submit:hover:not(:disabled) { transform: translateY(-1px); box-shadow: 0 8px 18px -6px rgba(232,167,138,0.5); }
+    .paste-submit:disabled { opacity: 0.55; cursor: not-allowed; }
 
     /* Skeletons (loading) */
-    .skeleton-grid { display: grid; gap: 1rem 1.1rem; grid-template-columns: 1fr; }
-    @media (min-width: 720px)  { .skeleton-grid { grid-template-columns: repeat(2, 1fr); } }
-    @media (min-width: 1080px) { .skeleton-grid { grid-template-columns: repeat(3, 1fr); } }
+    .skeleton-grid { display: grid; gap: 1rem; grid-template-columns: 1fr; }
+    @media (min-width: 720px) { .skeleton-grid { grid-template-columns: repeat(2, 1fr); } }
     .skeleton { border: 1px solid var(--hairline-soft); border-radius: 18px; overflow: hidden; }
     .skeleton .sk-body { padding: 1.1rem 1.2rem 1.4rem; display: flex; flex-direction: column; gap: 0.7rem; }
     .skeleton .sk-line { height: 0.7rem; border-radius: 4px; background: linear-gradient(110deg, rgba(255,255,255,0.025) 8%, rgba(255,255,255,0.05) 18%, rgba(255,255,255,0.025) 33%); background-size: 200% 100%; animation: shimmer 1.4s linear infinite; }
     .skeleton .sk-line.w-3 { width: 30%; } .skeleton .sk-line.w-7 { width: 70%; } .skeleton .sk-line.w-5 { width: 50%; }
     @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+
+    /* ===== Right panel (Picked Ideas) ===== */
+    .idea-panel { background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.015)); border: 1px solid rgba(232,185,121,0.12); border-radius: 18px; padding: 1.3rem 1.35rem 1.35rem; display: flex; flex-direction: column; gap: 0.9rem; }
+    @media (min-width: 1024px) {
+      .idea-panel { position: sticky; top: 90px; max-height: calc(100vh - 110px); }
+    }
+    .panel-head { display: flex; flex-direction: column; gap: 0.45rem; }
+    .panel-head h2 { font-family: 'Fraunces', serif; font-style: italic; font-weight: 500; font-size: 1.55rem; color: var(--gold-soft); margin: 0; letter-spacing: -0.015em; }
+    .panel-meta { display: flex; align-items: center; justify-content: space-between; gap: 0.6rem; font-family: 'JetBrains Mono', monospace; font-size: 0.62rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--warm-faint); }
+    .count-badge { color: var(--gold); }
+    .clear-all-link { background: transparent; border: 0; color: var(--warm-faint); font: inherit; letter-spacing: 0.18em; text-transform: uppercase; cursor: pointer; padding: 0; text-decoration: underline; text-underline-offset: 3px; text-decoration-color: rgba(232,185,121,0.30); transition: color .2s; font-family: 'JetBrains Mono', monospace; font-size: 0.62rem; }
+    .clear-all-link:hover { color: var(--peach); }
+    .panel-empty { font-family: 'Fraunces', serif; font-style: italic; color: var(--warm-faint); text-align: center; padding: 1.8rem 0.5rem; font-size: 0.96rem; line-height: 1.55; }
+    .panel-error { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--danger); padding: 0.55rem 0.75rem; border-radius: 8px; border: 1px solid rgba(224,122,106,0.28); background: rgba(224,122,106,0.08); }
+
+    .ideas-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.45rem; overflow-y: auto; min-height: 0; flex: 1; padding-right: 0.25rem; }
+    .ideas-list::-webkit-scrollbar { width: 6px; }
+    .ideas-list::-webkit-scrollbar-thumb { background: rgba(232,185,121,0.20); border-radius: 999px; }
+    .idea-row { display: flex; gap: 0.55rem; align-items: flex-start; padding: 0.6rem 0.65rem; border: 1px solid var(--hairline-soft); border-radius: 10px; background: rgba(255,255,255,0.015); transition: border-color .2s, background-color .2s, opacity .2s; }
+    .idea-row:hover { border-color: rgba(232,185,121,0.22); background: rgba(255,255,255,0.028); }
+    .idea-row.is-deselected { opacity: 0.55; }
+    .idea-row .idea-body { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 0.2rem; }
+    .idea-rank { font-family: 'JetBrains Mono', monospace; font-size: 0.62rem; color: var(--gold); letter-spacing: 0.08em; }
+    .idea-text { color: var(--warm); font-size: 0.92rem; line-height: 1.45; word-break: break-word; }
+    .idea-source-link { font-family: 'JetBrains Mono', monospace; font-size: 0.6rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--warm-faint); text-decoration: none; margin-top: 0.15rem; display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .idea-source-link:hover { color: var(--gold); }
+    .idea-remove { background: transparent; border: 0; color: var(--warm-faint); font-size: 1.15rem; cursor: pointer; padding: 0 0.25rem; line-height: 1; flex-shrink: 0; transition: color .2s; font-family: inherit; }
+    .idea-remove:hover { color: var(--danger); }
+
+    /* Custom checkbox */
+    .ck-wrap { position: relative; display: inline-flex; align-items: flex-start; cursor: pointer; padding-top: 0.18rem; }
+    .ck-wrap input { position: absolute; opacity: 0; pointer-events: none; }
+    .ck-box { display: inline-block; width: 1rem; height: 1rem; border: 1px solid rgba(232,185,121,0.40); border-radius: 4px; background: rgba(255,255,255,0.02); transition: background-color .15s, border-color .15s; position: relative; }
+    .ck-wrap input:checked + .ck-box { background: var(--gold); border-color: var(--gold); }
+    .ck-wrap input:checked + .ck-box::after { content: ''; position: absolute; left: 3px; top: 0px; width: 4px; height: 8px; border: solid #2A220F; border-width: 0 2px 2px 0; transform: rotate(45deg); }
+    .ck-wrap input:focus-visible + .ck-box { box-shadow: 0 0 0 3px rgba(232,185,121,0.25); }
+
+    .panel-actions { display: flex; gap: 0.55rem; padding-top: 0.6rem; border-top: 1px solid var(--hairline-soft); }
+    .btn-panel { flex: 1; padding: 0.7rem 1rem; border-radius: 999px; font-weight: 600; font-size: 0.76rem; cursor: pointer; transition: transform .2s, background-color .2s, color .2s, border-color .2s, box-shadow .2s, opacity .2s; border: 1px solid transparent; font-family: inherit; }
+    .btn-panel:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+    .btn-panel-primary { background: linear-gradient(135deg, #F5D38A 0%, #E8B979 50%, #D6A765 100%); color: #2A220F; box-shadow: 0 8px 18px -8px rgba(198,165,89,0.4); }
+    .btn-panel-primary:hover:not(:disabled) { transform: translateY(-1px); box-shadow: 0 14px 26px -10px rgba(232,185,121,0.5); }
+    .btn-panel-ghost { background: rgba(255,255,255,0.025); border-color: var(--hairline); color: var(--warm); }
+    .btn-panel-ghost:hover:not(:disabled) { border-color: var(--peach); color: var(--peach); transform: translateY(-1px); }
+
+    /* ===== Modals ===== */
+    .modal { position: fixed; inset: 0; z-index: 90; display: flex; align-items: center; justify-content: center; padding: 1.25rem; }
+    .modal[hidden] { display: none; }
+    .modal-backdrop { position: absolute; inset: 0; background: rgba(8,7,10,0.78); backdrop-filter: blur(10px) saturate(140%); -webkit-backdrop-filter: blur(10px) saturate(140%); animation: modalFade .25s var(--ease); }
+    @keyframes modalFade { from { opacity: 0; } to { opacity: 1; } }
+    .modal-shell { position: relative; z-index: 1; width: 100%; max-width: 740px; max-height: calc(100vh - 2.5rem); display: flex; flex-direction: column; background: linear-gradient(180deg, #14110D, #0A0807); border: 1px solid rgba(232,185,121,0.22); border-radius: 20px; box-shadow: 0 40px 90px -20px rgba(0,0,0,0.7); animation: modalIn .3s var(--ease); overflow: hidden; }
+    @keyframes modalIn { from { opacity: 0; transform: translateY(12px) scale(0.98); } to { opacity: 1; transform: none; } }
+    .modal-head { padding: 1.3rem 1.55rem 1rem; border-bottom: 1px solid var(--hairline-soft); }
+    .modal-source { font-family: 'JetBrains Mono', monospace; font-size: 0.66rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.35rem; word-break: break-word; }
+    .modal-head h2 { font-family: 'Fraunces', serif; font-style: italic; font-weight: 500; font-size: 1.35rem; color: var(--warm); margin: 0; letter-spacing: -0.015em; line-height: 1.3; }
+    .modal-body { flex: 1; padding: 1.15rem 1.55rem; overflow-y: auto; display: flex; flex-direction: column; gap: 0.85rem; min-height: 0; }
+    .modal-status { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--warm-mute); padding: 0.7rem 0.95rem; border-radius: 10px; border: 1px solid var(--hairline-soft); background: rgba(255,255,255,0.02); display: flex; align-items: center; gap: 0.7rem; }
+    .modal-status .dot { width: 6px; height: 6px; border-radius: 999px; background: var(--gold); animation: pulse 1.05s var(--ease) infinite; flex-shrink: 0; }
+    .modal-status.is-error { background: rgba(224,122,106,0.10); border-color: rgba(224,122,106,0.30); color: var(--peach); }
+    .modal-status.is-error .dot { background: var(--danger); animation: none; box-shadow: 0 0 10px rgba(224,122,106,0.55); }
+
+    .modal-checklist { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.4rem; }
+    .modal-checklist li { display: flex; align-items: flex-start; gap: 0.65rem; padding: 0.6rem 0.7rem; border: 1px solid var(--hairline-soft); border-radius: 10px; background: rgba(255,255,255,0.015); transition: background-color .2s, border-color .2s; }
+    .modal-checklist li:hover { background: rgba(255,255,255,0.03); border-color: rgba(232,185,121,0.22); }
+    .modal-checklist .ck-rank { font-family: 'JetBrains Mono', monospace; font-size: 0.66rem; color: var(--gold); flex-shrink: 0; padding-top: 0.25rem; min-width: 1.6em; }
+    .modal-checklist .ck-label { flex: 1; color: var(--warm); font-size: 0.94rem; line-height: 1.4; cursor: pointer; }
+
+    .modal-foot { display: flex; gap: 0.6rem; padding: 1rem 1.55rem; border-top: 1px solid var(--hairline-soft); justify-content: flex-end; flex-wrap: wrap; }
+    .btn-modal { padding: 0.7rem 1.35rem; border-radius: 999px; font-weight: 600; font-size: 0.8rem; border: 1px solid transparent; cursor: pointer; transition: transform .2s, background-color .2s, color .2s, border-color .2s, box-shadow .2s, opacity .2s; font-family: inherit; }
+    .btn-modal:disabled { opacity: 0.55; cursor: not-allowed; transform: none; }
+    .btn-modal-ghost { background: rgba(255,255,255,0.025); border-color: var(--hairline); color: var(--warm); }
+    .btn-modal-ghost:hover:not(:disabled) { border-color: var(--peach); color: var(--peach); }
+    .btn-modal-primary { background: linear-gradient(135deg, #F5D38A 0%, #E8B979 50%, #D6A765 100%); color: #2A220F; box-shadow: 0 8px 18px -8px rgba(198,165,89,0.4); }
+    .btn-modal-primary:hover:not(:disabled) { transform: translateY(-1px); box-shadow: 0 14px 28px -10px rgba(232,185,121,0.5); }
+
+    /* Preview table */
+    .preview-table-wrap { overflow-x: auto; border: 1px solid var(--hairline-soft); border-radius: 10px; }
+    .preview-table { width: 100%; border-collapse: collapse; font-size: 0.86rem; }
+    .preview-table th, .preview-table td { padding: 0.6rem 0.8rem; border-bottom: 1px solid var(--hairline-soft); text-align: left; vertical-align: top; }
+    .preview-table th { font-family: 'JetBrains Mono', monospace; font-size: 0.6rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); font-weight: 500; background: rgba(255,255,255,0.02); }
+    .preview-table td { color: var(--warm); }
+    .preview-table tr:last-child td { border-bottom: 0; }
+    .preview-table .url-cell { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; color: var(--warm-faint); word-break: break-all; max-width: 22ch; }
+    .preview-table .url-cell a { color: inherit; text-decoration: none; }
+    .preview-table .url-cell a:hover { color: var(--gold); }
 
     /* Reveal-on-scroll */
     .reveal { opacity: 0; transform: translateY(28px); transition: opacity .9s var(--ease), transform .9s var(--ease); }
@@ -211,7 +333,7 @@
                placeholder="Try: smart watches, ergonomic chairs, AI assistants…"
                autocomplete="off" required maxlength="120" />
         <button type="submit" id="search-btn" class="btn btn-gold">
-          Search
+          <span id="search-btn-label">Search</span>
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
         </button>
       </form>
@@ -223,27 +345,52 @@
   </section>
 
   <!-- ============================================== -->
-  <!-- RESULTS                                         -->
+  <!-- RESULTS + IDEA PANEL (two-column split)         -->
   <!-- ============================================== -->
   <section class="relative overflow-hidden border-t border-gold-500/[0.06]">
-    <div class="max-w-[1400px] mx-auto px-5 sm:px-6 lg:px-10 py-14 sm:py-20">
+    <div class="max-w-[1400px] mx-auto px-5 sm:px-6 lg:px-10 py-12 sm:py-16">
+      <div class="tf-grid">
 
-      <!-- Status row: empty by default; populated with loading/error -->
-      <div id="status" class="status hidden" role="status" aria-live="polite"></div>
+        <!-- LEFT: search results -->
+        <div class="tf-left">
+          <!-- Status row -->
+          <div id="status" class="status hidden" role="status" aria-live="polite"></div>
 
-      <!-- Loading skeletons (hidden by default) -->
-      <div id="skeletons" class="skeleton-grid mt-6 hidden" aria-hidden="true">
-        <div class="skeleton"><div class="sk-body"><div class="sk-line w-3"></div><div class="sk-line w-7"></div><div class="sk-line w-5"></div></div></div>
-        <div class="skeleton"><div class="sk-body"><div class="sk-line w-3"></div><div class="sk-line w-7"></div><div class="sk-line w-5"></div></div></div>
-        <div class="skeleton"><div class="sk-body"><div class="sk-line w-3"></div><div class="sk-line w-7"></div><div class="sk-line w-5"></div></div></div>
-      </div>
+          <!-- Skeletons -->
+          <div id="skeletons" class="skeleton-grid hidden" aria-hidden="true">
+            <div class="skeleton"><div class="sk-body"><div class="sk-line w-3"></div><div class="sk-line w-7"></div><div class="sk-line w-5"></div></div></div>
+            <div class="skeleton"><div class="sk-body"><div class="sk-line w-3"></div><div class="sk-line w-7"></div><div class="sk-line w-5"></div></div></div>
+            <div class="skeleton"><div class="sk-body"><div class="sk-line w-3"></div><div class="sk-line w-7"></div><div class="sk-line w-5"></div></div></div>
+            <div class="skeleton"><div class="sk-body"><div class="sk-line w-3"></div><div class="sk-line w-7"></div><div class="sk-line w-5"></div></div></div>
+          </div>
 
-      <!-- Results container -->
-      <div id="results" class="result-grid mt-6"></div>
+          <!-- Result cards -->
+          <div id="results" class="result-grid"></div>
 
-      <!-- Initial empty hint -->
-      <div id="empty-hint" class="text-center text-ink-100/45 text-[0.92rem] py-12 italic font-serif">
-        Search a topic above to surface the top five trending results.
+          <!-- Initial empty hint -->
+          <div id="empty-hint" class="text-center text-ink-100/45 text-[0.92rem] py-10 italic font-serif">
+            Search a topic above to surface the top five trending results.
+          </div>
+        </div>
+
+        <!-- RIGHT: Picked Ideas panel -->
+        <aside class="idea-panel" aria-labelledby="ideas-heading">
+          <header class="panel-head">
+            <h2 id="ideas-heading">Picked Ideas</h2>
+            <div class="panel-meta">
+              <span class="count-badge" id="count-badge">0 ideas &middot; 0 selected</span>
+              <button type="button" class="clear-all-link" id="clear-all" hidden>Clear all</button>
+            </div>
+          </header>
+          <div class="panel-error" id="panel-error" hidden role="alert"></div>
+          <div class="panel-empty" id="panel-empty">Extract ideas from any article on the left.</div>
+          <ul class="ideas-list" id="ideas-list" aria-live="polite"></ul>
+          <div class="panel-actions">
+            <button type="button" class="btn-panel btn-panel-ghost" id="btn-preview" disabled>Preview</button>
+            <button type="button" class="btn-panel btn-panel-primary" id="btn-export" disabled>Export CSV</button>
+          </div>
+        </aside>
+
       </div>
     </div>
   </section>
@@ -283,9 +430,71 @@
     </div>
   </footer>
 
+  <!-- ============================================== -->
+  <!-- MODAL: Browse & Pick                            -->
+  <!-- ============================================== -->
+  <div class="modal" id="browse-modal" role="dialog" aria-modal="true" aria-labelledby="browse-title" hidden>
+    <div class="modal-backdrop" data-close></div>
+    <div class="modal-shell" role="document">
+      <header class="modal-head">
+        <div class="modal-source" id="browse-source"></div>
+        <h2 id="browse-title">Article</h2>
+      </header>
+      <div class="modal-body">
+        <div class="modal-status" id="browse-status" hidden></div>
+        <div class="paste-back" id="browse-paste-back" hidden>
+          <p class="paste-msg">Google News redirects this article. Open it in a new tab, copy the final URL from your browser, and paste it below.</p>
+          <a class="paste-open" id="browse-paste-open" target="_blank" rel="noopener">Open article &#8599;</a>
+          <form class="paste-form" id="browse-paste-form" novalidate>
+            <input type="url" required placeholder="Paste final URL..." aria-label="Final article URL" />
+            <button type="submit" class="paste-submit">Re-extract</button>
+          </form>
+        </div>
+        <ul class="modal-checklist" id="browse-list"></ul>
+      </div>
+      <footer class="modal-foot">
+        <button type="button" class="btn-modal btn-modal-ghost" data-close>Cancel</button>
+        <button type="button" class="btn-modal btn-modal-primary" id="browse-add" disabled>Add to panel</button>
+      </footer>
+    </div>
+  </div>
+
+  <!-- ============================================== -->
+  <!-- MODAL: Preview                                  -->
+  <!-- ============================================== -->
+  <div class="modal" id="preview-modal" role="dialog" aria-modal="true" aria-labelledby="preview-title" hidden>
+    <div class="modal-backdrop" data-close></div>
+    <div class="modal-shell" role="document">
+      <header class="modal-head">
+        <div class="modal-source">Preview</div>
+        <h2 id="preview-title">Selected ideas</h2>
+      </header>
+      <div class="modal-body">
+        <div class="preview-table-wrap">
+          <table class="preview-table">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Idea</th>
+                <th>Rank</th>
+                <th>Source title</th>
+                <th>Source URL</th>
+              </tr>
+            </thead>
+            <tbody id="preview-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+      <footer class="modal-foot">
+        <button type="button" class="btn-modal btn-modal-ghost" data-close>Close</button>
+        <button type="button" class="btn-modal btn-modal-primary" id="preview-export">Export CSV</button>
+      </footer>
+    </div>
+  </div>
+
   <script>
+    // ===== Existing nav / mobile / reveal IIFE — unchanged =====
     (function () {
-      // Nav scroll state
       const nav = document.getElementById('nav');
       if (nav) {
         let s = false;
@@ -293,7 +502,6 @@
         window.addEventListener('scroll', onScroll, { passive: true });
         onScroll();
       }
-      // Mobile menu
       const t = document.getElementById('mobile-menu-toggle');
       const m = document.getElementById('mobile-menu');
       const setMenu = (o) => { if (!t||!m) return; m.classList.toggle('is-open', o); t.setAttribute('aria-expanded', String(o)); document.body.style.overflow = o ? 'hidden' : ''; };
@@ -305,7 +513,6 @@
         const onMq = (e) => { if (e.matches) setMenu(false); };
         (mq.addEventListener || mq.addListener).call(mq, 'change', onMq);
       }
-      // Reveal-on-scroll
       const els = document.querySelectorAll('.reveal');
       if ('IntersectionObserver' in window) {
         const io = new IntersectionObserver(entries => entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { threshold: 0.14, rootMargin: '0px 0px -6% 0px' });
@@ -314,122 +521,203 @@
       } else { els.forEach(el => el.classList.add('in')); }
     })();
 
-    // ================== Trend Finder logic ==================
+    // ===== Trend Finder — search + extract + idea panel + CSV =====
     (function () {
-      const API = (() => {
+
+      // ---- Environment-switched API base ----
+      const API_BASE = (() => {
         const host = window.location.hostname;
         const isLocal = host === 'localhost' || host === '127.0.0.1' || host === '' || host.endsWith('.local');
         return isLocal
-          ? 'http://localhost:5000/api/trends'
-          : 'https://tester-io-trend-finder-api.onrender.com/api/trends';
+          ? 'http://localhost:5001'
+          : 'https://tester-io-trend-finder-api.onrender.com';
       })();
+      const TRENDING_ENDPOINT = `${API_BASE}/api/trending`;
+      const EXTRACT_ENDPOINT  = `${API_BASE}/api/extract`;
 
-      // Reflect the active backend in the hero status line.
+      // Backend label in the hero
       const backendLabel = document.getElementById('backend-label');
       if (backendLabel) {
-        try {
-          const u = new URL(API);
-          backendLabel.textContent = u.host + u.pathname.replace(/\/api\/trends\/?$/, '');
-        } catch (_) {
-          backendLabel.textContent = API.replace(/^https?:\/\//, '').replace(/\/api\/trends\/?$/, '');
-        }
+        try { backendLabel.textContent = new URL(API_BASE).host; }
+        catch (_) { backendLabel.textContent = API_BASE.replace(/^https?:\/\//, ''); }
       }
 
-      const form      = document.getElementById('search-form');
-      const input     = document.getElementById('topic');
-      const btn       = document.getElementById('search-btn');
-      const status    = document.getElementById('status');
-      const skeletons = document.getElementById('skeletons');
-      const results   = document.getElementById('results');
-      const emptyHint = document.getElementById('empty-hint');
+      // ---- DOM refs ----
+      const form        = document.getElementById('search-form');
+      const input       = document.getElementById('topic');
+      const btn         = document.getElementById('search-btn');
+      const btnLabel    = document.getElementById('search-btn-label');
+      const statusEl    = document.getElementById('status');
+      const skeletons   = document.getElementById('skeletons');
+      const results     = document.getElementById('results');
+      const emptyHint   = document.getElementById('empty-hint');
 
+      const panelEmpty  = document.getElementById('panel-empty');
+      const panelError  = document.getElementById('panel-error');
+      const ideasList   = document.getElementById('ideas-list');
+      const countBadge  = document.getElementById('count-badge');
+      const clearAllBtn = document.getElementById('clear-all');
+      const btnPreview  = document.getElementById('btn-preview');
+      const btnExport   = document.getElementById('btn-export');
+
+      const browseModal     = document.getElementById('browse-modal');
+      const browseTitle     = document.getElementById('browse-title');
+      const browseSource    = document.getElementById('browse-source');
+      const browseStatus    = document.getElementById('browse-status');
+      const browseList      = document.getElementById('browse-list');
+      const browsePasteWrap = document.getElementById('browse-paste-back');
+      const browsePasteOpen = document.getElementById('browse-paste-open');
+      const browsePasteForm = document.getElementById('browse-paste-form');
+      const browseAddBtn    = document.getElementById('browse-add');
+
+      const previewModal  = document.getElementById('preview-modal');
+      const previewTbody  = document.getElementById('preview-tbody');
+      const previewTitle  = document.getElementById('preview-title');
+      const previewExport = document.getElementById('preview-export');
+
+      // ---- State ----
+      const state = {
+        cards: new Map(),  // cardId -> { id, title, url, source, thumbnail, published }
+        ideas: [],         // { id, rank, idea, sourceTitle, sourceUrl, addedAt, selected }
+        browseContext: null, // { cardId, articleTitle, articleUrl, articleSource, items: [{rank,idea,selected}] }
+      };
+      let nextIdeaId = 1;
+
+      // ---- Tiny helpers ----
       const setHidden = (el, hidden) => el.classList.toggle('hidden', hidden);
-
-      function showLoading(topic) {
-        emptyHint.classList.add('hidden');
-        results.innerHTML = '';
-        status.className = 'status is-loading';
-        setHidden(status, false);
-        status.innerHTML = `<span class="dot"></span> Searching trending results for &ldquo;<span class="text-warm">${escapeHtml(topic)}</span>&rdquo;…`;
-        setHidden(skeletons, false);
-        btn.disabled = true;
-      }
-
-      function showError(message) {
-        setHidden(skeletons, true);
-        emptyHint.classList.add('hidden');
-        results.innerHTML = '';
-        status.className = 'status is-error';
-        setHidden(status, false);
-        status.innerHTML = `<span class="dot"></span> ${escapeHtml(message)}`;
-        btn.disabled = false;
-      }
-
-      function showResults(items) {
-        setHidden(skeletons, true);
-        setHidden(status, true);
-        emptyHint.classList.add('hidden');
-        results.innerHTML = items.map(renderCard).join('');
-        btn.disabled = false;
-      }
-
-      function renderCard(item) {
-        const name   = item.name   || 'Untitled result';
-        const source = item.source || 'unknown source';
-        const url    = item.url    || '#';
-
-        return `
-          <a class="result-card" href="${escapeAttr(url)}" target="_blank" rel="noopener" style="text-decoration: none; color: inherit;">
-            <div class="body">
-              <div class="source"><span class="src-dot"></span>${escapeHtml(source)}</div>
-              <h3>${escapeHtml(name)}</h3>
-              <span class="view-btn">
-                View &rarr;
-              </span>
-            </div>
-          </a>`;
-      }
-
       function escapeHtml(s) {
-        return String(s)
+        return String(s ?? '')
           .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
           .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
       }
       function escapeAttr(s) { return escapeHtml(s); }
+      function cardIdFor(item, index) {
+        // Stable enough for one search: index + url prefix.
+        return 'c' + index + '_' + (item.url || '').replace(/[^a-z0-9]/gi, '').slice(0, 16);
+      }
+      function formatPublished(iso) {
+        if (!iso) return '';
+        const d = new Date(iso);
+        if (isNaN(d)) return '';
+        const diffMs = Date.now() - d.getTime();
+        const min  = Math.floor(diffMs / 60000);
+        const hr   = Math.floor(diffMs / 3600000);
+        const day  = Math.floor(diffMs / 86400000);
+        if (min < 1)   return 'just now';
+        if (min < 60)  return min + 'm ago';
+        if (hr  < 24)  return hr  + 'h ago';
+        if (day < 14)  return day + 'd ago';
+        return d.toISOString().slice(0, 10);
+      }
 
-      async function search(topic) {
-        showLoading(topic);
+      // =========================================================
+      // SEARCH (GET /api/trending?q=...)
+      // =========================================================
+
+      function showSearchLoading(topic) {
+        emptyHint.classList.add('hidden');
+        results.innerHTML = '';
+        statusEl.className = 'status is-loading';
+        setHidden(statusEl, false);
+        statusEl.innerHTML = `<span class="dot"></span> Searching trending results for &ldquo;${escapeHtml(topic)}&rdquo;…`;
+        setHidden(skeletons, false);
+        btn.disabled = true;
+        btnLabel.textContent = 'Searching...';
+      }
+
+      function showSearchError(message) {
+        setHidden(skeletons, true);
+        emptyHint.classList.add('hidden');
+        results.innerHTML = '';
+        statusEl.className = 'status is-error';
+        setHidden(statusEl, false);
+        statusEl.innerHTML = `<span class="dot"></span> ${escapeHtml(message)}`;
+        btn.disabled = false;
+        btnLabel.textContent = 'Search';
+      }
+
+      function showResults(items) {
+        setHidden(skeletons, true);
+        setHidden(statusEl, true);
+        emptyHint.classList.add('hidden');
+        state.cards.clear();
+        items.forEach((item, i) => {
+          const id = cardIdFor(item, i);
+          state.cards.set(id, { id, ...item });
+        });
+        results.innerHTML = items.map((item, i) => renderCard({ id: cardIdFor(item, i), ...item }, i)).join('');
+        btn.disabled = false;
+        btnLabel.textContent = 'Search';
+      }
+
+      function renderCard(item, index) {
+        const id        = item.id;
+        const title     = item.title || 'Untitled';
+        const url       = item.url || '#';
+        const source    = (item.source || 'unknown').toUpperCase();
+        const pubText   = item.published ? formatPublished(item.published) : '';
+        return `
+          <article class="result-card" data-card-id="${escapeAttr(id)}">
+            <div class="body">
+              <div class="card-head">
+                <span class="rank-badge" aria-hidden="true">${index + 1}</span>
+                <div class="source"><span class="src-dot"></span>${escapeHtml(source)}</div>
+              </div>
+              <h3>${escapeHtml(title)}</h3>
+              ${pubText ? `<div class="published">${escapeHtml(pubText)}</div>` : ''}
+              <div class="card-msg is-error" data-role="error" hidden></div>
+              <div class="card-msg is-success" data-role="success" hidden></div>
+              <div class="paste-back" data-role="paste-back" hidden>
+                <p class="paste-msg">Google News redirects this article. Open it in a new tab, copy the final URL from your browser, and paste it below.</p>
+                <a class="paste-open" data-role="paste-open" target="_blank" rel="noopener" href="${escapeAttr(url)}">Open article &#8599;</a>
+                <form class="paste-form" data-role="paste-form" novalidate>
+                  <input type="url" required placeholder="Paste final URL..." aria-label="Final article URL" />
+                  <button type="submit" class="paste-submit">Re-extract</button>
+                </form>
+              </div>
+              <div class="card-actions">
+                <button type="button" class="btn-card btn-card-primary" data-action="extract">Extract Ideas</button>
+                <button type="button" class="btn-card btn-card-ghost" data-action="browse">Browse &amp; Pick</button>
+              </div>
+              <a class="view-link" target="_blank" rel="noopener" href="${escapeAttr(url)}">View original &rarr;</a>
+            </div>
+          </article>`;
+      }
+
+      async function fetchJsonGet(url, timeoutMs = 30000) {
+        const ctrl = new AbortController();
+        const tid = setTimeout(() => ctrl.abort(), timeoutMs);
         try {
-          const ctrl = new AbortController();
-          const timeoutId = setTimeout(() => ctrl.abort(), 25000);
-          const res = await fetch(API, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ topic }),
-            signal: ctrl.signal,
-          });
-          clearTimeout(timeoutId);
-
+          const res = await fetch(url, { method: 'GET', signal: ctrl.signal });
           let body = null;
           try { body = await res.json(); } catch (_) { /* fall through */ }
+          return { res, body };
+        } finally {
+          clearTimeout(tid);
+        }
+      }
 
+      async function runSearch(topic) {
+        showSearchLoading(topic);
+        try {
+          const url = `${TRENDING_ENDPOINT}?q=${encodeURIComponent(topic)}`;
+          const { res, body } = await fetchJsonGet(url, 30000);
           if (!res.ok) {
             const msg = (body && (body.error || body.message)) || `Backend returned ${res.status} ${res.statusText}.`;
-            showError(msg);
+            showSearchError(msg);
             return;
           }
-
           const items = (body && Array.isArray(body.results)) ? body.results : [];
           if (items.length === 0) {
-            showError(`No trending results found for "${topic}". Try a different topic.`);
+            showSearchError(`No trending results found for "${topic}". Try a different topic.`);
             return;
           }
           showResults(items.slice(0, 5));
         } catch (err) {
           if (err && err.name === 'AbortError') {
-            showError('Request timed out — the backend took longer than 25 seconds.');
+            showSearchError('Request timed out — the backend took longer than 30 seconds.');
           } else {
-            showError('Backend not reachable — start it with `python trend-finder-backend/server.py` and try again.');
+            showSearchError('Backend not reachable — start it with `python trend-finder-backend/server.py` and try again.');
           }
         }
       }
@@ -437,13 +725,440 @@
       form.addEventListener('submit', (e) => {
         e.preventDefault();
         const topic = (input.value || '').trim();
-        if (!topic) {
-          input.focus();
-          showError('Please enter a topic to search.');
+        if (!topic) { input.focus(); showSearchError('Please enter a topic to search.'); return; }
+        runSearch(topic);
+      });
+
+      // =========================================================
+      // CARD INTERACTIONS — Extract / Browse / Paste-back
+      // =========================================================
+
+      function cardEl(cardId) { return results.querySelector(`[data-card-id="${CSS.escape(cardId)}"]`); }
+      function cardData(cardId) { return state.cards.get(cardId); }
+
+      function setCardError(cardId, message) {
+        const card = cardEl(cardId); if (!card) return;
+        const err = card.querySelector('[data-role="error"]');
+        if (!err) return;
+        err.textContent = message;
+        err.hidden = !message;
+      }
+      function clearCardMessages(cardId) {
+        const card = cardEl(cardId); if (!card) return;
+        const err = card.querySelector('[data-role="error"]');
+        const ok  = card.querySelector('[data-role="success"]');
+        if (err) { err.hidden = true; err.textContent = ''; }
+        if (ok)  { ok.hidden  = true; ok.textContent  = ''; }
+      }
+      function setCardPasteBack(cardId, visible) {
+        const card = cardEl(cardId); if (!card) return;
+        const wrap = card.querySelector('[data-role="paste-back"]');
+        if (wrap) wrap.hidden = !visible;
+      }
+      function setCardSuccess(cardId, message) {
+        const card = cardEl(cardId); if (!card) return;
+        const ok = card.querySelector('[data-role="success"]');
+        if (!ok) return;
+        ok.textContent = message;
+        ok.hidden = !message;
+      }
+      function setCardActionsDisabled(cardId, disabled, primaryLabel) {
+        const card = cardEl(cardId); if (!card) return;
+        card.querySelectorAll('.btn-card').forEach(b => { b.disabled = disabled; });
+        const primary = card.querySelector('.btn-card-primary');
+        if (primary && primaryLabel != null) primary.textContent = primaryLabel;
+      }
+
+      async function callExtract(url, timeoutMs = 60000) {
+        return fetchJsonGet(`${EXTRACT_ENDPOINT}?url=${encodeURIComponent(url)}`, timeoutMs);
+      }
+
+      async function extractFromCard(cardId, urlOverride) {
+        const card = cardData(cardId);
+        if (!card) return;
+        clearCardMessages(cardId);
+        setCardActionsDisabled(cardId, true, 'Extracting...');
+
+        const targetUrl = urlOverride || card.url;
+        try {
+          const { res, body } = await callExtract(targetUrl);
+          if (!res.ok) {
+            if (res.status === 422 && body && body.code === 'google_news_redirect') {
+              setCardPasteBack(cardId, true);
+              setCardActionsDisabled(cardId, false, 'Extract Ideas');
+              return;
+            }
+            setCardError(cardId, (body && body.error) || `Extract failed (${res.status}).`);
+            setCardActionsDisabled(cardId, false, 'Extract Ideas');
+            return;
+          }
+
+          const items = Array.isArray(body.items) ? body.items : [];
+          if (items.length === 0) {
+            setCardError(cardId, 'No ranked list detected in this article.');
+            setCardActionsDisabled(cardId, false, 'Extract Ideas');
+            return;
+          }
+          const added = addIdeasToPanel(items, body.title || card.title, body.url || targetUrl);
+          setCardPasteBack(cardId, false);
+          setCardSuccess(cardId, `Added ${added} idea${added === 1 ? '' : 's'} to your panel.`);
+          setCardActionsDisabled(cardId, false, 'Extract Ideas');
+        } catch (err) {
+          if (err && err.name === 'AbortError') {
+            setCardError(cardId, 'Extract timed out.');
+          } else {
+            setCardError(cardId, 'Backend not reachable — start it with `python trend-finder-backend/server.py`.');
+          }
+          setCardActionsDisabled(cardId, false, 'Extract Ideas');
+        }
+      }
+
+      async function browseFromCard(cardId, urlOverride) {
+        const card = cardData(cardId);
+        if (!card) return;
+        const targetUrl = urlOverride || card.url;
+        state.browseContext = { cardId, articleTitle: card.title, articleUrl: targetUrl, articleSource: card.source, items: [] };
+        openBrowseModal(card);
+
+        showBrowseStatus('loading', `Extracting ideas from ${card.source}…`);
+        browseList.innerHTML = '';
+        browseAddBtn.disabled = true;
+        browsePasteWrap.hidden = true;
+
+        try {
+          const { res, body } = await callExtract(targetUrl);
+          if (!res.ok) {
+            if (res.status === 422 && body && body.code === 'google_news_redirect') {
+              hideBrowseStatus();
+              browsePasteOpen.href = targetUrl;
+              browsePasteWrap.hidden = false;
+              return;
+            }
+            showBrowseStatus('error', (body && body.error) || `Extract failed (${res.status}).`);
+            return;
+          }
+          const items = Array.isArray(body.items) ? body.items : [];
+          if (items.length === 0) {
+            showBrowseStatus('error', 'No ranked list detected in this article.');
+            return;
+          }
+          state.browseContext.articleTitle = body.title || card.title;
+          state.browseContext.articleUrl = body.url || targetUrl;
+          browseTitle.textContent = state.browseContext.articleTitle;
+          state.browseContext.items = items.map(x => ({ rank: x.rank, idea: x.idea, selected: true }));
+          renderBrowseList();
+          hideBrowseStatus();
+          browseAddBtn.disabled = false;
+        } catch (err) {
+          if (err && err.name === 'AbortError') {
+            showBrowseStatus('error', 'Extract timed out.');
+          } else {
+            showBrowseStatus('error', 'Backend not reachable.');
+          }
+        }
+      }
+
+      // Card click handlers (event delegation)
+      results.addEventListener('click', (e) => {
+        const btn = e.target.closest('button[data-action]');
+        if (!btn) return;
+        const card = btn.closest('[data-card-id]');
+        if (!card) return;
+        const cardId = card.getAttribute('data-card-id');
+        if (btn.dataset.action === 'extract') extractFromCard(cardId);
+        else if (btn.dataset.action === 'browse') browseFromCard(cardId);
+      });
+
+      // Card paste-back form submit
+      results.addEventListener('submit', (e) => {
+        const form = e.target.closest('form[data-role="paste-form"]');
+        if (!form) return;
+        e.preventDefault();
+        const card = form.closest('[data-card-id]');
+        if (!card) return;
+        const cardId = card.getAttribute('data-card-id');
+        const inputEl = form.querySelector('input[type="url"]');
+        const pasted = (inputEl.value || '').trim();
+        if (!pasted || !/^https?:\/\//i.test(pasted)) {
+          setCardError(cardId, 'Please paste a valid http(s) URL.');
           return;
         }
-        search(topic);
+        clearCardMessages(cardId);
+        extractFromCard(cardId, pasted);
       });
+
+      // =========================================================
+      // RIGHT PANEL — Picked Ideas state & rendering
+      // =========================================================
+
+      function addIdeasToPanel(items, sourceTitle, sourceUrl) {
+        let added = 0;
+        const now = new Date().toISOString();
+        for (const it of items) {
+          const idea = (it.idea || '').trim();
+          if (!idea) continue;
+          // dedup: same idea text + same source URL
+          const dupKey = (idea.toLowerCase()) + '::' + (sourceUrl || '');
+          const exists = state.ideas.some(x => (x.idea.toLowerCase() + '::' + x.sourceUrl) === dupKey);
+          if (exists) continue;
+          state.ideas.push({
+            id: nextIdeaId++,
+            rank: Number.isFinite(it.rank) ? it.rank : (state.ideas.length + 1),
+            idea,
+            sourceTitle: sourceTitle || '(untitled)',
+            sourceUrl: sourceUrl || '',
+            addedAt: now,
+            selected: true,
+          });
+          added++;
+        }
+        renderPanel();
+        clearPanelError();
+        return added;
+      }
+
+      function renderPanel() {
+        const count = state.ideas.length;
+        const selectedCount = state.ideas.filter(x => x.selected).length;
+        countBadge.textContent = `${count} idea${count === 1 ? '' : 's'} · ${selectedCount} selected`;
+        clearAllBtn.hidden = count === 0;
+        btnPreview.disabled = selectedCount === 0;
+        btnExport.disabled  = selectedCount === 0;
+        panelEmpty.hidden   = count > 0;
+
+        if (count === 0) { ideasList.innerHTML = ''; return; }
+
+        ideasList.innerHTML = state.ideas.map(x => `
+          <li class="idea-row ${x.selected ? '' : 'is-deselected'}" data-idea-id="${x.id}">
+            <label class="ck-wrap" aria-label="Select idea">
+              <input type="checkbox" data-role="select" ${x.selected ? 'checked' : ''} />
+              <span class="ck-box"></span>
+            </label>
+            <div class="idea-body">
+              <span class="idea-rank">#${x.rank}</span>
+              <span class="idea-text">${escapeHtml(x.idea)}</span>
+              <a class="idea-source-link" href="${escapeAttr(x.sourceUrl)}" target="_blank" rel="noopener" title="${escapeAttr(x.sourceTitle)}">From: ${escapeHtml(x.sourceTitle)}</a>
+            </div>
+            <button type="button" class="idea-remove" data-role="remove" aria-label="Remove idea">×</button>
+          </li>`).join('');
+      }
+
+      function showPanelError(msg) {
+        panelError.textContent = msg;
+        panelError.hidden = false;
+      }
+      function clearPanelError() {
+        panelError.hidden = true;
+        panelError.textContent = '';
+      }
+
+      // Panel interactions
+      ideasList.addEventListener('click', (e) => {
+        const removeBtn = e.target.closest('[data-role="remove"]');
+        if (removeBtn) {
+          const row = removeBtn.closest('[data-idea-id]');
+          if (!row) return;
+          const id = Number(row.getAttribute('data-idea-id'));
+          state.ideas = state.ideas.filter(x => x.id !== id);
+          renderPanel();
+          return;
+        }
+      });
+      ideasList.addEventListener('change', (e) => {
+        const cb = e.target.closest('input[type="checkbox"][data-role="select"]');
+        if (!cb) return;
+        const row = cb.closest('[data-idea-id]');
+        if (!row) return;
+        const id = Number(row.getAttribute('data-idea-id'));
+        const item = state.ideas.find(x => x.id === id);
+        if (item) item.selected = cb.checked;
+        renderPanel();
+      });
+      clearAllBtn.addEventListener('click', () => {
+        state.ideas = [];
+        renderPanel();
+        clearPanelError();
+      });
+      btnPreview.addEventListener('click', () => openPreviewModal(btnPreview));
+      btnExport.addEventListener('click', () => {
+        const ok = exportCsv();
+        if (!ok) showPanelError('Select at least one idea to export.');
+      });
+
+      // =========================================================
+      // CSV EXPORT
+      // =========================================================
+
+      function csvEscape(v) {
+        const s = String(v ?? '');
+        if (/[",\n\r]/.test(s)) return '"' + s.replace(/"/g, '""') + '"';
+        return s;
+      }
+      function exportCsv() {
+        const selected = state.ideas.filter(x => x.selected);
+        if (selected.length === 0) return false;
+        const header = ['rank','idea','source_title','source_url','added_at'];
+        const rows = selected.map(x => [x.rank, x.idea, x.sourceTitle, x.sourceUrl, x.addedAt].map(csvEscape).join(','));
+        const csv = [header.join(','), ...rows].join('\r\n');
+        const now = new Date();
+        const yyyy = now.getFullYear();
+        const mm = String(now.getMonth() + 1).padStart(2, '0');
+        const dd = String(now.getDate()).padStart(2, '0');
+        const filename = `trend-finder-export-${yyyy}-${mm}-${dd}.csv`;
+        const blob = new Blob([csv], { type: 'text/csv;charset=utf-8' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        return true;
+      }
+
+      // =========================================================
+      // MODALS — open/close, focus trap, esc, backdrop click
+      // =========================================================
+
+      function showBrowseStatus(kind, text) {
+        browseStatus.className = 'modal-status' + (kind === 'error' ? ' is-error' : '');
+        browseStatus.innerHTML = `<span class="dot"></span> ${escapeHtml(text)}`;
+        browseStatus.hidden = false;
+      }
+      function hideBrowseStatus() { browseStatus.hidden = true; }
+
+      function renderBrowseList() {
+        if (!state.browseContext) return;
+        const items = state.browseContext.items || [];
+        browseList.innerHTML = items.map((x, i) => `
+          <li>
+            <label class="ck-wrap" aria-label="Select idea">
+              <input type="checkbox" data-idx="${i}" ${x.selected ? 'checked' : ''} />
+              <span class="ck-box"></span>
+            </label>
+            <span class="ck-rank">#${x.rank ?? (i + 1)}</span>
+            <span class="ck-label">${escapeHtml(x.idea)}</span>
+          </li>`).join('');
+      }
+      browseList.addEventListener('change', (e) => {
+        const cb = e.target.closest('input[type="checkbox"][data-idx]');
+        if (!cb || !state.browseContext) return;
+        const i = Number(cb.dataset.idx);
+        if (state.browseContext.items[i]) state.browseContext.items[i].selected = cb.checked;
+        const anyChecked = state.browseContext.items.some(x => x.selected);
+        browseAddBtn.disabled = !anyChecked;
+      });
+
+      function openBrowseModal(card) {
+        browseTitle.textContent = card.title || '(untitled)';
+        browseSource.textContent = (card.source || '').toUpperCase();
+        browseAddBtn.disabled = true;
+        openModal(browseModal);
+      }
+      browseAddBtn.addEventListener('click', () => {
+        if (!state.browseContext) return;
+        const checked = state.browseContext.items.filter(x => x.selected);
+        if (checked.length === 0) return;
+        const added = addIdeasToPanel(checked, state.browseContext.articleTitle, state.browseContext.articleUrl);
+        // After successful add, show a brief success and close
+        if (added > 0) {
+          showBrowseStatus('loading', `Added ${added} idea${added === 1 ? '' : 's'} to your panel.`);
+        } else {
+          showBrowseStatus('loading', 'All ideas were already in your panel.');
+        }
+        setTimeout(() => closeModal(browseModal), 600);
+      });
+      // Paste-back inside the modal
+      browsePasteForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const inputEl = browsePasteForm.querySelector('input[type="url"]');
+        const pasted = (inputEl.value || '').trim();
+        if (!pasted || !/^https?:\/\//i.test(pasted)) {
+          showBrowseStatus('error', 'Please paste a valid http(s) URL.');
+          return;
+        }
+        if (!state.browseContext) return;
+        browsePasteWrap.hidden = true;
+        const cardLite = { ...cardData(state.browseContext.cardId) };
+        // Reuse browseFromCard with overridden URL
+        browseFromCard(state.browseContext.cardId, pasted);
+      });
+
+      function openPreviewModal(opener) {
+        const selected = state.ideas.filter(x => x.selected);
+        previewTitle.textContent = `Selected ideas (${selected.length})`;
+        previewTbody.innerHTML = selected.map((x, i) => `
+          <tr>
+            <td>${i + 1}</td>
+            <td>${escapeHtml(x.idea)}</td>
+            <td>${escapeHtml(String(x.rank))}</td>
+            <td>${escapeHtml(x.sourceTitle)}</td>
+            <td class="url-cell"><a href="${escapeAttr(x.sourceUrl)}" target="_blank" rel="noopener">${escapeHtml(x.sourceUrl)}</a></td>
+          </tr>`).join('');
+        openModal(previewModal, opener);
+      }
+      previewExport.addEventListener('click', () => {
+        exportCsv();
+      });
+
+      // ---- Generic modal infra ----
+      let activeModal = null;
+      let lastFocused = null;
+
+      function focusables(modal) {
+        return Array.from(modal.querySelectorAll(
+          'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
+        )).filter(el => !el.hidden && el.offsetParent !== null);
+      }
+      function openModal(modal, opener) {
+        if (activeModal) closeModal(activeModal);
+        lastFocused = opener || document.activeElement;
+        modal.hidden = false;
+        document.body.style.overflow = 'hidden';
+        activeModal = modal;
+        // Focus first focusable
+        const f = focusables(modal);
+        if (f[0]) f[0].focus();
+      }
+      function closeModal(modal) {
+        if (modal.hidden) return;
+        modal.hidden = true;
+        document.body.style.overflow = '';
+        activeModal = null;
+        if (lastFocused && typeof lastFocused.focus === 'function') {
+          try { lastFocused.focus(); } catch (_) {}
+        }
+        // Reset modal-local state
+        if (modal === browseModal) {
+          state.browseContext = null;
+          browseList.innerHTML = '';
+          browsePasteWrap.hidden = true;
+          browseStatus.hidden = true;
+          browseAddBtn.disabled = true;
+        }
+      }
+      function handleModalKey(e) {
+        if (!activeModal) return;
+        if (e.key === 'Escape') { e.preventDefault(); closeModal(activeModal); return; }
+        if (e.key === 'Tab') {
+          const f = focusables(activeModal);
+          if (f.length === 0) return;
+          const first = f[0], last = f[f.length - 1];
+          if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+          else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+        }
+      }
+      document.addEventListener('keydown', handleModalKey);
+      // Backdrop + [data-close] click
+      [browseModal, previewModal].forEach(modal => {
+        modal.addEventListener('click', (e) => {
+          if (e.target.matches('[data-close]')) closeModal(modal);
+        });
+      });
+
+      // Initial panel render (empty state)
+      renderPanel();
     })();
   </script>
 </body>
